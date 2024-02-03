@@ -1,0 +1,12 @@
+{% autoescape off %}
+Hi, {{ user.full_name }}
+
+Thanks for ordering with The Luxury Pioneer.
+Your Order Number is {{ order.order_number }}. We are processing your order.
+We'll contact you soon.
+You can track your order from the orders section in dashboard -
+{{ request.scheme }}://{{request.get_host}}/user/user-dashboard
+
+Thank you,
+The Luxury Pioneer
+{% endautoescape %}

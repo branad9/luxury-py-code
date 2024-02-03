@@ -1,0 +1,95 @@
+{% load static %}
+
+<!-- Htmx -->
+<script src="{% static 'vue/htmx.min.js' %}"></script>
+
+<!-- Bootstrap Js -->
+<script src="{% static 'assets/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+<!-- User Dashboard Tab Js -->
+<script src="{% static 'assets/js/user-dashboard-tab.js' %}"></script>
+
+<!-- Feather Icon -->
+<script src="{% static 'assets/js/feather/feather.min.js' %}"></script>
+
+<!-- Swiper Slider Js -->
+<script src="{% static 'assets/js/swiper-slider/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/js/swiper-slider/swiper-custom.min.js' %}"></script>
+
+<!-- Timer Js -->
+<script src="{% static 'assets/js/timer.js' %}"></script>
+
+<!-- Header Sticky js  -->
+<script src="{% static 'assets/js/sticky-header.js' %}"></script>
+
+<!-- Active Class js  -->
+<script src="{% static 'assets/js/active-class.js' %}"></script>
+
+<!-- Wow Js -->
+<script src="{% static 'assets/js/wow.js' %}"></script>
+<script src="{% static 'assets/js/wow-custom.js' %}"></script>
+<script src="{% static 'assets/js/grid-style.js' %}"></script>
+
+<!-- Script Js -->
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+<!-- Theme Settings Js -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var lazyloadImages;    
+    
+      if ("IntersectionObserver" in window) {
+        lazyloadImages = document.querySelectorAll(".lazy");
+        var imageObserver = new IntersectionObserver(function(entries, observer) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var image = entry.target;
+              image.src = image.dataset.src;
+              image.classList.remove("lazy");
+              imageObserver.unobserve(image);
+            }
+          });
+        });
+    
+        lazyloadImages.forEach(function(image) {
+          imageObserver.observe(image);
+        });
+      } else {  
+        var lazyloadThrottleTimeout;
+        lazyloadImages = document.querySelectorAll(".lazy");
+        
+        function lazyload () {
+          if(lazyloadThrottleTimeout) {
+            clearTimeout(lazyloadThrottleTimeout);
+          }    
+    
+          lazyloadThrottleTimeout = setTimeout(function() {
+            var scrollTop = window.pageYOffset;
+            lazyloadImages.forEach(function(img) {
+                if(img.offsetTop < (window.innerHeight + scrollTop)) {
+                  img.src = img.dataset.src;
+                  img.classList.remove('lazy');
+                }
+            });
+            if(lazyloadImages.length == 0) { 
+              document.removeEventListener("scroll", lazyload);
+              window.removeEventListener("resize", lazyload);
+              window.removeEventListener("orientationChange", lazyload);
+            }
+          }, 20);
+        }
+    
+        document.addEventListener("scroll", lazyload);
+        window.addEventListener("resize", lazyload);
+        window.addEventListener("orientationChange", lazyload);
+      }
+    })
+
+</script>
+<script type="text/javascript">
+ 	function lazyload() {
+        $('.lazy').lazy({
+            placeholder: "data:image/gif;base64,R0lGODlhEALAPQAPzl5uLr9Nrl8e7..."
+        });
+    };
+</script>

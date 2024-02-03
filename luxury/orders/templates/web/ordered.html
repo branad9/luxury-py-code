@@ -1,0 +1,30 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+<title>Order Successfull</title>
+<meta name='robots' content='noindex, follow' />
+    
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main"> 
+    <!-- Top Section Start -->
+    <section class="p-0">
+        <div class="success-icon">
+          <div class="img-wrap">
+             <img src="{% static 'assets/images/icon/order.png' %}" alt="jeans" style="width: 105px;"/>
+          </div>
+
+          <div class="success-contain">
+            <h1>Order Successfull</h1>
+            <h5 class="font-light">Thank you, Ww Have Received your Order. <br>We Will Get Back to you soon With your order Updates Over Phone Call OR Whatsapp.</h5>
+            <br>
+            <a href="{% url 'products' %}" class="btn-solid justify-content-center"> Back To Shop </a>
+          </div>
+        </div>
+      </section>
+      <br>
+      <!-- Top Section End -->
+</main>
+<!-- Main End -->
+{% endblock web_content %}

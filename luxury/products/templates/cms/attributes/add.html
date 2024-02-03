@@ -1,0 +1,146 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid" id="add-attribute" v-cloak>
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Add Attribute</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'cms_home' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'cms_attributes' %}">Product Attributes</a></li>
+                            <li class="breadcrumb-item active">Add Attribute</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mr-auto p-2"> 
+                            <h4 class="card-title">Add Attribute</h4>
+                        </div>
+                        <div v-if="Object.keys(errors).length > 0">
+                            <div v-for="(v, k) in errors" :key="k" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                [[ k ]]: [[ v ]]
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        <form method="POST" @submit.prevent="addAttribute">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="formrow-name-input">Name</label>
+                                        <input type="text" v-model="attribute.name" class="form-control" placeholder="Enter attribute name" :class="'name' in errors ? 'is-invalid' : ''" id="formrow-name-input" required>
+                                        <div v-if="'name' in errors" class="invalid-feedback">[[ errors['name'] ]]</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" v-model="attribute.active" class="custom-control-input" id="formrow-active">
+                                            <label class="custom-control-label" for="formrow-active">Is Active</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="btn btn-success" @click="addValue"><i class="bx bx-plus font-size-16 align-middle mr-2"></i>Add Value</a>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group row mb-4" v-for="(v, i) in attribute.values">
+                                        <label for="horizontal-value-input" class="col-sm-3 col-form-label">Attribute Value</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" v-model="v.name" class="form-control" placeholder="Enter attribute value" id="horizontal-value-input" required>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a href="javascript:void(0)" class="btn btn-danger" @click="deleteValue(i)"><i class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" :class="loading ? 'disabled' : ''" class="btn btn-primary w-md">
+                                <i v-if="loading" class="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>[[ submit ]]
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+    </div> <!-- container-fluid -->
+</div>
+<script src="{% static 'vue/vue.global.js' %}"></script>
+<script src="{% static 'vue/axios.min.js' %}"></script>
+<script>
+    Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                attribute: {
+                    name: null,
+                    active: true,
+                    values: [
+                        { name: null }, 
+                    ],
+                },
+                loading: false,
+                submit: 'Submit',
+                errors: {},
+            }
+        },
+        methods: {
+            addValue() {
+                this.attribute.values.push({name: null});
+            },  
+            deleteValue(i) {
+                if (this.attribute.values.length > 1) {
+                    this.attribute.values.splice(i, 1);
+                }
+             },
+            addAttribute() {
+                if (this.attribute.name == null || this.attribute.name == '') {
+                    this.errors = {Error: 'Attribute name is required.'};
+                    return;
+                } 
+                for(let i=0; i<this.attribute.values.length; i++) {
+                    if (this.attribute.values[i].name == null || this.attribute.values[i].name == '') {
+                        this.errors = {Error: 'Attribute value is required.'};
+                        return;
+                    }
+                }
+                this.loading = true;
+                this.submit = 'Loading...';
+                let data = new FormData();
+                data.append('name', this.attribute.name);
+                data.append('active', this.attribute.active);
+                data.append('values', JSON.stringify(this.attribute.values));
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+                axios.post("{% url 'cms_save_attribute' %}", data).then((resp) => {
+                    this.loading = false;
+                    this.submit = 'Submit';
+                    if (resp.data.status === true) {
+                        window.location = "{% url 'cms_attributes' %}";
+                    } else {
+                        this.errors = resp.data.errors;
+                    }
+                }).catch(e => {
+                    this.loading = false;
+                    this.submit = 'Submit';
+                    this.errors = e;
+                });
+            }
+        }
+    }).mount('#add-attribute');
+</script>
+{% endblock content %}

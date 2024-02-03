@@ -1,0 +1,144 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+{% block content %}
+<div class="modal hide" id="sendMsgModal" tabindex="-1" role="dialog" aria-labelledby="sendMsgModal" aria-hidden="true"></div>
+<div class="modal hide" id="userDetailsModal" tabindex="-1" role="dialog" aria-labelledby="userDetailsModal" aria-hidden="true"></div>
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Cart</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'cms_home' %}">Home</a></li>
+                            <li class="breadcrumb-item active">Cart</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="mr-auto p-2"> 
+                                    <h4 class="card-title">All Carts</h4>
+                                </div>
+                            </div>
+                            <div class="col-3 text-right">
+                                <a href="{% url 'cms_export_csv_cart' %}" class="btn btn-primary"><i class="bx bx-file font-size-16 align-middle mr-2"></i>Export CSV</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <form action="{% url 'cms_cart' %}" method="GET">
+                                        <select name='sort' id="sort" onchange="this.form.submit()" class="form-control">
+                                          <option {% if request.GET.sort == '-created' %} selected {% endif %} value="-created">Date: New To Old</option>
+                                          <option {% if request.GET.sort == 'created' %} selected {% endif %} value="created">Date: Old To New</option>
+                                          <option {% if request.GET.sort == '-total' %} selected {% endif %} value="-total">Total: High To Low</option>
+                                          <option {% if request.GET.sort == 'total' %} selected {% endif %} value="total">Total: Low To High</option>
+                                        </select>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% include 'cms/includes/alerts.html' %}
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Customer Name</th>
+                                <th>Product</th>
+                                <th>Variation</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in items %}
+                                <tr>
+                                    <td>{{ forloop.counter0|add:items.start_index }}</td>
+                                    <td><a href="#" data-form="{% url 'cms_user_details' i.user_id %}" id="{{ i.id }}" class="user_details">{{ i.user }}</a></td>
+                                    <td><a href="{% url 'product_details' i.product.slug %}">{{ i.product }}</a></td>
+                                    {% if i.product.type == 'Simple' %}
+                                        <td>No Variation</td>
+                                    {% else %}
+                                        <td>{{ i.variation.variation_values.all.0.attribute }}: {{ i.variation.variation_values.all.0.attribute_value }}</td>
+                                    {% endif %}
+                                    <td>{{ i.qty }}</td>
+                                    <td>{{ i.total }}</td>
+                                    <td>{{ i.created.date }}</td>
+                                    <td>
+                                        <a href="{% url 'cms_delete_cart' i.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>   
+                        <div class="my-3">
+                            {% if items.has_other_pages  %}
+                            <ul class="pagination mb-0 flex-wrap">
+                                {% if items.has_previous  %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ items.previous_page_number }}{% if request.GET.sort is not None %}&sort={{request.GET.sort}}{% endif %}">Previous</a></li>
+                                {% endif %}
+                                {% for i in items.paginator.page_range %}
+                                    {% if items.number == i %}
+                                        <li class="page-item"><a class="page-link">{{ i }}{% if request.GET.sort is not None %}&sort={{request.GET.sort}}{% endif %}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ i }}{% if request.GET.sort is not None %}&sort={{request.GET.sort}}{% endif %}">{{ i }}</a></li>
+                                    {% endif %} 
+                                {% endfor %}
+                                {% if items.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ items.next_page_number }}{% if request.GET.sort is not None %}&sort={{request.GET.sort}}{% endif %}">Next</a></li>
+                                {% endif %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+        
+    </div> <!-- container-fluid -->
+</div>
+<script src="{% static 'vue/jquery.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".send_msg", function () {
+            $.ajax({
+                type: 'GET',
+                url:  $(this).data("form"),
+                success: function (data) {
+                    $('#sendMsgModal').html(data);
+                    $('#sendMsgModal').modal('show');
+                },
+                dataType: 'html'
+            });
+            return false;
+        });
+    });
+    $(document).ready(function () {
+        $(document).on("click", ".user_details", function () {
+            $.ajax({
+                type: 'GET',
+                url:  $(this).data("form"),
+                success: function (data) {
+                    $('#userDetailsModal').html(data);
+                    $('#userDetailsModal').modal('show');
+                },
+                dataType: 'html'
+            });
+            return false;
+        });
+    });
+</script>
+{% endblock content %}

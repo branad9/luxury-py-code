@@ -1,0 +1,60 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+
+<title>500</title>
+
+
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="banner">
+      <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+      <div class="container-lg">
+        <div class="breadcrumb-box">
+          <div class="heading-box">
+            <h1>Shop</h1>
+          </div>
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>
+              <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+            </li>
+            <li class="current"><a href="{% url 'products' %}">Shop</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- 404 Section Start -->
+  <section class="page-not-found">
+    <div class="container">
+      <div class="row gx-md-2 gx-0 gy-md-0 gy-3">
+        <div class="col-md-8 m-auto">
+          <div class="page-image">
+            <img src="{% static 'assets/images/500.png' %}" class="img-fluid blur-up lazyload" alt="" />
+          </div>
+        </div>
+
+        <div class="col-md-8 mx-auto mt-md-5 mt-3">
+          <div class="page-container pass-forgot">
+            <div>
+              <h2>Internal Server Error</h2>
+              <p class="font-md">Something went wrong from our side.</p>
+              <a href="{% url 'home' %}" class="btn-solid mb-line">Back Home Page <i class="arrow"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 404 Section End -->
+</main>
+<!-- Main End -->
+{% endblock web_content %}

@@ -1,0 +1,109 @@
+{% extends 'cms/base.html' %}
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Users</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'cms_home' %}">Home</a></li>
+                            <li class="breadcrumb-item active">Users</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="mr-auto p-2"> 
+                                    <h4 class="card-title">All Users</h4>
+                                </div>
+                            </div>
+                            <div class="col-3 text-right">
+                                <a href="{% url 'cms_add_user' %}" class="btn btn-primary"><i class="bx bx-plus font-size-16 align-middle mr-2"></i>Add User</a>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <form action="" method="get">
+                                <div class="row">
+                                    <div class="col-md-2">{{filters.form.full_name}}</div>
+                                    <div class="col-md-2">{{filters.form.email}}</div>
+                                    <div class="col-md-2"> {{filters.form.phone}}</div>
+                                    <button class="col-md-1 btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        
+
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in users %}
+                                <tr>
+                                    <td>{{ forloop.counter0|add:users.start_index }}</td>
+                                    <td>{{ i.full_name }}</td>
+                                    <td>{{ i.email }}</td>
+                                    <td>{{ i.phone }}</td>
+                                    <td>
+                                        {% if i.is_active %}
+                                            <h5><span class="badge badge-soft-success px-3 py-2">Active</span></h5>
+                                        {% else %}
+                                            <h5><span class="badge badge-soft-danger px-3 py-2">Inactive</span></h5>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'cms_edit_user' i.id %}" class="btn btn-primary mr-3"><i class="bx bx-pencil font-size-16 align-middle"></i></a>
+                                        <a href="{% url 'cms_delete_user' i.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>   
+                        <div class="my-3">
+                            {% if users.has_other_pages  %}
+                            <ul class="pagination mb-0 flex-wrap">
+                                {% if users.has_previous  %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ users.previous_page_number }}">Previous</a></li>
+                                {% endif %}
+                                {% for i in users.paginator.page_range %}
+                                    {% if users.number == i %}
+                                        <li class="page-item"><a class="page-link">{{ i }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %} 
+                                {% endfor %}
+                                {% if users.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ users.next_page_number  }}">Next</a></li>
+                                {% endif %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+        
+    </div> <!-- container-fluid -->
+</div>
+{% endblock content %}

@@ -1,0 +1,68 @@
+{% extends 'cms/base.html' %}
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Integrations</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'cms_home' %}">Home</a></li>
+                            <li class="breadcrumb-item active">Integrations</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="mr-auto p-2"> 
+                                    <h4 class="card-title">All Integrations</h4>
+                                </div>
+                            </div>
+                            <div class="col-3 text-right">
+                                <a href="{% url 'cms_add_integration' %}" class="btn btn-primary"><i class="bx bx-plus font-size-16 align-middle mr-2"></i>Add Integration</a>
+                            </div>
+                        </div>
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Pages</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in integrations %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>
+                                        {% for page in i.pages.all %}
+                                        {{ page.name }},
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'cms_edit_integration' i.id %}" class="btn btn-primary mr-3"><i class="bx bx-pencil font-size-16 align-middle"></i></a>
+                                        <a href="{% url 'cms_delete_integration' i.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+        
+    </div> <!-- container-fluid -->
+</div>
+{% endblock content %}

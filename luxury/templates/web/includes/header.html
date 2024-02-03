@@ -1,0 +1,519 @@
+{% load static %}
+
+
+<header class="header-common">
+
+  <!-- Top Header -->
+
+  <div class="top-header">
+
+    <p class="marquee"><span>{{ cp_settings.marquee }}</span></p>
+
+  </div>
+
+  <div class="container-lg">
+
+    <div class="nav-wrap">
+
+      <!-- Navigation Start -->
+
+      <nav class="navigation">
+
+        <div class="nav-section">
+
+          <div class="header-section">
+
+            <div class="navbar navbar-expand-xl navbar-light navbar-sticky p-0">
+
+              <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu" aria-controls="primaryMenu">
+
+                <span class="navbar-toggler-icon"></span>
+
+              </button>
+
+              <a href="{% url 'home' %}" class="logo-link">
+
+                <img class="logo logo-dark" src="{% static 'assets/images/logos/luxury-pioneer.png' %}" alt="luxury pioneer" />
+
+                <img class="logo logo-light" src="{% static 'assets/images/logos/luxury-pioneer.png' %}" alt="luxury pioneer" />
+
+              </a>
+
+              <div class="offcanvas offcanvas-collapse order-lg-2" id="primaryMenu">
+
+                <div class="offcanvas-header navbar-shadow">
+
+                  <img class="logo logo-dark" src="{% static 'assets/images/logos/luxury-pioneer.png' %}" alt="luxury pioneer" />
+
+                  <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+                </div>
+
+
+
+                <div class="offcanvas-body">
+
+                  <!-- Menu-->
+
+                  <ul class="navbar-nav">
+
+                    <!-- Home -->
+
+                    <li class="nav-item">
+
+                      <a class="nav-link" href="{% url 'home' %}">Home</a>
+
+                    </li>
+
+                    <!-- Shop -->
+
+                    <li class="nav-item">
+
+                      <a class="nav-link dropdown-toggle" href="{% url 'products' %}">Shop</a>
+
+                    </li>
+
+                    <!-- Categories -->
+
+                    {% for mc in cp_main_categories %}
+
+                    <li class="nav-item dropdown dropdown-mega">
+
+                      <a class="nav-link dropdown-toggle" href="{% url 'maincategory_products' mc.slug %}">{{ mc }}</a>
+
+                      <div class="dropdown-menu mega-element-menu">
+
+                        <div class="row g-4">
+
+                          {% for c in mc.categories.all %}
+
+                          <div class="col-xl-2">
+
+                            <div class="link-box">
+
+                              <p><b><a href="{% url 'category_products' mc.slug c.slug %}">{{ c.name }}</a></b></p>
+
+                              <div class="dropdown-column">
+
+                                {% for sc in c.subcategories.all %}
+
+                                <a class="dropdown-item" href="{% url 'subcategory_products' mc.slug c.slug sc.slug %}">{{ sc }}</a>
+
+                                {% endfor %}
+                                
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                          {% endfor %}
+
+                          <div class="col-xl-2 d-none d-xl-block">
+
+                            <div class="link-box">
+
+                              <div class="menu-img">
+
+                                <img class="img-fluid lazy" data-src="{{ mc.image.url }}" alt="img" />
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </li>
+
+                    {% endfor %}
+
+                   
+
+                    <li class="nav-item dropdown dropdown-mega">
+
+                        {% if user.is_authenticated %}  
+
+                          <a class="nav-link " href="{% url 'user_dashboard' %}">Dashboard</a>
+
+                        {% endif %}
+
+                    </li>
+
+                    <li class="nav-item ">                   
+                      <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>                     
+                    </li>
+                    
+                    
+                    <li class="nav-item dropdown dropdown-mega ">
+                        {% if user.is_authenticated %}
+                        
+                            <a class="nav-link luxury" href="{% url 'logout' %}">logout</a> 
+                         
+                        {% else %} 
+
+                            <a class="nav-link luxury" href="{% url 'login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+
+                        {% endif %}
+                         
+                    </li>
+
+
+                  </ul>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </nav>
+
+      <!-- Navigation End -->
+
+
+
+      <!-- Menu Right Start  -->
+
+      <div class="menu-right">
+
+
+
+        <!-- Icon Menu Start -->
+
+        <ul class="icon-menu">
+
+          {% comment %} <li>
+
+            <button class="search-button"><i data-feather="search"></i></button>
+
+            <!-- Search Input Start -->
+
+            <div class="search-full">
+
+              <div class="input-group">
+
+                <span class="input-group-text">
+
+                  <i data-feather="search"></i>
+
+                </span>
+
+                <input type="text" class="form-control search-type" placeholder="Search here.." />
+
+                <span class="input-group-text close-search">
+
+                  <i data-feather="x"></i>
+
+                </span>
+
+              </div>
+
+
+
+              <!-- Suggestion Start -->
+
+              <div class="search-suggestion">
+
+                <ul>
+
+                  <li>
+
+                    <div class="product-cart media">
+
+                      <img src="{% static 'assets/images/fashion/product/front/4.jpg' %}" class="img-fluid blur-up lazyload" alt="" />
+
+                      <div class="media-body">
+
+                        <a href="javascript:void(0)">
+
+                          <h6>Women's long sleeve Jacket</h6>
+
+                        </a>
+
+                        <ul class="rating p-0 mb">
+
+                          <li>
+
+                            <i class="fill" data-feather="star"></i>
+
+                          </li>
+
+                          <li>
+
+                            <i class="fill" data-feather="star"></i>
+
+                          </li>
+
+                          <li>
+
+                            <i class="fill" data-feather="star"></i>
+
+                          </li>
+
+                          <li>
+
+                            <i class="fill" data-feather="star"></i>
+
+                          </li>
+
+                          <li>
+
+                            <i data-feather="star"></i>
+
+                          </li>
+
+                        </ul>
+
+                        <p class="mb-0 mt-1">$280.00</p>
+
+                      </div>
+
+                    </div>
+
+                  </li>
+
+                  <li>
+
+                    <div class="product-cart media">
+
+                      <img src="{% static 'assets/images/fashion/product/front/5.jpg' %}" class="img-fluid blur-up lazyload" alt="" />
+
+                      <div class="media-body">
+
+                        <a href="javascript:void(0)">
+
+                          <h6>Shirt short mini dresses</h6>
+
+                        </a>
+
+                        <ul class="rating p-0">
+
+                          <li>
+
+                            <i class="fill" data-feather="star"></i>
+
+                          </li>
+
+                          <li>
+
+                            <i class="fill" data-feather="star"></i>
+
+                          </li>
+
+                          <li>
+
+                            <i class="fill" data-feather="star"></i>
+
+                          </li>
+
+                          <li>
+
+                            <i class="fill" data-feather="star"></i>
+
+                          </li>
+
+                          <li>
+
+                            <i data-feather="star"></i>
+
+                          </li>
+
+                        </ul>
+
+                        <p class="mb-0 mt-1">$35.00</p>
+
+                      </div>
+
+                    </div>
+
+                  </li>
+
+                </ul>
+
+              </div>
+
+              <!-- Suggestion Start -->
+
+            </div>
+
+            <!-- Search Input End -->
+
+          </li> {% endcomment %}
+
+
+
+          <li class="user">
+
+            <div class="dropdown user-dropdown">
+
+              <a href="javascript:void(0)"><i data-feather="user"></i></a>
+
+                {% if user.is_authenticated %}
+
+                <div class="onhover-show-div">
+
+                  <div class="content" style="width:200px;">
+
+                    <p>Hello, {{ user }}</p>
+
+                    <a class="mt-3" href="{% url 'logout' %}">Logout</a>
+
+                  </div>
+
+                </div>  
+
+                {% else %}
+
+                  <ul class="onhover-show-div">
+
+                    <li><a href="{% url 'login' %}">Login</a></li>
+
+                    <li><a href="{% url 'register' %}">Register</a></li>
+
+                  </ul>
+
+                {% endif %} 
+
+              
+
+            </div>
+
+          </li>
+
+
+
+          <li>
+
+            <div class="dropdown whislist-dropdown">
+
+              {% if user.is_authenticated %}
+
+                  <a href="{% url 'wishlist' %}"><i data-feather="heart"></i> {% if cp_wishlist_count > 0 %}<span class="notification-label">{{ cp_wishlist_count }}</span>{% endif %}</a>
+
+              {% else %}
+
+                  <a href="{% url 'login' %}"><i data-feather="heart"></i> <span class="notification-label">0</span></a>
+
+              {% endif %}
+
+            </div>
+
+          </li>
+
+
+
+          <!-- Cart Menu Start -->
+
+          <li>
+
+            <div class="dropdown shopingbag">
+
+              {% if user.is_authenticated %}
+
+                <a href="{% url 'cart' %}" class="cart-button"><i data-feather="shopping-bag"></i>{% if cp_cart_count > 0 %}<span class="notification-label">{{ cp_cart_count }}</span>{% endif %}</a>
+
+              {% else %}
+
+                <a href="{% url 'login' %}" class="cart-button"><i data-feather="shopping-bag"></i></a>
+
+              {% endif %}
+
+              {% comment %} <a href="javascript:void(0)" class="overlay-cart overlay-common"></a>
+
+              <div class="onhover-cart-dropdown">
+
+                <div class="onhover-show-div">
+
+                  <div class="dropdown-header">
+
+                    <div class="control">
+
+                      <a href="cart.html">Shopping Cart</a>
+
+                      <button class="back-cart"><i data-feather="arrow-right"></i></button>
+
+                    </div>
+
+                  </div>
+
+
+
+                  <div class="card-wrap custom-scroll">
+
+                    <!-- Cart Item Start -->
+
+                    <div class="cart-card media">
+
+                      <a href="#"> <img src="{% static 'assets/images/fashion/product/front/11.png' %}" class="img-fluid" alt="product" /> </a>
+
+                      <div class="media-body">
+
+                        <a href="#"> <h6>Product Name</h6></a>
+
+                        <span><i class="fa fa-inr" aria-hidden="true"></i> 245000.00</span>
+
+                        <div class="plus-minus">
+
+                          <i class="sub" data-feather="minus"></i>
+
+                          <input type="number" value="1" min="1" max="10"/>
+
+                          <i class="add" data-feather="plus"></i>
+
+                        </div>
+
+                      </div>
+
+                      <button class="remove-cart"><i data-feather="x"></i></button>
+
+                    </div>
+
+                    <!-- Cart Item End -->
+
+                  </div>
+
+                  <div class="dropdown-footer">
+
+                    <div class="btn-group block-group">
+
+                      <a href="cart.html" class="btn-solid">View Cart</a>
+
+                    </div>
+
+                  </div>
+
+
+
+                </div>
+
+              </div> {% endcomment %}
+
+            </div>
+
+          </li>
+
+          <!-- Cart Menu End -->
+
+        </ul>
+
+        <!-- Icon Menu End -->
+
+      </div>
+
+      <!-- Menu Right End  -->
+
+    </div>
+
+  </div>
+  
+
+
+</header>

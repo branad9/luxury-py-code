@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+{% load static %}
+<!-- Html start -->
+
+<html lang="en">
+
+   {% include 'web/includes/head.html' %}   
+
+  {% block head_section %}{% endblock head_section %}
+
+</head>
+<body>
+  {% autoescape off %}
+  {% for i in integrations %}{{i.body_code}}{% endfor %}
+  {% endautoescape %}
+  
+    <!-- Overlay -->
+    <a href="javascript:void(0)" class="overlay-general overlay-common"></a>
+    <!-- Header Start -->
+    {% include 'web/includes/header.html' %}
+
+    {% block web_content %}
+
+    {% endblock web_content %}
+
+    <!-- Document Footer Start -->
+    {% include 'web/includes/footer.html' %}
+    <!-- Document Footer End -->
+
+    <!-- Mobile Menu Footer Start -->
+    <footer class="mobile-menu-footer d-sm-none">
+      <ul>
+        <li>
+          <a href="{% url 'home' %}" class="active">
+            <i data-feather="home"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'products' %}">
+            <i data-feather="shopping-bag"></i>
+            <span>Shop</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'cart' %}">
+              {% if cp_cart_count > 0 %}<span class="notification-label">{{ cp_cart_count }}</span>{% endif %}
+            <i data-feather="shopping-cart"></i>
+            
+            <span>Cart</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'wishlist' %}">
+              {% if cp_wishlist_count > 0 %}<span class="notification-label">{{ cp_wishlist_count }}</span>{% endif %}
+            <i data-feather="heart"></i>
+            <span>Wishlist</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'user_dashboard' %}">
+            <i data-feather="user"></i>
+            <span>Account</span>
+          </a>
+        </li>
+      </ul>
+    </footer>
+    <!-- Mobile Menu Footer End -->
+
+    <!-- Notification Start -->
+    <div class="notification-wrap addToCart">
+      <div class="notification">
+        <!--<img src="{% static 'assets/images/fashion/product/front/1.jpg' %}" alt="product" />-->
+        <div>
+          <p>Added To Cart</p>
+        </div>
+      </div>
+    </div>
+    <!-- Notification End -->
+
+    <!-- Notification Start -->
+    <div class="notification-wrap addToWishlist">
+      <div class="notification">
+        <!--<img src="{% static 'assets/images/fashion/product/front/1.jpg' %}" alt="product" />-->
+        <div>
+          <p>Added To Wishlist</p>
+        </div>
+      </div>
+    </div>
+
+
+    {% comment %} <!-- Cookies Section Start -->
+    <div class="cookie-bar cookies-bar-1 left-cookies">
+      <img src="assets/png/cookie.png" alt="cookies" />
+      <div class="content">
+        <h5>Cookies Consent</h5>
+        <p>This website use cookies to ensure you get the best experience on our website.</p>
+        <div class="cookie-buttons">
+          <button class="btn-solid btn-sm mb-line cookies-accept">Accept <i class="arrow"></i></button>
+          <a href="javascript:void(0)" class="btn-solid btn-sm btn-outline cookies-accept">Learn more</a>
+        </div>
+      </div>
+    </div>
+    <!-- Cookie Section End --> {% endcomment %}
+
+    {% include 'web/includes/scripts.html' %}
+
+    {% autoescape off %}
+    {% for i in integrations %}{{i.footer_code}}{% endfor %}
+    {% endautoescape %}
+  </body>
+  <!-- Body End -->
+
+</html>
+<!-- Html End -->

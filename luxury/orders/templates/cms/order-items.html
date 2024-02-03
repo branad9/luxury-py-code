@@ -1,0 +1,106 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+{% block content %}
+<div class="modal hide" id="sendMsgModal" tabindex="-1" role="dialog" aria-labelledby="sendMsgModal" aria-hidden="true"></div>
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Order Items</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'cms_home' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'cms_orders' %}">Orders</a></li>
+                            <li class="breadcrumb-item active">Order Items</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="mr-auto p-2"> 
+                                    <h4 class="card-title">Order No:  {{ order.order_number }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Variation</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in order_items %}
+                                <tr>
+                                    <td>{{ forloop.counter0|add:order_items.start_index }}</td>
+                                    <td><a href="{% url 'product_details' i.product.slug %}">{{ i.product }}</a></td>
+                                    {% if i.product.sale_price != None %}
+                                        <td>{{ i.product.sale_price }}</td>
+                                    {% else %}
+                                        <td>{{ i.product.price }}</td>
+                                    {% endif %}
+                                    <td>{{ i.variation }}</td>
+                                    <td>{{ i.qty }}</td>
+                                    <td>{{ i.price }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>   
+                        <div class="my-3">
+                            {% if order_items.has_other_pages  %}
+                            <ul class="pagination mb-0 flex-wrap">
+                                {% if order_items.has_previous  %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ order_items.previous_page_number }}">Previous</a></li>
+                                {% endif %}
+                                {% for i in order_items.paginator.page_range %}
+                                    {% if order_items.number == i %}
+                                        <li class="page-item"><a class="page-link">{{ i }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %} 
+                                {% endfor %}
+                                {% if order_items.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ order_items.next_page_number  }}">Next</a></li>
+                                {% endif %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+        
+    </div> <!-- container-fluid -->
+</div>
+<script src="{% static 'vue/jquery.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".send_msg", function () {
+            $.ajax({
+                type: 'GET',
+                url:  $(this).data("form"),
+                success: function (data) {
+                    $('#sendMsgModal').html(data);
+                    $('#sendMsgModal').modal('show');
+                },
+                dataType: 'html'
+            });
+            return false;
+        });
+    });
+</script>
+{% endblock content %}

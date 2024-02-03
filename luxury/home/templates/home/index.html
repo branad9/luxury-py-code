@@ -1,0 +1,1105 @@
+{% extends 'web/base.html' %}
+
+{% load static %}
+{% load tags %}
+
+    
+{% block head_section %}
+
+
+<title>Luxury Pioneer - Buy First Copy | Replica | Luxury Bags & Watches</title>
+
+<link rel="canonical" href="{{ request.build_absolute_uri }}" />
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
+<meta name="title" content="Luxury Pioneer - Shop the Best Luxury Handbags, Watches, and Accessories" />
+<meta name="description" content="Explore the world of luxury at Luxury Pioneer. Browse our collection of branded handbags, watches, wallets, shoes, and other accessories to find the perfect addition to your wardrobe." />
+<meta name="keywords" content="best luxury handbags, prada shoes, prada shoes price india, prada bags, gucci shoes price, dior bag price, louis vuitton bags price, gucci bag, louis vuitton bag" />
+
+
+<meta property="article:published_time" content="2022-11-26T12:27:00+05:30">
+<meta property="article:modified_time" content="{{ curr_date }}">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Luxury Pioneer - Shop the Best Luxury Handbags, Watches, and Accessories">
+<meta property="og:description" content="Explore the world of luxury at Luxury Pioneer. Browse our collection of branded handbags, watches, wallets, shoes, and other accessories to find the perfect addition to your wardrobe.">
+<meta property="og:url" content="https://theluxurypioneer.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Luxury Pioneer - Shop the Best Luxury Handbags, Watches, and Accessories">
+<meta name="twitter:description" content="Explore the world of luxury at Luxury Pioneer. Browse our collection of branded handbags, watches, wallets, shoes, and other accessories to find the perfect addition to your wardrobe.">
+<meta name="twitter:image" content="https://theluxurypioneer.com/static/assets/images/logos/luxury-pioneer.png">
+
+<style>
+.seo { font-size: 15px !important; color: #3e3d3d !important; } .heading a { color: #db9648 !important; } .listing { font-size: 14px !important; line-height: 22px !important; color: #3e3d3d !important; text-align: justify; } .footerdis a { color: #db9648 !important; font-weight: 800; } .s-h3 { font-size: 16px; font-weight: 500; line-height: 1; margin: 0; text-transform: uppercase; } .product-card .content-box h3 { font-weight: 400; text-transform: uppercase; font-size: 13px; line-height: calc(22px + (26 - 22) * ((100vw - 320px)/(1920 - 320))); color: #262834; overflow: hidden; white-space: nowrap; max-width: -webkit-max-content; max-width: -moz-max-content; max-width: max-content; text-overflow: ellipsis; }
+</style>
+ 
+
+
+
+{% endblock head_section %}
+
+{% block web_content %}
+
+
+<main class="main">
+
+
+
+    <!-- Home Banner Section Start -->
+
+
+
+    <section class="home-slider-common home-slider2 ratio_40 p-0">
+
+
+
+      <div class="swiper home-slider">
+
+        <div class="swiper-wrapper">
+
+            {% for i in banners %}
+
+                <div class="swiper-slide">
+
+                    <div class="banner">
+
+                        <div>
+
+                            <img class="bg-img img-fluid" width="100%" height="100%" src="{{ i.background_image.url }}" alt="{{ i.title|default_if_none:"" }}" />
+
+                        </div>
+
+                        <img loading="lazy" class="img-fluid banner-left-img d-none d-sm-block" width="100%" height="100%" srcset="{{ i.image_left.url }}" alt="{{ i.title|default_if_none:"" }}" />
+
+                        <div class="content-box">
+
+                            <div class="heading">{{ i.title|default_if_none:"" }}</div>
+
+                            <p class="d-none d-xl-block">{{ i.subtitle|default_if_none:"" }}</p>
+
+                            <a href="{% url 'products' %}" class="btn-style2">ORDER NOW</a>
+
+                        </div>
+
+                        <img loading="lazy" class="img-fluid banner-right-img" width="100%" height="100%" srcset="{{ i.image_right.url }}" alt="banner" />
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+
+
+        </div>
+
+
+
+        <div class="swiper-pagination small"></div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+    <!-- Home Banner Section End -->
+
+
+
+
+
+
+
+    <!-- Brands Section Start -->
+
+
+
+    <div class="catagories-section catagories-style-2">
+    	<div class="swiper home-catagories-2">
+    		<!--<div class="swiper-wrapper"> 
+    		{% for i in cp_brands %} 
+    		    {% if i.image.url != None %}
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="{% url 'main_brand_products' i.slug %}">
+    						<div class="img-wrap"> <img loading="lazy" srcset="{{ i.image.url }}" width="100%" height="100%" alt="{{ i.name|default_if_none:" " }} " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+			    {% endif %} 
+			{% endfor %} 
+			</div>-->
+			<div class="swiper-wrapper"> 
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/dior">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/Dior-Logo_xz9RaF6.png" width="100%" height="100%" alt="Dior " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/bottega-veneta">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/Bottega_Veneta_logo_PNG2_GD45enp.png" width="100%" height="100%" alt="Bottega " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/rolex-watches">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/Rolex-logo_a3TbQrA_aIGbQUY.png" width="100%" height="100%" alt="Rolex watches " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/omega-watches">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/Omega_Logo.png" width="100%" height="100%" alt="Omega watches " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/richard-mille-watches">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/Richard_Mille_Logo.svg_WgO981Y.png" width="100%" height="100%" alt="Richard Mille watches " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/cartier-watches">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/cartier.png" width="100%" height="100%" alt="Cartier watches " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/audemars-piguets-watches">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/audeman.png" width="100%" height="100%" alt="Audemars piguets watches " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/panerai-watches">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/paneri.png" width="100%" height="100%" alt="Panerai watches " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/gucci">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/brand1.png" width="100%" height="100%" alt="Gucci " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/louis-vuitton">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/brand3.png" width="100%" height="100%" alt="Louis Vuitton " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+    			<div class="swiper-slide">
+    				<div class="catagories">
+    					<a href="/brands/prada">
+    						<div class="img-wrap"> <img loading="lazy" srcset="/media/images/brands/brand5.png" width="100%" height="100%" alt="Prada " /> </div>
+    					</a>
+    				</div>
+    			</div> 
+    			
+			</div>
+			
+    	</div>
+    </div>
+
+
+
+    <!-- Brands Section End -->
+
+
+
+
+
+
+
+    <!-- Categories Section Start -->
+
+
+
+    {% comment %} <div class="catagories-section">
+
+
+
+      <div class="swiper home-catagories-slider">
+
+
+
+        <div class="swiper-wrapper mb-0">
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="catagories">
+
+
+
+              
+
+
+
+              <a href="#">
+
+
+
+                <div class="img-wrap">
+
+
+
+                  <img loading="lazy" srcset="{% static 'assets/images/icon/watches.png' %}" width="100%" height="100%" alt="watches for men" />
+
+
+
+                </div>
+
+
+
+                <div class="btn-box">
+
+
+
+                  <span class="catagories-name"> Watches </span>
+
+
+
+                  <div class="btn-special">SHOP <i class="arrow"></i></div>
+
+
+
+                </div>
+
+
+
+              </a>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="catagories">
+
+
+
+              
+
+
+
+              <a href="#">
+
+
+
+                <div class="img-wrap">
+
+
+
+                  <img loading="lazy" srcset="{% static 'assets/images/icon/shoes.png' %}" width="100%" height="100%" alt="shoes for men" />
+
+
+
+                </div>
+
+
+
+                <div class="btn-box">
+
+
+
+                  <span class="catagories-name"> Shoes</span>
+
+
+
+                  <div class="btn-special">SHOP <i class="arrow"></i></div>
+
+
+
+                </div>
+
+
+
+              </a>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="catagories">
+
+
+
+              
+
+
+
+              <a href="#">
+
+
+
+                <div class="img-wrap">
+
+
+
+                  <img loading="lazy" srcset="{% static 'assets/images/icon/bags.png' %}" width="100%" height="100%" alt="bag for women" />
+
+
+
+                </div>
+
+
+
+                <div class="btn-box">
+
+
+
+                  <span class="catagories-name"> Bages </span>
+
+
+
+                  <div class="btn-special">SHOP <i class="arrow"></i></div>
+
+
+
+                </div>
+
+
+
+              </a>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="catagories">
+
+
+
+              
+
+
+
+              <a href="#">
+
+
+
+                <div class="img-wrap">
+
+
+
+                  <img loading="lazy" srcset="{% static 'assets/images/icon/sunglasses.png' %}" width="100%" height="100%" alt="sunglasses for women" />
+
+
+
+                </div>
+
+
+
+                <div class="btn-box">
+
+
+
+                  <span class="catagories-name"> Sunglasses </span>
+
+
+
+                  <div class="btn-special">SHOP <i class="arrow"></i></div>
+
+
+
+                </div>
+
+
+
+              </a>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div class="swiper-slide">
+
+
+
+            <div class="catagories">
+
+
+
+              
+
+
+
+              <a href="#">
+
+
+
+                <div class="img-wrap">
+
+
+
+                  <img loading="lazy" srcset="{% static 'assets/images/icon/wallet.png' %}" width="100%" height="100%" alt="Wallets" />
+
+
+
+                </div>
+
+
+
+                <div class="btn-box">
+
+
+
+                  <span class="catagories-name">Wallets </span>
+
+
+
+                  <div class="btn-special">SHOP <i class="arrow"></i></div>
+
+
+
+                </div>
+
+
+
+              </a>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </div> {% endcomment %}
+
+
+    <!-- Special Campaign Structure -->
+    <section class="special-product pb-0 wow-section-overflow">
+    	<div class="container-lg">
+    		<div class="title-box">
+    			<div class="unique-heading">Luxury Pioneer - World's Best Brands Ecommerce Store</div>
+    		</div>
+    		<div class="row g-2 g-lg-3 g-xxl-4">
+    			<div class="col-md-4 col-xl-5">
+    				<div class="row g-2 g-lg-3">
+    					<div class="col-12 ratio2_3 span3 wow fadeInLeft" data-wow-delay="0.6s">
+    						<div class="product-box">
+    							<a href="/men/watches"> <img loading="lazy" class="img-fluid" src="{% static 'assets/images/bag/category/1.jpg' %}" alt="watches for men" /> </a>
+    							<div class="catagories-small-label">
+    								<a href="/men/watches"> <span>Best Brand</span>
+    									<div>Luxury Watches</div>
+    								</a>
+    							</div>
+    						</div>
+    					</div>
+    					<div class="col-6 ratio_asos span3 wow fadeInLeft" data-wow-delay="0.7s">
+    						<div class="product-box">
+    							<a href="/women/accessories-562b5e9b-b42d-4aa9-b549-2037edcd3d26/sunglasses" class="img-wrap"> <img loading="lazy" class="img-fluid" src="{% static 'assets/images/bag/category/2.jpg' %}" alt="sunglasses for women" /> </a>
+    							<div class="catagories-small-label">
+    								<a href="/women/accessories-562b5e9b-b42d-4aa9-b549-2037edcd3d26/sunglasses"> <span>All Collection</span>
+    									<div>Sunglasses</div>
+    								</a>
+    							</div>
+    						</div>
+    					</div>
+    					<div class="col-6 ratio_asos span3 wow fadeInLeft" data-wow-delay="0.8s">
+    						<div class="product-box">
+    							<a href="/men/watches/aaa-rated-watches" class="img-wrap"> <img loading="lazy" class="img-fluid" src="{% static 'assets/images/bag/category/3.jpg' %}"  alt="rolex watch" /> </a>
+    							<div class="catagories-small-label">
+    								<a href="/men/watches/aaa-rated-watches"> <span>Top Brand</span>
+    									<div>Luxury Watches</div>
+    								</a>
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-md-5 col-xl-5 ratio_124 span3 wow fadeInUp" data-wow-delay="0.9s">
+    				<div class="product-box">
+    					<a href="/women/bags" class="img-wrap"> <img loading="lazy" class="img-fluid" src="{% static 'assets/images/bag/category/4.jpg' %}"  alt="bag for women" /> </a>
+    					<div class="catagories-large-label">
+    						<a href="/women/bags"> <span>Going Out Collection</span>
+    							<div>GOING ON COLLECTION</div>
+    							<ul class="timer">
+    								<li><span class="days time-value"></span> <span class="timer-label">Days</span></li>
+    								<li><span class="hours time-value"></span> <span class="timer-label">Hours</span></li>
+    								<li><span class="minutes time-value"></span> <span class="timer-label">Minute</span></li>
+    								<li><span class="seconds time-value"></span> <span class="timer-label">Seconds</span></li>
+    							</ul>
+    						</a>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-md-3 col-xl-2">
+    				<div class="row g-2 g-lg-3 ratio_163">
+    					<div class="col-6 col-md-12 span3 wow fadeInRight" data-wow-delay="0.7s">
+    						<div class="product-box">
+    							<a href="/women/bags" class="img-wrap"> <img loading="lazy" class="img-fluid" src="{% static 'assets/images/fashion/category/middlie-banner-BAG.png' %}" width="100%" height="100%" alt="bag for women" /> </a>
+    							<div class="catagories-small-label">
+    								<a href="/women/bags"> <span>Best Collection</span>
+    									<div>Woman Bag</div>
+    								</a>
+    							</div>
+    						</div>
+    					</div>
+    					<div class="col-6 col-md-12 span3 wow fadeInRight" data-wow-delay="0.7s">
+    						<div class="product-box">
+    							<a href="/men/shoes/casual-shoes" class="img-wrap"> <img loading="lazy" class="img-fluid" src="{% static 'assets/images/fashion/category/middlie-banner-shoes.png' %}" width="100%" height="100%" alt="shoes for men" /> </a>
+    							<div class="catagories-small-label">
+    								<a href="/men/shoes/casual-shoes"> <span>New Style</span>
+    									<div>Casual Collection</div>
+    								</a>
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+
+
+    {% for mc in cp_main_categories %}
+
+
+
+      <section class="catagories-style-3">
+
+
+
+          <div class="container-lg">
+
+
+
+              <div class="title-box">
+
+
+
+                <div class="unique-heading">Shop Category By {{ mc }}</div>
+
+
+
+                <span class="title-divider1"><span class="squre"></span><span class="squre"></span></span>
+
+
+
+              </div>
+
+
+
+          <!-- Categories Section Start -->
+
+
+
+            <div class="swiper-box">
+
+
+
+              <div class="swiper top-catagories">
+
+
+
+                <div class="swiper-wrapper">
+
+
+
+                  {% for c in  mc.categories.all %}
+
+
+
+                  <div class="swiper-slide">
+
+
+
+                    <div class="catagories-box">
+
+
+
+                      <a href="{% url 'category_products' mc.slug c.slug %}">
+
+
+
+                        {% if c.image.url is not None %}
+
+
+
+                            <img loading="lazy" srcset="{{ c.image.url }}" width="100%" height="100%" alt="{{ c.slug }}" />
+
+
+
+                        {% else %}
+
+
+
+                            <img loading="lazy" srcset="{% static 'assets/images/category-banner-Audemars-Piguet.png' %}" width="100%" height="100%" alt="{{ c.slug }}" />
+
+
+
+                        {% endif %}
+
+
+
+                        <span class="s-h3">{{ c.name }}</span>
+
+
+
+                      </a>
+
+
+
+                    </div>
+
+
+
+                  </div>
+
+
+
+                  {% endfor %}
+
+
+
+
+
+
+
+                </div>
+
+
+
+              </div>
+
+
+
+              <div class="swiper-button">
+
+
+
+                <button class="swiper-next">
+
+
+
+                  <i data-feather="arrow-left"></i>
+
+
+
+                </button>
+
+
+
+                <button class="swiper-prev"><i data-feather="arrow-right"></i></button>
+
+
+
+              </div>
+
+
+
+            </div>
+
+
+
+            <!-- Categories Section End -->
+
+
+
+          </div>
+
+
+
+      </section>
+
+
+
+      {% endfor %}
+    <section class="special-product special-product-2 pb-0">
+    	<div class="container-lg">
+    		<div class="title-box">
+    			<div class="unique-heading">Exclusive Bags</div> <span class="title-divider1"><span class="squre"></span><span class="squre"></span></span>
+    		</div>
+    		<div class="row g-2 g-xl-3">
+    			<div class="col-md-7">
+    				<div class="row g-2 g-xl-3">
+    					<div class="col-sm-8 ratio2_3 wow fadeInUp" data-wow-delay="0.1s">
+    						<div class="product-box">
+    							<a href="/brands/louis-vuitton" class="img-wrap"> <img loading="lazy" class="bg-img img-fluid" src="{% static 'assets/images/bag/category/001.jpg' %}" alt="TOTE BAG" /> </a>
+    							<div class="cat-bg catagories-small-label right-align">
+    								<a href="/brands/louis-vuitton"> <span>Louis Vuitton Bags</span> </a>
+    							</div>
+    						</div>
+    					</div>
+    					<div class="col-12 col-sm-4 ratio_asos wow fadeInUp" data-wow-delay="0.2s">
+    						<div class="product-box">
+    							<a href="/brands/gucci" class="img-wrap"> <img loading="lazy" class="bg-img img-fluid" src="{% static 'assets/images/bag/category/01.jpg' %}" alt="SHOULDER BAGS" /> </a>
+    							<div class="cat-bg catagories-small-label">
+    								<a href="/brands/gucci"> <span>Gucci Bags</span> </a>
+    							</div>
+    						</div>
+    					</div>
+    					<div class="col-12 col-sm-12 ratio_asos wow fadeInUp" data-wow-delay="0.3s">
+    						<div class="product-box" style="height: 322px;">
+    							<a href="/brands/prada" class="img-wrap"> <img loading="lazy" class="bg-img img-fluid" src="{% static 'assets/images/bag/category/prado.jpg' %}" alt="BACKPACKS" /> </a>
+    							<div class="cat-bg catagories-small-label">
+    								<a href="/brands/prada"> <span>Prada Bags</span> </a>
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-md-5 ratio_115 wow fadeInUp" data-wow-delay="0.6s">
+    				<div class="product-box">
+    					<a href="/brands/dior" class="img-wrap"> <img loading="lazy" class="bg-img img-fluid " src="{% static 'assets/images/bag/category/bags-2.jpg' %}" alt="BAG COLLECTION" /> </a>
+    					<div class="cat-bg catagories-small-label right-align">
+    						<a href="/brands/dior"> <span>Christian Dior Bags</span> </a>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+    {% for c in campaigns %}
+
+
+    <section class="pb-0 ratio_asos">
+      <div class="container-lg">
+        <div class="title-box">
+          <div class="unique-heading">{{ c.title }}</div>
+          <span class="title-divider1"><span class="squre"></span><span class="squre"></span></span>
+        </div>
+        <div class="swiper product-slider">
+
+
+
+          <div class="swiper-wrapper">
+
+
+
+            {% for p in c.products.all %}
+
+
+
+            <div class="swiper-slide">
+
+
+
+              <div class="product-card">
+
+
+
+                <div class="img-box">
+
+
+
+                  <!-- Thumbnail -->
+
+
+
+                  {% if p.images.count > 0 %}
+
+
+
+                      <a href="{% url 'product_details' p.slug %}"><img loading="lazy" srcset="{{ p.images.all.first.cmp_image.url }}" width="100%" height="100%" alt="{{ p.name }}" /></a>
+
+
+
+                  {% else %}
+
+
+
+                      <a href="{% url 'product_details' p.slug %}"><img loading="lazy" srcset="{% static 'assets/images/lux.png' %}" width="100%" height="100%" alt="{{ p.name }}" /></a>
+
+
+
+                  {% endif %}
+
+
+
+                </div>
+
+
+
+                <!-- Content Box -->
+
+
+
+                <div class="content-box">
+
+
+
+                  <a href="{% url 'product_details' p.slug %}">
+
+
+
+                    {% if p.brand is not None %}
+
+
+
+                      <p>{{ p.brand }}</p>
+
+
+
+                    {% endif %}
+
+
+
+                    <h3>{{ p.name|unslug }}</h3>
+
+
+
+                    {% if p.sale_price is not None %}
+
+
+
+                      <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.sale_price }}</span> <del><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price }}</del>
+
+
+
+                    {% elif p.price is not None %}
+
+
+
+                      <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price }}</span>
+
+
+
+                    {% endif %}
+
+
+
+                  </a>
+
+
+
+                </div>
+
+
+
+              </div>
+
+
+
+            </div>
+
+
+
+            {% endfor %}
+
+
+
+
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+    <br></br>
+
+
+
+    {% endfor %}
+
+
+
+   <section class="special-product pb-0 wow-section-overflow" style=" padding-top: 45px;">
+	<div class="container-lg" style=" padding-bottom: 45px;">	
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo">Luxurious Shoes, Bags & Accessories: <a href="https://theluxurypioneer.com/brands/dior">Dior</a> to <a href="https://theluxurypioneer.com/brands/gucci">Gucci</a> bag</h2>
+				<p class="listing">
+					Welcome to The Luxury Pioneer, your ultimate guide to the world of luxury fashion. Check out our range of premium shoes, bags, and accessories from the world's most luxurious brand, all in one place. Our collection features exquisite pieces crafted with the finest materials and expert attention to detail.
+				</p>
+				<p class="listing">
+					We have a wide selection of styles available at various price points, including the latest Prada shoe prices in India. We also offer a range of Prada bags, from classic designs to the latest must-have styles.
+				</p>
+				<p class="listing">At The Luxury Pioneer, we have an extensive collection of Gucci shoes available at various price points. Our expert guides can assist you in choosing the perfect Gucci shoe price to match your budget and style. Additionally, we offer a carefully curated selection of Gucci bags that feature the latest styles and designs.</p>
+				<p class="listing">If you're seeking a timeless investment piece, our selection of Dior bags includes a variety of styles at different price points. Our expert guides can assist you in choosing the ideal Dior bag price to suit your budget and style. Our Louis Vuitton bags collection also features a range of styles, including the latest Louis Vuitton bag prices.</p>
+				<p class="listing">Our commitment at The Luxury Pioneer is to provide our clients with an outstanding customer experience. We achieve this by offering personalized styling advice and ensuring that every piece we offer is of unparalleled quality. Browse our collection of the most luxurious shoes, bags, and accessories and discover the ultimate in style, sophistication, and quality.</p>			
+			</div>
+		</div>
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo">A luxurious journey to the best luxury shoes and bags</h2>
+				<p class="listing">Embark on a luxurious journey to the world of high-end fashion with The Luxury Pioneer. Our selection will captivate even the most discerning tastes with its unparalleled quality and craftsmanship.</p>
+				<p class="listing">Our priority is providing exceptional customer service and unparalleled quality, ensuring you find the perfect investment piece that lasts for years. Visit us and discover the ultimate destination for luxury fashion enthusiasts. Let's take a look at all the brands available on our site-</p>
+			</div>
+		</div>
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo"><a href="https://theluxurypioneer.com/brands/louis-vuitton">Louis Vuitton</a></h2>
+				<p class="listing">Louis Vuitton is a luxury fashion brand known for its high-end leather goods, luggage, and accessories. Founded in Paris in 1854, Louis Vuitton has become a symbol of luxury and sophistication over the years.</p>
+				<p class="listing">At The Luxury Pioneer, we offer an extensive selection of Louis Vuitton products, including bags, wallets, shoes, and more. Our collection includes the brand's most iconic designs, such as the classic monogram canvas pattern and the timeless Damier Ebene pattern.</p>
+				<p class="listing">Our team of expert guides is dedicated to helping you select the perfect investment piece from Louis Vuitton, offering personalized advice based on your preferences and budget. Check out the latest Louis Vuitton prices in India on our website for a hassle-free luxury shopping experience.</p>
+				<p class="listing">Experience the ultimate luxury shopping experience at The Luxury Pioneer and indulge in the world of Louis Vuitton.</p>
+			</div>
+		</div>
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo"><a href="https://theluxurypioneer.com/brands/gucci">Gucci</a></h2>
+				<p class="listing">Gucci is a luxury fashion brand that has been renowned for its iconic designs for over 100 years. At The Luxury Pioneer, we offer a wide range of Gucci products, including shoes, bags, and accessories, all handcrafted from the finest materials.</p>
+				<p class="listing">Our expert guides are available to help you find the perfect Gucci piece to suit your style and budget, whether you're looking for a statement piece to elevate your wardrobe or a timeless investment that will last for years to come. We provide the latest Gucci prices in India and personalized advice to help you make a perfect choice.</p>
+				<p class="listing">Gucci products are known for their exquisite craftsmanship, attention to detail, and unique designs that stand out from the crowd. Indulge in our collection of Gucci products and experience the ultimate luxury fashion experience with The Luxury Pioneer.</p>
+			</div>
+		</div>
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo"><a href="https://theluxurypioneer.com/brands/chanel">Chanel</a></h2>
+				<p class="listing">Chanel is a fashion house that needs no introduction. The renowned company was established in 1910 by Gabrielle "Coco" Chanel and has long been a leader in high-end fashion. Chanel is known for its timeless designs and impeccable craftsmanship, which has made it a favorite among fashion enthusiasts worldwide.</p>
+				<p class="listing">At The Luxury Pioneer, we offer a wide range of Chanel products, including handbags, shoes, and accessories. Our professional tips can assist you in discovering the latest Chanel prices in India and selecting the perfect item to enhance your style.</p>
+				<p class="listing">Chanel's iconic handbags, including the classic flap bag and the boy bag, are among the most desired fashion accessories worldwide. They are made from the finest materials and feature elegant designs that are both timeless and sophisticated.</p>
+				<p class="listing">Our collection also includes a range of accessories, such as scarves, sunglasses, and jewelry, to complete your look.</p>
+				<p class="listing">Experience the luxury of Chanel with The Luxury Pioneer, where exceptional customer service and unparalleled quality are our top priorities.</p>
+			</div>
+		</div>
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo"><a href="https://theluxurypioneer.com/brands/prada">Prada</a></h2>
+				<p class="listing">Prada is an esteemed luxury brand with a rich history dating back to 1913. Known for its exceptional quality and unique design, Prada has been a staple in the fashion industry for over a century. Prada offers an array of footwear options for men, comprising sophisticated dress shoes as well as relaxed sneakers. Prada's shoes for men are made of high-quality materials like leather and suede, making them both fashionable and long-lasting.</p>
+				<p class="listing">Prada's handbags line for women is equally impressive, with the iconic Lady Dior Bag being a standout piece. These handbags are crafted from the finest materials and are designed with both fashion and function in mind. They come in a range of sizes and styles, including shoulder bags, totes, and clutches. And with free shipping available on many items, Prada makes it easy to add a touch of luxury to your wardrobe.</p>
+			</div>
+		</div>
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo"><a href="https://theluxurypioneer.com/brands/fendi">Fendi</a></h2>
+				<p class="listing">Fendi is an Italian luxury fashion house known for its exquisite designs and high-quality materials. The business was founded in Rome in 1925, and it has since developed into one of the world's leading fashion brands. It is renowned for its luxurious handbags, fur, and ready-to-wear lines.</p>
+				<p class="listing">At The Luxury Pioneer, we offer a wide selection of Fendi products, including the latest Fendi handbag prices in India. With tailored guidance and a dedication to providing excellent customer service, our knowledgeable advisers are here to assist you in finding the ideal piece for your taste and price range.</p>
+				<p class="listing">Whether you're looking for a statement piece or a timeless investment, our collection of Fendi products is sure to impress. From the iconic Peekaboo bag to the luxurious fur coats, Fendi is a brand that represents style, sophistication, and class. Indulge in the ultimate luxury experience with Fendi, available at The Luxury Pioneer.</p>
+			</div>
+		</div>
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo"><a href="https://theluxurypioneer.com/brands/dior">Dior</a></h2>
+				<p class="listing">Christian Dior is a luxury fashion house known for its elegant designs and high-quality leather goods. The Lady Dior Bag is one of the brand's most iconic pieces, featuring a quilted design and unique charms. The bag comes in a variety of colors and materials, including leather and patent leather.</p>
+				<p class="listing">Dior also offers a range of shoulder bags, perfect for everyday wear or special occasions. Customers can take advantage of free shipping on their orders, making it easier to add a Dior bag to their collection.</p>
+				<p class="listing">Dior bags and accessories are a must-have for any fashion-conscious shopper looking for timeless luxury pieces.</p>
+			</div>
+		</div>
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo"><a href="https://theluxurypioneer.com/brands/versace">Versace</a></h2>
+				<p class="listing">Versace is a luxury fashion house that was founded in 1978 by Gianni Versace in Milan, Italy. The brand is renowned for its bold and innovative designs, using vibrant colors and striking patterns. At The Luxury Pioneer, we offer a curated selection of Versace pieces that exude the brand's signature glamour and sophistication.</p>
+				<p class="listing">Our collection features an array of Versace clothing, shoes, and accessories, including the latest Versace bag prices in India. Our professional recommendations can help you locate the ideal item to fit your taste and budget, whether you're searching for a statement piece or a timeless investment.</p>
+				<p class="listing">With its bold and luxurious approach to fashion, Versace remains a beloved and influential brand in the luxury fashion industry.</p>
+			</div>
+		</div>
+		<div class="title-box7">
+			<div>
+				<h2 class="heading seo"><a href="https://theluxurypioneer.com/brands/rolex-watches">Rolex</a></h2>
+				<p class="listing">Rolex is a brand synonymous with luxury and excellence in the world of watches. Since its founding in 1905, Rolex has been a pioneer in watchmaking, introducing many innovations that have changed the industry. With a variety of styles that appeal to different preferences, the brand is still a pioneer in high-end timepieces today.</p>
+				<p class="listing">We are pleased to present a collection of Rolex watches at The Luxury Pioneer that showcases the company's dedication to excellence in design and manufacturing. Our collection includes both vintage and contemporary models, each with its unique story and design. Our expert guides are here to assist you in selecting the ideal Rolex for your requirements, whether you're a collector looking for a rare piece or a connoisseur looking for a watch that blends design and functionality.</p>
+				<p class="listing">Visit us to explore our collection and experience the luxury of Rolex for yourself.</p>
+				<p class="listing">Bags and shoes from Other brands such as Omega, Cartier, Richard Mille, Hublot, and many others are included on our website.</p>
+			</div>
+		</div>
+		
+	</div>
+</section>
+
+
+
+</main>
+
+
+
+{% endblock web_content %}

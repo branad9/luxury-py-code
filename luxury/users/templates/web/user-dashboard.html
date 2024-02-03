@@ -1,0 +1,522 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block head_section %}
+<title>User Dashboard</title>
+<meta name='robots' content='noindex, nofollow' />
+
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main">
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-wrap">
+      <div class="banner">
+        <!--<img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />-->
+
+        <div class="container-lg">
+          <div class="breadcrumb-box">
+            <div class="heading-box">
+              <h1>User Dashboard</h1>
+            </div>
+            <ol class="breadcrumb">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li>
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+              </li>
+              <li class="current"><a href="javascript:void(0)">User Dashboard</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Dashboard Start -->
+    <section class="user-dashboard">
+      <div class="container-lg">
+        <div class="row g-3 g-xl-4 tab-wrap">
+          <div class="col-lg-4 col-xl-3 sticky">
+            <button class="setting-menu btn-solid btn-sm d-lg-none">Setting Menu <i class="arrow"></i></button>
+            <div class="side-bar">
+              <span class="back-side d-lg-none"> <i data-feather="x"></i></span>
+              <div class="profile-box">
+                <div class="user-name">
+                  <h3>{{ user.full_name }}</h3>
+                  <h4>{{ user.email }}</h4>
+                </div>
+              </div>
+
+              <ul class="nav nav-tabs nav-tabs2" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="true">
+                    Dashboard
+                    <span><i data-feather="chevron-right"></i></span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false">
+                    Orders
+                    <span><i data-feather="chevron-right"></i></span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a href="{% url 'wishlist' %}" class="nav-link">
+                    Wishlist
+                    <span><i data-feather="chevron-right"></i></span>
+                  </a>
+                </li>
+                <!--<li class="nav-item" role="presentation">-->
+                <!--  <button class="nav-link" id="savedAddress-tab" data-bs-toggle="tab" data-bs-target="#savedAddress" type="button" role="tab" aria-controls="savedAddress" aria-selected="false">-->
+                <!--    Saved Address-->
+                <!--    <span><i data-feather="chevron-right"></i></span>-->
+                <!--  </button>-->
+                <!--</li>-->
+                <!-- <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment" type="button" role="tab" aria-controls="payment" aria-selected="false">
+                    Saved Card
+                    <span><i data-feather="chevron-right"></i></span>
+                  </button>
+                </li> -->
+                <!--<li class="nav-item" role="presentation">-->
+                <!--  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">-->
+                <!--    Profile-->
+                <!--    <span><i data-feather="chevron-right"></i></span>-->
+                <!--  </button>-->
+                <!--</li>-->
+
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-8 col-xl-9">
+            <div class="right-content tab-content" id="myTabContent">
+              <!-- User Dashboard Start -->
+              <div class="tab-pane show active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                <div class="dashboard-tab">
+                  <div class="title-box3">
+                    <h3>Hello {{ user.full_name }}</h3>
+                    <p>
+                      Welcome {{ user.full_name }}, here you can customize your profile and also track your order also, you can access your saved address and orders. if you want change setting you can
+                      do it from here
+                    </p>
+                  </div>
+
+                  <div class="row g-0 option-wrap">
+                    <div class="col-sm-6 col-xl-4">
+                      <a href="javascript:void(0)" data-class="orders" class="tab-box">
+                        <img src="https://themes.pixelstrap.com/oslo/assets/icons/svg/1.svg" alt="shopping bag" />
+                        <h5>Orders</h5>
+                        <p>See order history of previous orders</p>
+                      </a>
+                    </div>
+                    <div class="col-sm-6 col-xl-4">
+                      <a href="{% url 'wishlist' %}" data-class="wishlist" class="tab-box">
+                        <img src="https://themes.pixelstrap.com/oslo/assets/icons/svg/2.svg" alt="wishlist" />
+                        <h5>Wishlist</h5>
+                        <p>Your Wishlist expire within 24h please complete Checkout</p>
+                      </a>
+                    </div>
+                    <!--<div class="col-sm-6 col-xl-4">-->
+                    <!--  <a href="javascript:void(0)" data-class="savedAddress" class="tab-box">-->
+                    <!--    <img src="https://themes.pixelstrap.com/oslo/assets/icons/svg/3.svg" alt="address" />-->
+                    <!--    <h5>Saved Address</h5>-->
+                    <!--    <p>You saved 3 address for delivery</p>-->
+                    <!--  </a>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-6 col-xl-4">-->
+                    <!--  <a href="javascript:void(0)" data-class="profile" class="tab-box">-->
+                    <!--    <img src="https://themes.pixelstrap.com/oslo/assets/icons/svg/5.svg" alt="profile" />-->
+                    <!--    <h5>Profile</h5>-->
+                    <!--    <p>Complete your profile details there are some Information missing</p>-->
+                    <!--  </a>-->
+                    <!--</div>-->
+
+                  </div>
+                </div>
+              </div>
+              <!-- User Dashboard End -->
+
+              <!-- Order Tabs Start -->
+              <div class="tab-pane" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                <div class="cart-wrap order-content">
+                  <div class="title-box3">
+                    <h3>My Orders</h3>
+                    <p>Thanks for placing a delivery order with Luxury Pioneer! Your order should be home with you in soon!</p>
+                  </div>
+
+                  <div class="order-wraper">
+                    {% for ord in orders %}            
+                    <div class="order-box">
+                      <div class="order-header">
+                        <span><i data-feather="box"></i></span>
+                        <div class="order-content">
+                          <h5 class="order-status success">{{ ord.status }}</h5>
+                          <p>Order placed on {{ ord.created }}</p>
+                          {% if ord.track_number is not None %}
+                              <p>You can tracking number is {{ ord.track_number }}</p>
+                          {% endif %}
+                          {% if ord.order_note is not None %}
+                              <p>Note: {{ ord.order_note }}</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                      {% for item in ord.orderitems.all %}
+                      <div class="order-info">
+                        <div class="product-details">
+                          {% if item.product.images.count > 0 %}
+                            <div class="img-box"><img src="{{ item.product.images.all.first.image.url }}" alt="product" /></div>
+                          {% else %}
+                            <div class="img-box"><img src="{% static 'assets/images/lux.png' %}" alt="product" /></div>
+                          {% endif %}  
+                          <div class="product-content">
+                            <h5>{{ item.product.name }}</h5>
+                            {% if item.variation != None %}
+                                <span>{{ item.variation.variation_values.first.attribute }} - {{ item.variation.variation_values.first.attribute_value }}</span>
+                            {% endif %}
+                            
+                            {% if item.variation != None %} 
+                                {% if item.variation.sale_price != None %}
+                                    <span>Price: {{ item.variation.sale_price|intcomma }}</span>
+                                {% elif item.variation.price != None %}
+                                    <span>Price: {{ item.variation.price|intcomma }}</span>
+                                {% endif %}
+                            {% else %} 
+                                {% if item.product.sale_price != None %}
+                                    <span>Price: {{ item.product.sale_price|intcomma }}</span>
+                                {% elif item.product.price != None %}
+                                    <span>Price: {{ item.product.price|intcomma }}</span>
+                                {% endif %}
+                            {% endif %}
+
+                            <span>Qty: {{ item.qty }}</span>
+                            <span>Total Price: {{ item.price|intcomma }}</span>
+                          </div>
+                        </div>
+                      </div> 
+                      {% endfor %}
+                    </div>
+                    {% endfor %}
+
+                  </div>
+                </div>
+              </div>
+              <!-- Order Tabs End -->
+
+              <!-- Saved Address Tabs Start -->
+              <!--<div class="tab-pane" id="savedAddress" role="tabpanel" aria-labelledby="savedAddress-tab">-->
+              <!--  <div class="address-tab">-->
+              <!--    <div class="title-box3">-->
+              <!--      <h3>Your Saved Address</h3>-->
+              <!--      <p>here is your saved address, from here you can easily add or modify your address</p>-->
+              <!--    </div>-->
+
+              <!--    <div class="row g-3 g-md-4">-->
+              <!--      <div class="col-md-6 col-lg-12 col-xl-6">-->
+              <!--        <div class="address-box checked">-->
+              <!--          <div class="radio-box">-->
+              <!--            <div>-->
+              <!--              <input class="radio-input" type="radio" checked id="radio1" name="radio1" />-->
+              <!--              <label class="radio-label" for="radio1">Customer Name</label>-->
+              <!--            </div>-->
+              <!--            <span class="badges badges-pill badges-theme">Home</span>-->
+              <!--            <div class="option-wrap">-->
+              <!--              <span class="edit" data-bs-toggle="modal" data-bs-target="#edditAddress"><i data-feather="edit"></i></span>-->
+              <!--              <span class="delet ms-0" data-bs-toggle="modal" data-bs-target="#conformation"><i data-feather="trash"></i></span>-->
+              <!--            </div>-->
+              <!--          </div>-->
+              <!--          <div class="address-detail">-->
+              <!--            <p class="content-color font-default">Ground Floor, No-1997 3554, Mahatma Gandhi Road, next to West Side, Kala Ghoda, Fort, Mumbai, Maharashtra 400001</p>-->
+              <!--            <p class="content-color font-default">India</p>-->
+              <!--            <span class="content-color font-default">Mobile: <span class="title-color font-default fw-500"> +91-8254662410</span></span>-->
+                         
+              <!--          </div>-->
+              <!--        </div>-->
+              <!--      </div>-->
+
+              <!--      <div class="col-md-6 col-lg-12 col-xl-6">-->
+              <!--        <div class="address-box">-->
+              <!--          <div class="radio-box">-->
+              <!--            <div>-->
+              <!--              <input class="radio-input" type="radio" id="radio3" name="radio1" />-->
+              <!--              <label class="radio-label" for="radio3">Customer Name</label>-->
+              <!--            </div>-->
+              <!--            <span class="badges badges-pill badges-theme">Home</span>-->
+              <!--            <div class="option-wrap">-->
+              <!--              <span class="edit" data-bs-toggle="modal" data-bs-target="#edditAddress"><i data-feather="edit"></i></span>-->
+              <!--              <span class="delet ms-0" data-bs-toggle="modal" data-bs-target="#conformation"><i data-feather="trash"></i></span>-->
+              <!--            </div>-->
+              <!--          </div>-->
+              <!--          <div class="address-detail">-->
+              <!--            <p class="content-color font-default">Ground Floor, No-1997 3554, Mahatma Gandhi Road, next to West Side, Kala Ghoda, Fort, Mumbai, Maharashtra 400001</p>-->
+              <!--            <p class="content-color font-default">India</p>-->
+              <!--            <span class="content-color font-default">Mobile: <span class="title-color font-default fw-500"> +91-8254662410</span></span>-->
+
+                         
+              <!--          </div>-->
+              <!--        </div>-->
+              <!--      </div>-->
+
+              <!--      <div class="col-md-6 col-lg-12 col-xl-6">-->
+              <!--        <div class="address-box">-->
+              <!--          <div class="radio-box">-->
+              <!--            <div>-->
+              <!--              <input class="radio-input" type="radio" id="radio2" name="radio1" />-->
+              <!--              <label class="radio-label" for="radio2">Customer Name</label>-->
+              <!--            </div>-->
+              <!--            <span class="badges badges-pill badges-theme">Office</span>-->
+              <!--            <div class="option-wrap">-->
+              <!--              <span class="edit" data-bs-toggle="modal" data-bs-target="#edditAddress"><i data-feather="edit"></i></span>-->
+              <!--              <span class="delet ms-0" data-bs-toggle="modal" data-bs-target="#conformation"><i data-feather="trash"></i></span>-->
+              <!--            </div>-->
+              <!--          </div>-->
+              <!--          <div class="address-detail">-->
+              <!--            <p class="content-color font-default">Ground Floor, No-1997 3554, Mahatma Gandhi Road, next to West Side, Kala Ghoda, Fort, Mumbai, Maharashtra 400001</p>-->
+              <!--            <p class="content-color font-default">India</p>-->
+              <!--            <span class="content-color font-default">Mobile: <span class="title-color font-default fw-500"> +91-8254662410</span></span>-->
+                          
+              <!--          </div>-->
+              <!--        </div>-->
+              <!--      </div>-->
+
+              <!--      <div class="col-md-6 col-lg-12 col-xl-6">-->
+              <!--        <div class="address-box add-new d-flex flex-column gap-2 align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#addNewAddress">-->
+              <!--          <span class="plus-icon"><i data-feather="plus"></i></span>-->
+              <!--          <h4 class="theme-color font-xl fw-500">Add New Address</h4>-->
+              <!--        </div>-->
+              <!--      </div>-->
+              <!--    </div>-->
+              <!--  </div>-->
+              <!--</div>-->
+              <!-- Saved Address Tabs End -->
+
+              <!-- Profile Tabs Start -->
+              <!--<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">-->
+              <!--  <div class="profile">-->
+              <!--    <div class="title-box3">-->
+              <!--      <h3>Basics Information</h3>-->
+              <!--    </div>-->
+
+              <!--    <form action="javascript:void(0)" class="custom-form form-pill">-->
+              <!--      <div class="row g-3 g-xl-4">-->
+              <!--        <div class="col-sm-6">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="fullname">Full Name</label>-->
+              <!--            <input class="form-control" id="fullname" name="fullname" type="text" value="" />-->
+              <!--          </div>-->
+              <!--        </div>-->
+
+              <!--        <div class="col-sm-6">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="email">Email</label>-->
+              <!--            <input class="form-control" id="email" name="email" type="email" value="" />-->
+              <!--          </div>-->
+              <!--        </div>-->
+
+              <!--        <div class="col-sm-4">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="mobile">Mobile</label>-->
+              <!--            <input maxlength="10" class="form-control" id="mobile" name="mobile" type="number" value="" />-->
+              <!--          </div>-->
+              <!--        </div>-->
+
+              <!--        <div class="col-sm-4">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="gender">Gender</label>-->
+              <!--            <select name="gender" id="gender" class="form-control">-->
+              <!--              <option selected>Male</option>-->
+              <!--              <option>Female</option>-->
+              <!--              <option>Other</option>-->
+              <!--            </select>-->
+              <!--          </div>-->
+              <!--        </div>-->
+
+              <!--        <div class="col-sm-4">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="location">Location</label>-->
+              <!--            <select name="location" id="location" class="form-control">-->
+              <!--              <option selected>london</option>-->
+              <!--              <option>United State</option>-->
+              <!--              <option>India</option>-->
+              <!--            </select>-->
+              <!--          </div>-->
+              <!--        </div>-->
+
+              <!--        <div class="col-12">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="photo">Profile Photo</label>-->
+              <!--            <input class="form-control" id="photo" name="photo" accept="application/pdf" type="file" />-->
+              <!--          </div>-->
+              <!--        </div>-->
+
+              <!--        <div class="col-12">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="address1">Address 1</label>-->
+              <!--            <input class="form-control" id="address1" name="address1" type="text" value="" />-->
+              <!--          </div>-->
+              <!--        </div>-->
+
+              <!--        <div class="col-12">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="address2">Address 1</label>-->
+              <!--            <input class="form-control" id="address2" name="address2" type="text" value="" />-->
+              <!--          </div>-->
+              <!--        </div>-->
+
+              <!--        <div class="col-sm-6">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="al-mobile">Alternate Mobile</label>-->
+              <!--            <input maxlength="10" class="form-control" id="al-mobile" name="al-mobile" type="number" value="" />-->
+              <!--          </div>-->
+              <!--        </div>-->
+
+              <!--        <div class="col-sm-6">-->
+              <!--          <div class="input-box">-->
+              <!--            <label for="hint-name">Nick Name</label>-->
+              <!--            <input class="form-control" id="hint-name" name="hint-name" type="text" value=" " />-->
+              <!--          </div>-->
+              <!--        </div>-->
+              <!--      </div>-->
+
+              <!--      <div class="btn-box">-->
+              <!--        <button class="btn-outline btn-sm">Cancel</button>-->
+              <!--        <button class="btn-solid btn-sm">Save Changes <i class="arrow"></i></button>-->
+              <!--      </div>-->
+              <!--    </form>-->
+              <!--  </div>-->
+              <!--</div>-->
+              <!-- Profile Tabs End -->
+
+              <!-- Security Tabs Start -->
+              <div class="tab-pane" id="security" role="tabpanel" aria-labelledby="security-tab">
+                <div class="privacy-tab">
+                  <div class="privacy box">
+                    <div class="title-box3">
+                      <h3>Privacy</h3>
+                    </div>
+
+                    <div class="setting-option">
+                      <div class="content-box">
+                        <h6 class="font-roboto">Allows others to see my profile</h6>
+                        <p class="font-roboto">all peoples will be able to see my profile.</p>
+                      </div>
+                      <label class="switch"> <input checked type="checkbox" name="chk1" value="option1" class="setting-check" /><span class="switch-state"></span> </label>
+                    </div>
+
+                    <div class="setting-option mt-3">
+                      <div class="content-box">
+                        <h6 class="font-roboto">Who has save this profile only that people see my profile</h6>
+                        <p class="font-roboto">all peoples will not be able to see my profile.</p>
+                      </div>
+                      <label class="switch"> <input type="checkbox" name="chk2" value="option1" class="setting-check" /><span class="switch-state"></span> </label>
+                    </div>
+
+                    <button class="btn-solid btn-sm">Save Changes <i class="arrow"></i></button>
+                  </div>
+
+                  <div class="account-box">
+                    <div class="title-box3">
+                      <h3>Account settings</h3>
+                    </div>
+
+                    <div class="setting-option">
+                      <div class="content-box">
+                        <h6 class="font-roboto">Deleting Your Account Will Permanently</h6>
+                        <p class="font-roboto">Once your account is deleted, you will be logged out and will be unable to log in back.</p>
+                      </div>
+                      <label class="switch"> <input type="checkbox" name="chk3" value="option2" class="setting-check" checked /><span class="switch-state"></span> </label>
+                    </div>
+
+                    <div class="setting-option mt-3">
+                      <div class="content-box">
+                        <h6 class="font-roboto">Deleting Your Account Will Temporary</h6>
+                        <p class="font-roboto">Once your account is deleted, you will be logged out and you will be create new account.</p>
+                      </div>
+                      <label class="switch"> <input type="checkbox" name="chk4" value="option4" class="setting-check" /><span class="switch-state"></span> </label>
+                    </div>
+
+                    <button class="btn-solid btn-sm">Save Changes <i class="arrow"></i></button>
+                  </div>
+                </div>
+              </div>
+              <!-- Security Tabs End -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Dashboard End -->
+  </main>
+<!-- Main End -->
+
+<!-- Add New Address Modal Start -->
+<div class="modal fade addnew-address" id="addNewAddress" tabindex="-1" aria-labelledby="addNewAddressLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNewAddressLabel">Add New Address</h5>
+        <span class="close-modal" data-bs-dismiss="modal"><i data-feather="x"></i></span>
+      </div>
+
+      <div class="modal-body full-grid-mobile">
+        <form action="javascript:void(0)" method="POST" class="custom-form form-pill">
+          {% csrf_token %}
+          <div class="row g-3 g-md-4">
+
+            <div class="col-6 col-sm-4">
+              <div class="input-box">
+                <label for="type">Type</label>
+                <select class="form-select form-control" name="type" id="type">
+                  <option selected disabled value="">Choose...</option>
+                  <option value="Home">Home</option>
+                  <option value="Office">Office</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="input-box">
+                <label for="address">Address</label>
+                <textarea class="form-control" type="text" name="address" id="address" rows="4" placeholder="Enter Address" required></textarea>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="input-box">
+                <label for="locality">Locality</label>
+                <input class="form-control" type="text" name="locality" id="locality" placeholder="Enter Locality" required />
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="input-box">
+                <label for="city">City</label>
+                <input class="form-control" type="text" name="city" id="city" placeholder="Enter City" required />
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="input-box">
+                <label for="pincode">Pincode</label>
+                <input class="form-control" type="text" name="pincode" id="pincode" placeholder="Enter Pincode" maxlength="6" required />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <div class="btn-box">
+                <button type="button" class="btn btn-outline rounded-pill" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                <button type="submit" name="add_address" class="btn btn-solid line-none rounded-pill">Add Address <i class="arrow"></i></button>
+              </div>
+            </div>
+            
+          </div>
+        </form>
+      </div>
+     
+    </div>
+  </div>
+</div>
+<!-- Add New Address Modal End -->  
+
+{% endblock web_content %}

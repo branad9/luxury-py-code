@@ -1,0 +1,20 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://example.com/sample2.html</loc>
+    <image:image>
+      <image:loc>https://example.com/picture.jpg</image:loc>
+       <image:loc>https://example.com/picture 2.jpg</image:loc>
+       <image:loc>https://example.com/picture 2.jpg</image:loc>
+    </image:image>
+  </url>
+</urlset>
+
+{% for mc in main_categories %}<br><br>
+                    <a href="{% url 'maincategory_products' mc.slug %}"><h5>{{ mc.name }}</h5></a><br>
+                    {% for c in mc.categories.all %}
+                        <a href="{% url 'category_products' c.slug %}"><h6>{{ c.name }}</h6></a><br>
+                        {% for p in c.product_set.all %}
+                            <p><a href="{% url 'product_details' p.slug %}">{{ p.name }}</a></p>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}

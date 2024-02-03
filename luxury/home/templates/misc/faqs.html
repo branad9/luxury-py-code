@@ -1,0 +1,118 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+
+<title>FAQ</title>
+<meta name='robots' content='index, follow' />
+<style>
+    h2{
+        color: #db9648;
+        margin-top: 15px;    font-size: 20px;
+    }
+    .about-section .content-box p {
+        font-size: 18px;
+        color: #767676;
+        font-weight: 400;
+        margin-top: 10px;
+        text-align: justify;
+        line-height: 22px;
+        margin-bottom: 14px;
+        margin-bottom: 50px;
+        text-transform: capitalize;
+    }
+</style>
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main title-element">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="banner">
+      <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+      <div class="container-lg">
+        <div class="breadcrumb-box">
+          <div class="heading-box">
+            <h1>FAQ</h1>
+          </div>
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home </a></li>
+            <li>
+              <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+            </li>
+
+            <li class="current"><a href="#">FAQ</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- About Us Section Start -->
+  <section class="about-section">
+    <div class="container-lg">
+      <div class="row g-0 g-lg-4 g-xl-5">
+        <div class="col-lg-12 order-2 order-lg-1">
+          <div class="align-ment">
+            <div class="contenten-wrap">
+              <div class="content-box">
+                <h2>24/7 Hours Delivery</h2>
+                <p>At Luxury Pioneer,  we offer same-day delivery across all of India. In case shipping outside India, It may take between 10-15 Days.</p>
+                
+                 <h2>No Shipping Charges</h2>
+                <p>You don't have to pay any extra shipping charges if you order in India. 
+                We offer free delivery for all our products shipped within India. There are NO hidden charges when you make a purchase on Luxury Pioneer. List prices are final and all-inclusive. You pay exactly what you see on the product page.</p>
+                
+                 <h2>Cash On Delivery</h2>
+                <p>We offer Cash on Delivery as a recognized mode of payment with no extra charges. Our delivery executive will collect the payment and deliver the shipment to your doorstep.</p>
+                
+                 <h2>One-Year Service Warranty in Watches</h2>
+                <p>Enjoy a one-year free service warranty on all the watches including brands like Rolex, Panerai, Cartier, Audemars Piguets, Richard Mille, and Omega.</p>
+                    
+                    
+                
+                  <h2 style="font-size: 30px;margin: 0;text-decoration: underline;">Frequently Asked Questions</h2><br><br>
+                  
+                 <h2>1. Who is Luxury Pioneer?</h2>
+                <p>Luxury Pioneer is one of the most reliable eCommerce Platforms for sourcing Luxury Branded Products. We deal in Men’s and Women’s Watches, Bags, Shoes, Accessories, Belts and Many More. We offer High-Quality Replica Products from iconic brands like Louis Vuitton, Rolex, Prada, Gucci, Richard Mille, and more. We offer products that are 99% the same as the originals. We have been in the Luxury Replica industry for almost a decade. We are a brand that is loved by our clients. With 100% customer satisfaction.</p>
+                  
+                 <h2>2. How Your First Copy Luxury Products Different From The Rest?</h2>
+                <p>We don’t sell cheap duplicates from Italy and Paris based on luxurious brands. You won’t see a replica for merely thousands of rupees on our platform. We source our products from extremely reliable and rare sources outside of India. So, we can 100% guarantee that you won’t find any difference between the original and the replica. If you are a passionate brand lover then you won’t resist our product at such attractive prices.</p>
+                  
+                 <h2>3. Why You Have Such High Prices in Comparison With Other Online Stores?</h2>
+                <p>As mentioned above customer satisfaction is our number one priority. Thus, we offer the closest replica you will ever find in the luxury products world. Our customers belonging to an elite class of society, often place repeat orders. As they are surprisingly impressed by how our Prada and Gucci bags looks exactly like those Hollywood actresses have been carrying. We source our entire product range from outside of India. Thus we can’t afford to sell premium products for peanut prices. If you expect to buy a Rolex watch for 3000 we are not the store for you. We cater to an audience who is genuinely a brand enthusiast and designer brand lover.</p>
+                  
+                 <h2>4. Do you offer Repair For Watches?</h2>
+                <p>We offer damage repair for up to a year for all our watches brands such as Rolex, Panerai, Cartier, Audemars Piguets, Richard Mille, and Omega. All of our products are of superior quality and flawless finish. </p>
+                  
+                 <h2>5. How Close Your Products Are To Authentic Brand Products?</h2>
+                <p>You can review our products from any brand expert or previous brand wearer. We 100% guarantee that you won’t be disappointed. Doesn’t matter if you are a brand enthusiast or collector. Once you receive our products you will fall in love with the quality and feel of the products.</p>
+                
+                <h2>6. How Do You Justify The Quality Of Your Products?</h2>
+                <p>We don't preach but we let our products talk. We also provide WhatsApp video calls before you place an order. So you can be 100% sure and confident about the product.</p>
+                <h2>7. What If We Receive A Defective Product Do You Offer Return In That Case?</h2>
+                <p>We never send the shipment before letting you have a look via a WhatsApp video call/Video Message. So, the chances of receiving a defective product are none.</p>
+                
+                <h2>8. How Can We Track Our Order?</h2>
+                <p>Once the product is dispatched we will provide you with the tracking ID. So you can check the status of the delivery. In the event of a delay, our shipping channel will notify you as soon as possible.</p>
+                
+                <h2>9. What are Other Modes of Payment?</h2>
+                <p>We accept all the payment modes like debit cards, credit cards, wallet transfers, UPI, and COD. </p>
+                
+                <h2> 10. Do You Offer Exchange Services For Shoes?
+                </h2>
+                <p>We have accommodated the size chart on the website for your reference. </p>
+                
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- About Us Section End -->
+
+</main>
+<!-- Main End -->
+{% endblock web_content %}

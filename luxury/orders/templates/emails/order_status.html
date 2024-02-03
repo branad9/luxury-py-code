@@ -1,0 +1,11 @@
+{% autoescape off %}
+Hi {{ user.full_name }},
+
+We want to inform you that your order({{ order.order_number }}) has been {{ order.status }}{% if order.status == "Cancelled" %} by {% if order.cancelled_by.is_admin or order.cancelled_by.is_superuser %}admin{% else %}yourself{% endif %}.
+{% if order.cancellation_reason %}The reason for the cancellation is "{{ order.cancellation_reason }}"{% endif %}
+{% endif %}
+If you have any query, please contact us.
+
+Thank you,
+The Luxury Pioneer
+{% endautoescape %}

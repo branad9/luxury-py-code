@@ -1,0 +1,70 @@
+<!doctype html>
+{% load static %}   
+<html lang="en">
+    {% include 'cms/includes/head.html' %}
+    <body>
+        <div class="account-pages my-5 pt-sm-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card overflow-hidden">
+                            <div class="bg-soft-primary">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="text-primary p-4">
+                                            <h5 class="text-primary">Welcome Admin !</h5>
+                                            <p>Sign in to continue to Luxury Pioneer.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 align-self-end">
+                                        <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0"> 
+                                <br>
+                                {% comment %} <div class="avatar-md profile-user-wid mb-4">
+                                    <span class="avatar-title rounded-circle bg-light">
+                                        <img src="{% static 'assets/images/logo.svg' %}" alt="" class="rounded-circle" height="34">
+                                    </span>
+                                </div> {% endcomment %}
+                                {% include 'cms/includes/alerts.html' %}
+                                <div class="p-2">
+                                    <form class="form-horizontal" method="POST" action="{% url 'cms_login' %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                                        </div>
+                
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                                        </div>
+                                        
+                                        <div class="mt-3">
+                                            <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Log In</button>
+                                        </div>
+
+                                        <div class="mt-4 text-center">
+                                            <a href="javascript:void(0)" class="text-muted"><i class="mdi mdi-lock mr-1"></i> Forgot your password?</a>
+                                        </div>
+                                    </form>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <div>
+                                <p>© <script>document.write(new Date().getFullYear())</script> Luxury Pioneer. Crafted with <i class="mdi mdi-heart text-danger"></i> by Xira Infotech</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'cms/includes/scripts.html' %}
+    </body>
+</html>

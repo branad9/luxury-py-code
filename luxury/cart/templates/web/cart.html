@@ -1,0 +1,415 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+
+<title>Cart</title>
+
+{% endblock head_section %}
+{% block web_content %}
+
+<style>
+    [v-cloak] {
+  display: none;
+}
+[v-cloak] + #lploader::before {
+    content: url({% static 'assets/images/loader2.svg' %});
+    display: block;
+    text-align: center;
+    width: 390px;
+    height: 600px;
+    margin: 0px auto;
+    font-size: 30px;
+    padding: 180px 3px 6px 0px;
+}
+</style>
+<!-- Main Start -->
+<main class="main" id="cart-list" v-cloak> 
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-wrap">
+      <div class="banner">
+        <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner"/>
+        <div class="container-lg">
+          <div class="breadcrumb-box">
+            <div class="heading-box">
+              <h1>Cart</h1>
+            </div>
+            <ol class="breadcrumb">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li>
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+              </li>
+              <li><a href="{% url 'products' %}">Shop</a></li>
+              <li>
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+              </li>
+              <li class="current"><a href="javascript:void(0)">Cart</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Cart Section Start -->
+    <section v-if="items.length <= 0" class="page-not-found">
+      <div class="container">
+        <div class="row gx-md-2 gx-0 gy-md-0 gy-3">
+          <div class="col-md-8 m-auto">
+            <div class="page-image">
+              <img src="{% static 'assets/images/Empty-Cart.png' %}" class="img-fluid blur-up lazyload" alt="" />
+            </div>
+          </div>
+  
+          <div class="col-md-8 mx-auto mt-md-5 mt-3">
+            <div class="page-container pass-forgot">
+              <div>
+                <h2>Cart Empty</h2>
+                <p class="font-md">This cart is empty.</p>
+                <a href="{% url 'products' %}" class="btn-solid mb-line">Shop Now<i class="arrow"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section v-else class="section-b-space card-page">
+        <div class="container-lg">
+          <div class="row g-3 g-md-4 cart">
+            <div class="col-md-7 col-lg-8">
+              <div class="cart-wrap">
+                <div class="items-list">
+                  <table class="table cart-table m-md-0">
+                    <thead>
+                      <tr>
+                        <th class="d-none d-sm-table-cell">PRODUCT</th>
+                        <th class="d-none d-sm-table-cell">PRICE</th>
+                        <th class="d-none d-lg-table-cell">QUANTITY</th>
+                        <th class="d-none d-xl-table-cell">TOTAL</th>
+                        <th class="d-none d-xl-table-cell">ACTION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="c in items">
+                        <td>
+                          <div class="product-detail">
+                            <img class="pr-img" v-if="c.product.images.filter((i) => i.default == true).length > 0" :src="c.product.images.filter((i) => i.default == true)[0].cmp_image" :alt="PRODUCTIMAGE" />
+                            <img v-else class="pr-img" src="{% static 'assets/images/lux.png' %}" alt="image" />
+                            <div class="details">
+                              <h4 class="title-color font-default2"><a :href="`/product/${c.product.slug}`">[[ c.product.name ]]</a></h4>
+                              <span v-if="c.product.brand != null" class="sold-by">[[c.product.brand]]</span>
+                              <span v-if="c.product.type == 'Variable'" class="sold-by">[[c.variation.values[0].attribute]]: [[c.variation.values[0].attribute_value]]</span>
+                              <div class="plus-minus mt-2 d-inline-flex d-lg-none">
+                                <i @click="removeCart(c)" class="fa fa-minus"></i>
+                                <input type="number" v-model="c.qty" min="1" disabled />
+                                <i @click="addCart(c)" class="fa fa-plus"></i>
+                              </div>
+                                <div class="mt-2 d-inline-flex d-lg-none">
+                                  <i class="fa fa-inr" aria-hidden="true" style="margin-top: 4px;padding: 0px 5px;"></i>[[addCommas(c.total)]]
+                                </div>
+                                <span class="mt-2 d-inline-flex d-lg-none" style="margin-left: 30px;">
+                                    <button @click="deleteCart(c)"><i class="fa fa-trash-o address-size fa-1x text-dark" aria-hidden="true"></i></button>
+                                </span>
+                                
+                            </div>
+                          </div>
+                        </td>
+                        <td v-if="c.product.type == 'Simple'" class="price d-none d-sm-table-cell">
+                            <div v-if="c.product.sale_price != null"><i class="fa fa-inr" aria-hidden="true"></i>[[addCommas(c.product.sale_price)]]</div>
+                            <div v-else><i class="fa fa-inr" aria-hidden="true"></i>[[addCommas(c.product.price)]]</div>
+                        </td>
+                        <td v-else class="price d-none d-sm-table-cell">
+                            <div v-if="c.variation.sale_price != null"><i class="fa fa-inr" aria-hidden="true"></i>[[addCommas(c.variation.sale_price)]]</div>
+                            <div v-else><i class="fa fa-inr" aria-hidden="true"></i>[[addCommas(c.variation.price)]]</div>
+                        </td>
+                        <td class="d-none d-lg-table-cell">
+                          <div class="plus-minus">
+                            <i @click="removeCart(c)" class="fa fa-minus"></i>
+                            <input type="number" v-model="c.qty" min="1" disabled />
+                            <i @click="addCart(c)" class="fa fa-plus"></i>
+                          </div>
+                        </td>
+                        <td class="total d-none d-sm-table-cell"><i class="fa fa-inr" aria-hidden="true"></i>[[addCommas(c.total)]]</td>
+                        <td class="d-none d-lg-table-cell "><button @click="deleteCart(c)"><i class="fa fa-trash-o address-size fa-1x text-dark" aria-hidden="true"></i></button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-5 col-lg-4">
+              <div class="summery-wrap">
+                {% for add in address %}
+                  <div class="coupon-box">
+                    <div class="row">
+                      <div class="col-9"><h5 class="cart-title">Shipping Address</h5></div>
+                      <div class="col-3"><a href="javascript:void(0)" @click="changeAddress" class="btn btn-outline btn-sm cart-title">Change</a></div>
+                    </div>
+                    <div class="address-box">
+                      <div class="radio-box">
+                        <span class="badges badges-pill badges-theme">{{ add.type }}</span>
+                      </div>
+                      <div class="address-detail">
+                        <p class="content-color font-default">{{ add.address }}</p>
+                        <p class="content-color font-default">{{ add.locality }}, {{ add.city }}</p>
+                        <span class="content-color font-default">Pincode: <span class="title-color font-default fw-500">{{ add.pincode }}</span></span>
+                      </div>
+                    </div>
+                  </div>
+                {% empty %}
+                    <div class="coupon-box">
+                      <h5 class="cart-title">Shipping Address</h5>
+                      <div class="address-box">
+                        <a href="javascript:void(0)" @click="changeAddress" class="btn btn-outline btn-sm cart-title">Select Address</a>
+                      </div>
+                    </div>
+                {% endfor %}
+                
+                <div class="coupon-box">
+                  <h5 class="cart-title">Payment Options</h5>
+                    <div class="payment-section">
+                      <div class="accordion" id="">
+                          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              <div class="row g-3 filter-row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                  <div class="filter-col radio-box">
+                                    <input class="radio-input" checked type="radio" name="card" id="card1" value="option1" />
+                                    <label class="radio-label content-color" for="card1"
+                                      ><span class="font-md">Cash on Delivery </span></label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cart-wrap grand-total-wrap">
+                  <div>
+                    <div class="order-summery-box">
+                      <h5 class="cart-title">Price Details ([[totalCount]] Items)</h5>
+                      <ul class="order-summery">
+                        <li>
+                          <span>Bag total</span>
+                          <span><i class="fa fa-inr" aria-hidden="true"></i>[[addCommas(subtotal)]]</span>
+                        </li>
+
+                        {% comment %} <li>
+                          <span>Bag savings</span>
+                          <span class="theme-color">-<i class="fa fa-inr" aria-hidden="true"></i>596852.00</span>
+                        </li> {% endcomment %}
+
+                        
+
+                        <li>
+                          <span> </span>
+                          <span>Shipping Charges as applicable </span>
+                        </li>
+
+                        <li class="pb-0">
+                          <span>Total Amount</span>
+                          <span><i class="fa fa-inr" aria-hidden="true"></i>[[addCommas(subtotal)]]</span>
+                        </li>
+                      </ul>
+                      <div class="row g-3 mt-2">
+                        <div class="col-6 col-md-12">
+                          <a href="javascript:void(0)" @click="placeOrder" :class="orderLoadBtn ? 'disabled' : ''" class="btn-solid checkout-btn">[[ orderLoadText ]] <i class="arrow"></i></a>
+                        </div>
+                        <div class="col-6 col-md-12">
+                          <a href="{% url 'products' %}" class="btn-outline w-100 justify-content-center checkout-btn"> Back To Shop </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Cart Section End -->
+</main>
+<!-- Main End -->
+<div id="lploader"></div>
+<script src="{% static 'vue/vue.global.js' %}"></script>
+<script src="{% static 'vue/axios.min.js' %}"></script>
+<script>
+    Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                items: [],
+                orderLoadBtn: false,
+                orderLoadText: 'Place Order'
+            }
+        },
+        mounted() {
+           this.getCart();
+        },
+        methods: {
+          getCart() {
+            axios.get("{% url 'get_cart' %}").then((resp) => {
+                if (resp.data.status === true) {
+                    console.log(`carts ${JSON.stringify(resp.data)}`);
+                    this.items = resp.data.data;
+                }
+            });
+          },
+          addCart(cart) {
+              cart.qty += 1;
+              let price = 0;
+              if (cart.product.type == 'Simple') {
+                  if (cart.product.sale_price != null) {
+                      price = cart.product.sale_price;
+                  } else {
+                      price = cart.product.price;
+                  }
+              } else {
+                  if (cart.variation.sale_price != null) {
+                      price = cart.variation.sale_price;
+                  } else {
+                      price = cart.variation.price;
+                  }
+              }
+              let total = price * cart.qty
+              let data = new FormData();
+              data.append('product', cart.product.id.toString());
+              if (cart.product.type == 'Simple') {
+                data.append('variation', '0');
+              } else {
+                data.append('variation', cart.variation.id.toString());
+              }
+              data.append('total', total.toString());
+              data.append('qty', cart.qty.toString());
+              data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+              axios.post("{% url 'change_cart' %}", data).then((resp) => {
+                  console.log('added to cart');  
+                  if (resp.data.status === false) {
+                      console.log('error '+ JSON.stringify(resp.data.errors));  
+                      this.errors = resp.data.errors;
+                      cart.qty -= 1;
+                  } else {
+                      this.getCart();
+                      window.location = "{% url 'cart' %}";
+                      
+                  }
+              });
+          },
+          removeCart(cart) {
+            if (cart.qty > 1) {
+                cart.qty -= 1;
+                let price = 0;
+                if (cart.product.type == 'Simple') {
+                    if (cart.product.sale_price != null) {
+                        price = cart.product.sale_price;
+                    } else {
+                        price = cart.product.price;
+                    }
+                } else {
+                    if (cart.variation.sale_price != null) {
+                        price = cart.variation.sale_price;
+                    } else {
+                        price = cart.variation.price;
+                    }
+                }
+                let total = price * cart.qty
+                let data = new FormData();
+                data.append('product', cart.product.id.toString());
+                if (cart.product.type == 'Simple') {
+                  data.append('variation', '0');
+                } else {
+                  data.append('variation', cart.variation.id.toString());
+                }
+                data.append('total', total.toString());
+                data.append('qty', cart.qty.toString());
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+                axios.post("{% url 'change_cart' %}", data).then((resp) => {
+                    if (resp.data.status === false) {
+                        this.errors = resp.data.errors;
+                        cart.qty += 1;
+                    } else {
+                        this.getCart();
+                        window.location = "{% url 'cart' %}";
+                    }
+                });
+            } else {  
+              let data = new FormData();
+              data.append('cart_id', cart.id.toString());
+              data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+              axios.post("{% url 'delete_cart' %}", data).then((resp) => {
+                  if (resp.data.status === true) {
+                      this.getCart();
+                      window.location = "{% url 'cart' %}";
+                      
+                  } 
+              });
+            }
+          },
+          deleteCart(cart) {
+             let data = new FormData();
+             data.append('cart_id', cart.id.toString());
+             data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+             axios.post("{% url 'delete_cart' %}", data).then((resp) => {
+                if (resp.data.status === true) {
+                      this.getCart();
+                      window.location = "{% url 'cart' %}";
+                      
+                } 
+            });
+          },
+          placeOrder() {
+               if (!confirm('Are you sure you want to place order?')) {
+                    return;
+                }
+              this.orderLoadBtn = true;
+              this.orderLoadText = 'Loading...';
+              let data = new FormData();
+              data.append('total', this.subtotal);
+              data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+              axios.post("{% url 'place_order' %}", data).then((resp) => {
+                  this.orderLoadBtn = false;
+                  this.orderLoadText = 'Place Order';
+                  if (resp.data.no_address === true) {
+                    alert('Please select delivery address');
+                  } else if (resp.data.status === true) {
+                      window.location = "{% url 'ordered' %}";
+                  } else {
+                      alert('Failed to place order. Please try again later.');
+                  }
+              });
+          },
+          changeAddress() {
+              localStorage.setItem('showAddress', true);
+              window.location = "{% url 'user_dashboard' %}";
+          },
+          addCommas(x) {
+              if (x != null) {
+                  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              } else {
+                  return x;
+              }
+              
+          }
+        },
+        computed: {
+            subtotal() { 
+                let num = 0;
+                for (let item of this.items) {
+                    num += parseFloat(item.total);
+                }  
+                return num;
+            },
+            totalCount() { 
+                let num = 0;
+                for (let item of this.items) {
+                    num += parseInt(item.qty);
+                }  
+                return num;
+            }
+        }
+    }).mount('#cart-list');
+</script>
+{% endblock web_content %}

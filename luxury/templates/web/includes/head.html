@@ -1,0 +1,235 @@
+{% load static %}
+
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<link rel="manifest" href="manifest.json" />
+	<link rel="icon" href="{% static 'assets/images/favicon/favicon.png' %}" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="{% static 'assets/images/favicon/favicon.png' %}" />
+	<meta name="theme-color" content="#0f8fac" />
+	<meta name="apple-mobile-web-app-capable" content="" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="apple-mobile-web-app-title" content="" />
+	<meta name="msapplication-TileImage" content="{% static 'assets/images/favicon/favicon.png' %}" />
+	<meta name="msapplication-TileColor" content="#FFFFFF" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com/" />
+	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+		rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500;600;700;800;900&amp;display=swap"
+		rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Leckerli+One&amp;display=swap" rel="stylesheet" />
+
+
+
+	<!-- Bootstrap Css -->
+	<link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css' %}" />
+	<!-- Wow Animation Css -->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/wow-animate.css' %}" />
+	<!-- Swiper Slider Css -->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css' %}" />
+	<!-- Style Css -->
+	<link id="change-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<script type="application/ld+json">
+{
+	"@context": "https://schema.org/",
+	"@type": "Organization",
+	"name": "theluxurypioneer",
+	"url": "https://theluxurypioneer.com/",
+	"logo": "https://theluxurypioneer.com/static/assets/images/logos/luxury-pioneer.png"
+}
+</script>
+	<script type="application/ld+json">
+{
+	"@context": "https://schema.org/",
+	"@type": "LocalBusiness",
+	"name": "theluxurypioneer",
+	"address": "Ground Floor, No-1997 3554, Mahatma Gandhi Road, next to West Side, Kala Ghoda, Fort, Mumbai, Maharashtra 400001",
+	"image": "https://theluxurypioneer.com/static/assets/images/logos/luxury-pioneer.png"
+}
+</script>
+	<script type="application/ld+json">
+{
+	"@context": "https://schema.org/",
+	"@type": "WebSite",
+	"name": "theluxurypioneer.com",
+	"url": "https://theluxurypioneer.com/",
+	"sameAs": "",
+	"description": "Explore the world of luxury at Luxury Pioneer. Browse our collection of branded handbags, watches, wallets, shoes, and other accessories to find the perfect addition to your wardrobe. Shop now for premium quality products that will last you a lifetime.",
+	"image": ""
+}
+</script>
+	<style>
+		img.lazy {
+			width: 700px;
+			height: 467px;
+			display: block;
+			background-image: url("{% static 'assets/images/loader2.svg' %}");
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
+		}
+
+		.float {
+			bottom: 120px;
+			left: 40px;
+		}
+
+		.link-box p {
+			font-size: 16px;
+			line-height: 12px;
+			text-transform: uppercase;
+		}
+
+		.navbar-expand-xl .dropdown-menu .dropdown-item {
+			font-size: 12px;
+			line-height: 16px;
+			text-transform: uppercase;
+		}
+
+		.home-slider-common .home-slider .banner .content-box p {
+			text-transform: capitalize;
+		}
+
+		.catagories-style-3 .catagories-box img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.cat-bg {
+			position: absolute !important;
+			left: 50% !important;
+			width: 90% !important;
+			bottom: calc(10px + (15 - 10) * ((100vw - 320px)/(1920 - 320))) !important;
+			padding: calc(9px + (11 - 9) * ((100vw - 320px)/(1920 - 320))) !important;
+			text-align: center !important;
+			-webkit-transform: translateX(-50%) !important;
+			transform: translateX(-50%) !important;
+			background: rgba(255, 255, 255, .8) !important;
+			-webkit-box-shadow: 0 4px 50px rgb(0 0 0 / 10%) !important;
+			box-shadow: 0 4px 50px rgb(0 0 0 / 10%) !important;
+			-webkit-backdrop-filter: blur(4px) !important;
+			backdrop-filter: blur(4px) !important;
+		}
+
+		.product-card .content-box p {
+			font-size: 13px !important;
+			color: #db9648 !important;
+			margin-bottom: 5px !important;
+			text-transform: uppercase !important;
+			font-weight: 600 !important;
+		}
+
+		.seo {
+			font-size: 15px !important;
+			color: #3e3d3d !important;
+		}
+
+		.listingp {
+			font-size: 16px !important;
+			font-weight: 400 !important;
+			line-height: 22px !important;
+			color: #3e3d3d !important;
+		}
+
+		.listingp a {
+			color: #db9648 !important;
+		}
+
+		.product-card .content-box h2 {
+			font-weight: 400;
+			font-size: calc(12px + (18 - 15) * ((100vw - 320px)/(1920 - 320)));
+			line-height: calc(22px + (26 - 22) * ((100vw - 320px)/(1920 - 320)));
+			color: #262834;
+			margin-bottom: calc(0px + (5 - 0) * ((100vw - 320px)/(1920 - 320)));
+			overflow: hidden;
+			white-space: nowrap;
+			max-width: -webkit-max-content;
+			max-width: -moz-max-content;
+			max-width: max-content;
+			text-overflow: ellipsis;
+		}
+
+		.catagories-style-3 .catagories-box p {
+			font-weight: 500;
+			font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+			margin-top: 10px;
+			line-height: calc(18px + (21 - 18) * ((100vw - 320px) / (1920 - 320)));
+			text-align: center;
+			color: #262834;
+			height: calc(32px + (42 - 32) * ((100vw - 320px) / (1920 - 320)));
+		}
+
+		.productdesc h2 {
+			font-size: 15px !important;
+			color: #db9648 !important;
+			font-weight: 600;
+			line-height: calc(16px + (51 - 28) * ((100vw - 320px)/(1920 - 320)));
+			text-transform: uppercase;
+			margin-top: calc(10px + (-14 + 7) * ((100vw - 320px)/(1920 - 320)));
+			margin-bottom: 0px;
+		}
+
+		.productdesc h1 {
+			font-size: 15px !important;
+			color: #db9648 !important;
+			font-weight: 600;
+			line-height: calc(16px + (51 - 28) * ((100vw - 320px)/(1920 - 320)));
+			text-transform: uppercase;
+			margin-top: calc(10px + (-14 + 7) * ((100vw - 320px)/(1920 - 320)));
+			margin-bottom: 0px;
+		}
+
+		.productdesc h3 {
+			font-size: 15px !important;
+			color: #db9648 !important;
+			font-weight: 600;
+			line-height: calc(16px + (51 - 28) * ((100vw - 320px)/(1920 - 320)));
+			text-transform: uppercase;
+			margin-top: calc(10px + (-14 + 7) * ((100vw - 320px)/(1920 - 320)));
+			margin-bottom: 0px;
+		}
+
+		.productdesc h2 span {
+			color: #db9648 !important;
+		}
+
+		.productdesc a {
+			color: #db9648 !important;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		.productdesc a span {
+			color: #db9648 !important;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		.productdesc p {
+			font-size: 16px !important;
+			font-weight: 400 !important;
+			line-height: 22px !important;
+			color: #3e3d3d !important;
+			margin-top: 0;
+			margin-bottom: 30px;
+			text-align: justify;
+		}
+
+		.offcanvas.show {
+			z-index: 999999999999999999999999999999999999999999;
+		}
+	</style>
+
+	{% autoescape off %}
+	{% for i in integrations %}{{i.head_code}}{% endfor %}
+	{% endautoescape %}

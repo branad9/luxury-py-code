@@ -1,0 +1,79 @@
+{% extends 'cms/base.html' %}
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Newsletters</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'cms_home' %}">Home</a></li>
+                            <li class="breadcrumb-item active">Newsletters</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="mr-auto p-2"> 
+                                    <h4 class="card-title">All Newsletters</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Email</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in newsletters %}
+                                <tr>
+                                    <td>{{ forloop.counter0|add:newsletters.start_index }}</td>
+                                    <td>{{ i.email }}</td>
+                                    <td>{{ i.created }}</td>
+                                    <td>{{ i.updated }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>   
+                        <div class="my-3">
+                            {% if newsletters.has_other_pages  %}
+                            <ul class="pagination mb-0 flex-wrap">
+                                {% if newsletters.has_previous  %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ newsletters.previous_page_number }}">Previous</a></li>
+                                {% endif %}
+                                {% for i in newsletters.paginator.page_range %}
+                                    {% if newsletters.number == i %}
+                                        <li class="page-item"><a class="page-link">{{ i }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %} 
+                                {% endfor %}
+                                {% if newsletters.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ newsletters.next_page_number  }}">Next</a></li>
+                                {% endif %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+        
+    </div> <!-- container-fluid -->
+</div>
+{% endblock content %}

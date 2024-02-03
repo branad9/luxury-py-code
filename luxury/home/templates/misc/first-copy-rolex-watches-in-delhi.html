@@ -1,0 +1,190 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+
+<title>First Copy Rolex Watches in Delhi: Our Top Recommendations</title>
+<meta name='robots' content='index, follow' />
+<style type="text/css">
+  .content-box h3{
+      font-size: 14px;
+      font-family: montserrat,sans-serif;
+      font-weight: 500;
+  }
+  .content-box h2{
+    font-size: 22px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+  }
+  .content-box {
+        text-align: justify;
+        font-family: montserrat,sans-serif!important;
+    }
+  .content-box{
+    color: #3e3d3d!important;
+  }
+  .blog-detail a{
+    color: #db9648!important;
+  }
+  .blog-detail .content-box img{
+    border: 1px solid #db9648;
+    margin: 5px;
+  }
+</style>
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main title-element">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="banner">
+      <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+      <div class="container-lg">
+        <div class="breadcrumb-box">
+          <div class="heading-box">
+            <h1>First Copy Rolex Watches in Delhi: Our Top Recommendations</h1>
+          </div>
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home </a></li>
+            <li>
+              <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+            </li>
+
+            <li class="current"><a href="#">First Copy Rolex Watches in Delhi: Our Top Recommendations</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- About Us Section Start -->
+    <section>
+        <div class="container-lg">
+          <div class="row gy-5 g-lg-3 g-xxl-4">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10 ratio_36">
+                <div id="myproducts" style="margin-bottom:30px">
+                    <div class="product-tab-content">
+                        <div class="view-option row g-3 g-xl-6 ratio_asos row-cols-2 row-cols-sm-3 row-cols-xl-6 grid-section">
+                            {% for p in products %}
+                            <div class="product-card">
+                                <div class="img-box">
+                                <!-- Thumbnail -->
+                                    {% if p.images.count > 0 %}
+                                        <a href="{% url 'product_details' p.slug %}"><img src="{{ p.images.all.first.cmp_image.url }}" alt="product" /></a>
+                                    {% else %}
+                                        <a href="{% url 'product_details' p.slug %}"><img src="{% static 'assets/images/lux.png' %}" alt="product" /></a>
+                                    {% endif %}
+                                </div>
+                                <!-- Content Box -->
+                                <div class="content-box">
+                                <a href="{% url 'product_details' p.slug %}">
+                                    {% if p.brand != None %}
+                                      <p>{{ p.brand }}</p>
+                                    {% endif %}  
+                                    <h2 style="margin-top: 10px;">{{ p.name }}</h2>
+                                    {% if p.sale_price != None %}
+                                        <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.sale_price }}</span> <del><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price }}</del>
+                                    {% elif p.price != None %}
+                                        <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price }}</span>
+                                    {% endif %}
+                                    
+                                </a>
+                                <a  href="{% url 'product_details' p.slug %}" class="btn btn-solid btn-sm mb-line addtocart-btn">View Details<i class="arrow"></i> </a>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <img src="{% static 'assets/images/no-product-found.png' %}" alt="No Products">    
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+              <div class="blog-wrap">
+                <div class="blog-box blog-detail">
+                      <img src="media/images/blogs/first-copy-rolex-watches-in-delhi.jpg" width="100%" alt="first-copy-rolex-watches-in-delhi" /> 
+                  <div class="content-box"> <span>
+                    <i data-feather="clock"> </i>Jan. 05, 2023</span>
+                    <h2>First Copy Rolex Watches in Delhi: Our Top Recommendations</h2> 
+                    
+                    <p>People in Delhi are said to have big hearts and even bigger wallets. Don't trust me? Well according to India Times, For most luxury brands, Delhi accounts for 40% of total sales. Since Delhi is always surrounded by power and opulence. For centuries most rulers had Delhi in mind to rule entire India. Even now people of Delhi still believe in shopping to flaunt, but it must be distinctive enough to make the wearer stand out. For women, it is often jewllery and luxury clothing. However, men choose to invest in luxury watches. We have curated a list of the Best First Copy Rolex Watches you must invest in as they are affordable yet as charming as original Rolex.</p>
+
+                    <p>For Men, there is nothing cooler than making a sharp style statement with a Rolex. A watch can be a stylish accessory that adds a touch of sophistication to an outfit. A Delhi man needs nothing more than a watch to flaunt an aura to their personality. </p>
+                    
+                    <h2>What Are The Prices Of First Copy Rolex Watches In Delhi? </h2>
+                    
+                    <p>Delhi has many verified Rolex stores. The price range of Rolex watches in India can vary significantly depending on the specific model and features. Rolex offers a wide range of watches at various price points, from entry-level models to high-end, luxury pieces.</p>
+                    
+                    <p>Some entry-level models, such as the Rolex Oyster Perpetual, can start at around INR 700,000 (approximately $9,500). Mid-range models, such as the Rolex Datejust or the Rolex Explorer, can range in price from INR 800,000 to INR 1,500,000 (approximately $11,000 to $20,500).</p>
+                    
+                    <p>High-end, luxury models, such as the Rolex Daytona or the Rolex Submariner, can start at around INR 2,000,000 (approximately $27,000) and can go up to INR 4,000,000 or more (approximately $54,000 or more).
+                    These are original prices however if you go with Luxury Pioneer, the single most trusted eCommerce store which delivers high-quality first-copy Rolex watches pan India. Whether it is Delhi, Mumbai, Kolkata, or Bengaluru. We offer cash on delivery and the quality is undeniable. For example, if you choose Rolex Explorer, at Luxury pioneer you will get it for Rolex Submariner, it will cost you less than one lakh rupees. So, consider buying high-quality <b>First Copy Rolex Watches in Delhi</b></p>
+                    
+                    <h2>Peek into some of the Famous Rolex Watches in Delhi</h2>
+                    <p><b>Rolex Submariner Series</b></p>
+                    <p>The Rolex Submariner is a classic dive watch known for its durability and reliability. It was first introduced in 1953 and has since become one of the most iconic and sought-after watches in the world.</p>
+                    
+                    <p>The Submariner series includes several models with different features and finishes, including the Submariner, the Submariner Date, and the Submariner No Date. All Submariner models are water-resistant to a depth of at least 300 meters (1000 feet) and feature a rotatable bezel for timing dives. They are powered by Rolex's in-house caliber 3135 or caliber 3130 self-winding movements and are available in a variety of materials, including stainless steel, yellow gold, white gold, and Rolesor (a combination of stainless steel and gold).</p>
+                    
+                    
+                    
+                    
+                    <div class="row">
+                      <div class="col-md-3">
+                        <a href="https://theluxurypioneer.com/product/rolex-submariner-date-hulk-oystersteel-mens-watch-116610lv-0002"><img width="100%" alt="rolex-submariner-date-hulk-oystersteel-mens-watch-116610lv-0002" src="https://theluxurypioneer.com/media/images/products/Rolex-Submariner-Date-Hulk-Oystersteel-Mens-Watch-116610LV-0002.jpg"></a>
+                      </div>
+                      <div class="col-md-3">
+                        <a href="https://theluxurypioneer.com/product/rolex-submariner-date-black-dial-mens-watch-116610ln-0001"><img width="100%" alt="rolex-submariner-date-black-dial-mens-watch-116610ln-0001" src="https://theluxurypioneer.com/media/images/products/Rolex-Submariner-Date-Black-Dial-Mens-Watch-116610LN-0001_8agGH9X.jpg"></a>
+                      </div>
+                      <div class="col-md-3">
+                        <a href="https://theluxurypioneer.com/product/rolex-submariner-date-mens-watch-116613ln-0001"><img width="100%" alt="rolex-submariner-date-mens-watch-116613ln-0001" src="https://theluxurypioneer.com/media/images/products/Rolex-Submariner-Date-Mens-Watch-116613LN-0001.jpg"></a>
+                      </div>
+                      <div class="col-md-3">
+                        <a href="https://theluxurypioneer.com/product/rolex-submariner-date-two-tone-blue-dial-mens-watch-116613lb-0005"><img width="100%" alt="rolex-submariner-date-two-tone-blue-dial-mens-watch-116613lb-0005" src="https://theluxurypioneer.com/media/images/products/RolexSubmariner-Date-Two-Tone-Blue-Dial-Mens-Watch-116613LB-0005_5NWDPt8.jpg"></a>
+                      </div>
+                    </div>
+                    
+                    
+                    
+                    <br><br>
+                    
+                    <p><b>Rolex Datejust 41</b></p>
+                    
+                    <p>The Rolex Datejust 41 is a classic and timeless dress watch that is part of the Datejust collection. It is available in a variety of materials, including stainless steel, yellow gold, white gold, and Rolesor (a combination of stainless steel and gold). The Datejust 41 features a 41mm case and a fluted bezel, which is a signature design element of the Datejust collection. It is powered by Rolex's in-house caliber 3235 self-winding movement, which is known for its precision and reliability.</p>
+                    
+                    <p>The Datejust 41 has a variety of dial options, including classic black, silver, and champagne, as well as more colorful options such as blue and green. It also has a range of strap options, including metal bracelets, leather straps, and rubber straps, so you can choose the one that best suits your style.</p>
+                    
+                    <p>The Datejust 41 is a versatile and stylish watch that is suitable for a wide range of occasions, from formal to casual. It is known for its high-quality construction and attention to detail, making it a popular choice for those who appreciate the fine craftsmanship and timeless design.
+                    </p>
+                    
+                    
+                    
+                    <div class="row">
+                      <div class="col-md-3">
+                        <a href="https://theluxurypioneer.com/product/rolex-datejust-36-silver-diamond-womens-watch-116234-0136"><img width="100%" alt="rolex-datejust-36-silver-diamond-womens-watch-116234-0136" src="https://theluxurypioneer.com/media/images/products/Rolex-Datejust-36-Silver-Diamond-Womens-Watch-116234-0136.jpg"></a>
+                      </div>
+                    </div><br>
+                    
+                    
+                    <p>You May Also Explore Our Wide Range of First Copy Rolex Watches in Delhi </p>
+                    <p>Luxury Pioneer is one stop destination to buy luxury commodities at attractive rates. So many of our esteemed clients belong to Delhi. We ship them within 7 days. We also offer cash on delivery. Our clients believe that the quality of watches, shoes, and bags we offer is unparalleled. Nine out of ten times people believe that they are wearing a genuine Rolex, Louis Vuitton or Prada so on. The fine quality leaves them surprised & baffled at the same time. It is easier to maintain the status quo without breaking the bank with Luxury Pioneer. </p>
+                    
+                    <h2>Popular Searches</h2>
+                    <b><a href="/men-watches/first-copy/panerai-watches">First Copy Panerai Watches</a> |
+                    <a href="/men-watches/first-copy/audemars-piguets-watches">First Copy Audemars Piguets Watches</a> |
+                    <a href="/men-watches/first-copy/cartier-watches">First Copy Cartier Watches</a> |
+                    <a href="/men-watches/first-copy/richard-mille-watches">First Copy Richard Mille Watches</a> |
+                    <a href="/men-watches/first-copy/omega-watches">First Copy Omega Watches</a> |
+                    <a href="/men-watches/first-copy/rolex-watches">First Copy Rolex Watches</a> </b>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+  <!-- About Us Section End -->
+</main>
+<!-- Main End -->
+{% endblock web_content %}

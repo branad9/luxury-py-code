@@ -1,0 +1,28 @@
+[2023-04-19 21:38:40,661] INFO:huey:Worker-1:Executing home.tasks.email_notification: 0314c186-6a60-44e7-84b0-9e22c8996e38
+[2023-04-19 21:38:48,306] INFO:huey:Worker-1:home.tasks.email_notification: 0314c186-6a60-44e7-84b0-9e22c8996e38 executed in 7.644s
+[2023-04-21 13:27:42,931] INFO:huey.consumer:MainThread:Huey consumer started with 1 thread, PID 3643437 at 2023-04-21 07:57:42.931377
+[2023-04-21 13:27:42,931] INFO:huey.consumer:MainThread:Scheduler runs every 1 second(s).
+[2023-04-21 13:27:42,931] INFO:huey.consumer:MainThread:Periodic tasks are enabled.
+[2023-04-21 13:27:42,931] INFO:huey.consumer:MainThread:The following commands are available:
++ home.tasks.email_notification
+[2023-04-21 13:27:42,934] INFO:huey:Worker-1:Executing home.tasks.email_notification: 7ebc6661-01e0-4a27-b24b-3aad47c20e0c
+[2023-04-21 13:27:50,696] INFO:huey:Worker-1:home.tasks.email_notification: 7ebc6661-01e0-4a27-b24b-3aad47c20e0c executed in 7.762s
+[2023-04-21 13:27:50,697] INFO:huey:Worker-1:Executing home.tasks.email_notification: e7b1fd9a-3067-430f-8bed-10d89b086875
+[2023-04-21 13:27:58,387] INFO:huey:Worker-1:home.tasks.email_notification: e7b1fd9a-3067-430f-8bed-10d89b086875 executed in 7.690s
+[2023-04-21 13:27:58,387] INFO:huey:Worker-1:Executing home.tasks.email_notification: 537df27e-c9d0-4597-bcf3-f5ca8326ddf2
+[2023-04-21 13:28:06,580] INFO:huey:Worker-1:home.tasks.email_notification: 537df27e-c9d0-4597-bcf3-f5ca8326ddf2 executed in 8.193s
+[2023-04-21 18:20:10,550] INFO:huey:Worker-1:Executing home.tasks.email_notification: 016636bd-5652-4a7f-a477-ccd6b6e54f4b
+[2023-04-21 18:20:18,279] INFO:huey:Worker-1:home.tasks.email_notification: 016636bd-5652-4a7f-a477-ccd6b6e54f4b executed in 7.729s
+[2023-04-21 18:30:05,328] INFO:huey:Worker-1:Executing home.tasks.email_notification: cb8f6e7f-c591-4e23-b0ba-d813a0d195a6
+[2023-04-21 18:30:13,502] INFO:huey:Worker-1:home.tasks.email_notification: cb8f6e7f-c591-4e23-b0ba-d813a0d195a6 executed in 8.174s
+[2023-04-21 19:00:11,763] INFO:huey:Worker-1:Executing home.tasks.email_notification: 624df0a0-2982-4642-81c7-b22e79922167
+[2023-04-21 19:00:19,543] INFO:huey:Worker-1:home.tasks.email_notification: 624df0a0-2982-4642-81c7-b22e79922167 executed in 7.780s
+[2023-04-22 18:20:09,913] INFO:huey:Worker-1:Executing home.tasks.email_notification: 54ce8e8d-4c50-48aa-9182-3ef98d55e4e9
+[2023-04-22 18:20:17,630] INFO:huey:Worker-1:home.tasks.email_notification: 54ce8e8d-4c50-48aa-9182-3ef98d55e4e9 executed in 7.717s
+[2023-04-22 18:30:04,678] INFO:huey:Worker-1:Executing home.tasks.email_notification: 3cc9c2e7-3150-4e57-a3e2-39cc1c762b94
+[2023-04-22 18:30:12,319] INFO:huey:Worker-1:home.tasks.email_notification: 3cc9c2e7-3150-4e57-a3e2-39cc1c762b94 executed in 7.641s
+[2023-04-22 19:00:10,577] INFO:huey:Worker-1:Executing home.tasks.email_notification: 2ad0c4b5-9596-4034-809b-8dc547c1d52b
+[2023-04-22 19:00:18,287] INFO:huey:Worker-1:home.tasks.email_notification: 2ad0c4b5-9596-4034-809b-8dc547c1d52b executed in 7.710s
+[2023-04-23 14:40:02,179] INFO:huey.consumer:MainThread:Received SIGTERM
+[2023-04-23 14:40:02,270] INFO:huey.consumer:MainThread:Shutting down
+[2023-04-23 14:40:02,270] INFO:huey.consumer:MainThread:Consumer exiting.

@@ -1,0 +1,147 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+
+<title>First Copy Omega Watches In Delhi Online : Our Top Picks</title>
+<meta name='robots' content='index, follow' /> 
+<style type="text/css">
+.content-box h3{
+  font-size: 14px;
+  font-family: montserrat,sans-serif;
+  font-weight: 500;
+}
+.content-box h2{
+font-size: 22px;
+margin-bottom: 10px;
+margin-top: 30px;
+}
+.content-box {
+    text-align: justify;
+    font-family: montserrat,sans-serif!important;
+}
+.content-box{
+color: #3e3d3d!important;
+}
+.blog-detail a{
+color: #db9648!important;
+}
+.blog-detail .content-box img{
+border: 1px solid #db9648;
+margin: 5px;
+}
+</style>
+
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main title-element">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="banner">
+      <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+      <div class="container-lg">
+        <div class="breadcrumb-box">
+          <div class="heading-box">
+            <h1>First Copy Omega Watches In Delhi Online: Our Top Picks</h1>
+          </div>
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home </a></li>
+            <li>
+              <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+            </li>
+
+            <li class="current"><a href="#">First Copy Omega Watches In Delhi Online: Our Top Picks</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- About Us Section Start -->
+    <section>
+        <div class="container-lg">
+          <div class="row gy-5 g-lg-3 g-xxl-4">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10 ratio_36">
+                <div id="myproducts" style="margin-bottom:30px">
+                    <div class="product-tab-content">
+                        <div class="view-option row g-3 g-xl-6 ratio_asos row-cols-2 row-cols-sm-3 row-cols-xl-6 grid-section">
+                            {% for p in products %}
+                            <div class="product-card">
+                                <div class="img-box">
+                                <!-- Thumbnail -->
+                                    {% if p.images.count > 0 %}
+                                        <a href="{% url 'product_details' p.slug %}"><img src="{{ p.images.all.first.cmp_image.url }}" alt="product" /></a>
+                                    {% else %}
+                                        <a href="{% url 'product_details' p.slug %}"><img src="{% static 'assets/images/lux.png' %}" alt="product" /></a>
+                                    {% endif %}
+                                </div>
+                                <!-- Content Box -->
+                                <div class="content-box">
+                                <a href="{% url 'product_details' p.slug %}">
+                                    {% if p.brand != None %}
+                                      <p>{{ p.brand }}</p>
+                                    {% endif %}  
+                                    <h2 style="margin-top: 10px;">{{ p.name }}</h2>
+                                    {% if p.sale_price != None %}
+                                        <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.sale_price }}</span> <del><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price }}</del>
+                                    {% elif p.price != None %}
+                                        <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price }}</span>
+                                    {% endif %}
+                                    
+                                </a>
+                                <a  href="{% url 'product_details' p.slug %}" class="btn btn-solid btn-sm mb-line addtocart-btn">View Details<i class="arrow"></i> </a>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <img src="{% static 'assets/images/no-product-found.png' %}" alt="No Products">    
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+              <div class="blog-wrap">
+                <div class="blog-box blog-detail">
+                      <img src="media/images/first-copy-omega-watches-in-delhi.jpg" width="100%" alt="first-copy-omega-watches-in-delhi" /> 
+                  <div class="content-box"> <span>
+                    <i data-feather="clock"> </i>Jan. 11, 2023</span>
+                    <h2>First Copy Rolex Watches in Delhi: Our Top Picks</h2> 
+                    
+                    <p>Omega is one of the finest swiss watch making brand. The watch collection offered by the century old brand is sophisticated, classy and elegant. The brand has a wide range of watches to suit different tastes and preferences, including sporty dive watches, elegant dress watches, and chronograph watches. Omega's watches are also worn by a number of high-profile individuals, including astronauts, athletes, and celebrities, which can further appeal to some consumers. Overall, Omega's target audience is composed of people who appreciates luxury and rarity at the same time. If you have desired Omega Watches for Long time but refrained from buying sue to staggering high rates, we offer you <a href="https://theluxurypioneer.com/men-watches/first-copy/omega-watches">First Copy Omega Watches In Delhi</a> that fit in your budget and suits your wrist.</p>
+                    <p>Omega, the popular luxury watchmaker brand, has launched its latest collection of watches that offers a delightful range of products in different hues and materials. Now that the summer season is officially here, a classy watch is sure to add a touch of sophistication and enhance your style quotient.</p>
+                    <b>Omega chronograph watches Delhi</b>
+                    <p>Being more than a century old brand, Omega has a lot of achievements in its cap. The accuracy and precision of Omega watches were second to none, therefore Omega Chronograph watch was the first ever watch to be used in olympics . Omega has been the official timekeeper of the Olympic Games on 28 occasions since 1932. However that isn’t the only first omega chronograph had accomplished. The Omega Speedmaster is perhaps the most well-known chronograph watch in the brand's lineup. In addition to being worn on the moon, the Speedmaster has also been worn on a number of space missions and has become known as the "Moonwatch."
+Omega has a number of other chronograph watch collections, including the Seamaster, the De Ville, and the Constellation. Each collection has a range of styles and features to suit different tastes and needs. Explore your favourites First Copy Omega Watches In Delhi with Luxury Pioneer.
+Your search for Omega chronograph watches Delhi ends by visiting Luxury Pioneer official website.</p>
+
+                    <b>Omega Constellation watches Delhi</b>
+                    <p>Omega's Constellation watch collection is known for its elegant design and attention to detail. These watches feature a range of high-quality materials, including stainless steel, 18K gold, and diamonds. The Constellation line is characterized by its iconic "griffes," or claws, which hold the bezel in place and give the watch a distinctive look. Many Constellation watches are equipped with chronograph functions, as well as other complications such as date displays and power reserve indicators. In addition to traditional mechanical movements, Omega also offers Constellation watches with its Co-Axial escapement, which is designed to improve the accuracy and performance of the movement. Omega's Constellation watches are made with a commitment to excellence and are built to last. They are the perfect choice for those who appreciate the finest things in life and want a watch that will stand the test of time. At luxury pioneer you may also find Omega watches for sale in Delhi. Also Buy Omega Constellation Watches in Delhi at attractive rates.</p>
+                    
+                    <b>Omega Seamaster watches Delhi</b>
+                    <p>Omega's Seamaster watch collection is designed for those who live an active lifestyle and need a watch that can keep up with them. The Seamaster line is inspired by Omega's maritime heritage and is water resistant to depths of up to 300 meters. Many Seamaster watches are equipped with chronograph functions, allowing for precise timekeeping during water-based activities. The Seamaster collection is available in a range of styles, including dive watches, sport watches, and dress watches. Omega's Seamaster watches are made with high-quality materials such as stainless steel, titanium, and 18K gold, and are built to withstand the demands of an active lifestyle. In addition to traditional mechanical movements, Omega also offers Seamaster watches with quartz movements, which offer high accuracy and are powered by a battery. Whether you're exploring the ocean depths or navigating the city streets, an Omega Seamaster watch is the perfect companion for any adventure. Find Omega Seamaster watches Delhi with Luxury Pioneer.</p>
+                    
+                    <b>Price of Omega watches in Delhi: Get them at a steal</b>
+                    <p>Are you an Omega watch lover? Do you know you can own multiple Omega Watches at price of one with Luxury Pioneer?
+Luxury Pioneer is the most trusted luxury replica website with over 1000 clients. We swear by the quality of products. We are not your ordinary shop selling cheap replica products. At Luxury Pioneer, we have 100% client retention due to the fact that we offer products that looks exactly like genuine products. If you are looking for Luxury Omega watches in Delhi, you must visit our website and place an order now. </p>
+                    
+                    
+                    <h2>Popular Searches</h2>
+                    <b><a href="/men-watches/first-copy/panerai-watches">First Copy Panerai Watches</a> |
+                    <a href="/men-watches/first-copy/audemars-piguets-watches">First Copy Audemars Piguets Watches</a> |
+                    <a href="/men-watches/first-copy/cartier-watches">First Copy Cartier Watches</a> |
+                    <a href="/men-watches/first-copy/richard-mille-watches">First Copy Richard Mille Watches</a> |
+                    <a href="/men-watches/first-copy/omega-watches">First Copy Omega Watches</a> |
+                    <a href="/men-watches/first-copy/rolex-watches">First Copy Rolex Watches</a> </b>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+  <!-- About Us Section End -->
+</main>
+<!-- Main End -->
+{% endblock web_content %}

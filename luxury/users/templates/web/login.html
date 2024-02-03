@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% load static %}
+<!-- Html start -->
+<html lang="en">
+    {% include 'web/includes/head.html' %}  
+  <!-- Body Start -->
+  <body>
+    <!-- Main Start -->
+    <div class="main">
+      <section class="page-body p-0">
+        <div class="row g-0 ratio_asos">
+          <div class="order-2 order-lg-1 col-lg-5">
+            <div class="content-box">
+              <div>
+                <h5>LOGIN <span class="bg-theme-blue"></span></h5>
+                <p class="font-md content-color">How do i get access order,wishlist and recomendation ?</p>
+                {% include 'web/includes/alerts.html' %}
+                <form action="{% url 'login' %}" method="POST" class="custom-form form-pill">
+                    {% csrf_token %}
+                    <div class="input-box">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="email" name="email" id="email" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="password">Password</label>
+                        <div class="icon-input">
+                            <input class="form-control" type="password" name="password" id="password" required>
+                            <img class="showHidePassword" src="{% static 'assets/images/icon/eye.png' %}" alt="eye" />
+                        </div>
+                    </div>
+                    <a class="forgot-link" href="{% url 'forgot_password' %}">Forgot Password?</a>
+                    <button type="submit" class="btn-solid rounded-pill line-none">Login<i class="arrow"></i></button>
+                    <a href="{% url 'home' %}" class="btn-solid rounded-pill line-none btn-outline mt-3 d-flex justify-content-center">Home<i class="arrow"></i></a>
+                </form>
+
+                <span class="backto-link font-default content-color text-decoration-none">If you are new, 
+                    <a class="text-decoration-underline theme-color" href="{% url 'register' %}"> Create Now </a> 
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-1 order-lg-2 col-lg-7">
+            <div class="img-box">
+              <img class="bg-img" src="{% static 'assets/images/inner-page/girl.png' %}" alt="banner" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- Main End -->
+    <script>
+        const showHideBtn = document.querySelectorAll(".showHidePassword");
+        let = activeEye = 1;
+        for (let i = 0; i < showHideBtn.length; ++i) {
+            showHideBtn[i].addEventListener("click", function () {
+                let inputEl = showHideBtn[i].parentNode.querySelector("input");
+                if (inputEl.type === "password") {
+                    inputEl.type = "text"
+                    activeEye = 2
+                } else {
+                    inputEl.type = "password"
+                    activeEye = 1
+                }
+                showHideBtn[i].src = `/static/assets/images/icon/eye.png`;
+            });
+        }
+    </script>
+    {% include 'web/includes/scripts.html' %}
+  </body>
+
+</html>

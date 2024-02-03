@@ -1,0 +1,96 @@
+summary {
+    display: block;
+    cursor: pointer;
+    outline: 0; 
+   
+  }
+  
+  summary::-webkit-details-marker {
+      display: none;
+    }
+  
+  
+  .tree-nav__item {
+    display: block;
+    white-space: nowrap;
+    color: #333;
+    position: relative;
+    font-family: Poppins,sans-serif;
+    font-size: 16px;
+  }
+  .tree-nav__item.is-expandable::before {
+    border-left: 1px solid #ccc;
+    content: "";
+    height: 100%;
+    left: 0.8rem;
+    position: absolute;
+    top: 2.4rem;
+    height: calc(100% - 2.4rem);
+  }
+  .tree-nav__item .tree-nav__item {
+    margin-left: 1.3rem;
+  }
+  .tree-nav__item.is-expandable[open] > .tree-nav__item-title::before {
+    font-family: "ionicons";
+    transform: rotate(90deg);
+  }
+  .tree-nav__item.is-expandable > .tree-nav__item-title {
+    padding-left: 0.4rem;
+  }
+  .tree-nav__item.is-expandable > .tree-nav__item-title::before {
+    position: absolute;
+    will-change: transform;
+    transition: transform 300ms ease;
+    font-family: "ionicons";
+    color: #333;
+    font-size: 13px;
+    content: "\f125";
+    left: 0;
+    display: inline-block;
+    width: 1.6rem;
+    text-align: center;
+  }
+  .form-check {
+    padding-left: 1.6rem;
+}
+
+  .tree-nav__item-title {
+    cursor: pointer;
+    display: block;
+    outline: 0;
+    color: #333;
+    line-height: 30px;
+    font-family: Poppins,sans-serif;
+    font-size: 16px;
+  }
+  .tree-nav__item-title .icon {
+    display: inline;
+    padding-left: 1.6rem;
+    margin-right: 0.8rem;
+    color: #ccc;
+    font-size: 1.4rem;
+    position: relative;
+  }
+  .tree-nav__item-title .icon::before {
+    top: 0;
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    width: 1.6rem;
+    text-align: center;
+  }
+  
+  .tree-nav__item-title::-webkit-details-marker {
+    display: none;
+  }
+  
+  .radio input {
+    left: -4px;
+    opacity: 0;
+    position: absolute;
+    top: -1px;
+    z-index: 100;
+}
+.radio input:checked+.radio-view {
+    background-position: -21px -21px;
+}

@@ -1,0 +1,563 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load tags %}
+{% block head_section %}
+
+<meta name="title" content="{{ pproduct.meta_title|default_if_none:"" }}" />
+<link rel="canonical" href="{{ request.build_absolute_uri }}" />
+<meta name="description" content="{{ pproduct.meta_description|default_if_none:"" }}" />
+<meta property="og:type" content="products" />
+<meta name="keywords" content="{{ pproduct.keywords|default_if_none:"" }}" />
+<meta name='robots' content="{{ pproduct.robots|default_if_none:"" }}" />
+
+<meta name="twitter:title" content="{{ pproduct.name|default_if_none:"" }}" />
+<meta name="twitter:description" content="{{ pproduct.desc|default_if_none:"" }}" />
+{% if pproduct.images.count > 0 %}
+<meta name="twitter:image" content="{{ pproduct.images.all.first.image.url }}" />
+{% else %}
+<meta name="twitter:image" content="{% static 'assets/images/lux.png' %}" />
+{% endif %}
+
+<title>{{ pproduct.name|default_if_none:"" }}</title>
+
+<meta property="article:published_time" content="2022-11-26T12:27:00+05:30">
+<meta property="article:modified_time" content="2022-11-26T12:27:00+05:30">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="products">  
+<meta property="og:title" content="{{ pproduct.name|default_if_none:'' }}">
+<meta property="og:description" content="{{ pproduct.desc|default_if_none:'' }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ pproduct.name|default_if_none:'' }}">
+<meta name="twitter:description" content="{{ pproduct.desc|default_if_none:'' }}">
+<meta name="twitter:image" content="https://theluxurypioneer.com/static/assets/images/logos/luxury-pioneer.png">
+
+<script type="application/ld+json">
+{
+"@context": "https://schema.org/",
+"@type": "Product",
+"name": "{{ pproduct.name|unslug }}",
+"image": "https://theluxurypioneer.com/{{ pproduct.cmp_image.url }}",
+"offers": {
+"@type": "Offer",
+"priceCurrency": "INR",
+"price": "{{ pproduct.price }}",
+"availability": "https://schema.org/InStock",
+"url": "{{ request.build_absolute_uri }}"
+}
+}
+</script>
+<style>
+.pre-order {
+font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+font-weight: normal;
+line-height: 22px;
+color: #767676;
+margin-bottom: 18px;
+margin-top: calc(-4px + (-2 + 4) * ((100vw - 320px) / (1920 - 320)));
+}   
+[v-cloak] {
+  display: none;
+}
+[v-cloak] + #lploader::before {
+    content: url({% static 'assets/images/loader2.svg' %});
+    display: block;
+    text-align: center;
+    width: 390px;
+    height: 600px;
+    margin: 0px auto;
+    font-size: 30px;
+    padding: 180px 3px 6px 0px;
+
+}
+
+</style>
+
+{% autoescape off %}
+{{ pproduct.schema|default_if_none:'' }}
+{% endautoescape %}
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+
+<main class="main" id="product-details" v-cloak>
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-wrap">
+      <div class="banner">
+        <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+        <div class="container-lg">
+          <div class="breadcrumb-box">
+            <div class="heading-box">
+              <h1>{{ pproduct.name|unslug }}</h1>
+            </div>
+            <ol class="breadcrumb">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li>
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+              </li>
+              <li><a href="{% url 'maincategory_products' pproduct.main_category.slug %}">{{ pproduct.main_category }}</a></li>
+              <li>
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+              </li>
+              <li><a href="{% url 'category_products' pproduct.main_category.slug pproduct.category.slug %}">{{ pproduct.category.name }}</a></li>
+              <li>
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+              </li>
+              <li><a href="{% url 'subcategory_products' pproduct.main_category.slug pproduct.category.slug pproduct.subcategory.slug %}">{{ pproduct.subcategory.name }}</a></li>
+              <li>
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+              </li>
+              <li class="current">{{ pproduct.name|unslug }}</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Product Section Start -->
+    <section class="product-page">
+      <div class="container-lg">
+        <div class="row g-3 g-xl-4 view-product">
+          <div class="col-md-7">
+            <div class="slider-box sticky off-50 position-sticky">
+              <div class="row g-2">
+                <div class="col-2">
+                  <div class="thumbnail-box">
+                    <div class="swiper thumbnail-img-box thumbnailSlider2">
+                      
+                      <div class="swiper-wrapper">
+                        {% for pi in pproduct.images.all %}
+                            {% if pi.default is True %}
+                                <div class="swiper-slide">
+                                  <img src="{{ pi.cmp_image.url }}"alt="{{ pi.alt|unslug }}" />
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                        <div class="swiper-slide">
+                          <img src="{% static 'assets/images/lux.png' %}" alt="{{ pproduct.name|unslug }}" />
+                        </div>
+                        {% endfor %}
+                        {% for pi in pproduct.images.all %}
+                            {% if pi.default is False %}
+                                <div class="swiper-slide">
+                                  <img src="{{ pi.cmp_image.url }}"alt="{{ pi.alt|unslug }}" />
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                        <div class="swiper-slide">
+                          <img src="{% static 'assets/images/lux.png' %}" alt="{{ pproduct.name|unslug }}" />
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-10 ratio_square">
+                  <div class="swiper mainslider2">
+                    <div class="swiper-wrapper">
+                        {% for pi in pproduct.images.all %}
+                            {% if pi.default is True %}
+                                <div class="swiper-slide">
+                                  <img src="{{ pi.cmp_image.url }}"alt="{{ pi.alt|unslug }}" />
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                        <div class="swiper-slide">
+                          <img src="{% static 'assets/images/lux.png' %}" alt="{{ pproduct.name|unslug }}" />
+                        </div>
+                        {% endfor %}
+                        {% for pi in pproduct.images.all %}
+                            {% if pi.default is False %}
+                                <div class="swiper-slide">
+                                  <img src="{{ pi.cmp_image.url }}"alt="{{ pi.alt|unslug }}" />
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                        <div class="swiper-slide">
+                          <img src="{% static 'assets/images/lux.png' %}" alt="{{ pproduct.name|unslug }}" />
+                        </div>
+                        {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5">
+            <br><br>
+            <div class="product-detail-box">
+              <div class="product-option">
+                <h2>{{ pproduct.name|unslug }}</h2>
+                <div v-if="product.type == 'Simple'">
+                    <div class="option price" v-if="product.sale_price != null">
+                        <span><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(product.sale_price) ]]</span> <del><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(product.price) ]]</del>
+                    </div>  
+                    <div class="option price" v-else-if="product.price != null">
+                        <span><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(product.price) ]]</span>
+                    </div>
+                </div>
+                <div v-else>
+                    <div class="option price" v-if="selectedVariation.sale_price != null">
+                        <span><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(selectedVariation.sale_price) ]]</span> <del><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(selectedVariation.price) ]]</del>
+                    </div>  
+                    <div class="option price" v-else-if="selectedVariation.price != null">
+                        <span><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(selectedVariation.price) ]]</span>
+                    </div>
+                </div>
+
+                <div class="option-side">
+                  <div class="option" v-if="product.type == 'Variable'">
+                    <div class="option size" v-for="attr in attributes">
+                        <div class="title-box4">
+                          <p class="heading">[[attr.name]]:<span class="bg-theme-blue"></span></p>
+                        </div>
+                        <ul class="size-list">
+                            <li :class="v.id == selectedAttribute ? 'active': ''" @click="changeAttribute(v.id)" v-for="v in attr.values">[[v.name]]</li>
+                        </ul>
+                    </div>
+                  </div>
+                  <div class="option" v-if="product.price != null">
+                    <div class="title-box4">
+                      <p class="heading">Quantity: <span class="bg-theme-blue"></span></p>
+                    </div>
+                    <div class="plus-minus">
+                      <i @click="removeQty" class="fa fa-minus"></i>
+                      <input type="number" v-model="qty" min="1" max="50" disabled />
+                      <i @click="addQty" class="fa fa-plus"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div v-if="product.pre_order">
+                    <p class="pre-order">[[ product.pre_order_msg ]]</p>
+                </div>
+                
+                <div v-else>
+                    <div class="btn-group" v-if="product.type == 'Simple'">
+                        <a v-if="product.price == null" href="javascript:void(0)" class="btn-solid btn-sm" data-bs-toggle="modal" data-bs-target="#enquiryModal">Request A Call</a>
+                        <a v-else href="javascript:void(0)" @click="addCart" class="btn-solid btn-sm addtocart-btn">Add To Cart </a>
+                        <a v-if="showWishlistBtn == false && product.price != null" href="javascript:void(0)" @click="addWishlist" class="btn-outline btn-sm">Add To Wishlist</a>
+                        <a v-else href="{% url 'wishlist' %}" class="btn-outline btn-sm wishlist-btn">View Wishlist</a>
+                    </div>  
+                    <div class="btn-group" v-else>
+                        <a v-if="selectedVariation.price == null" href="javascript:void(0)" class="btn-solid btn-sm" data-bs-toggle="modal" data-bs-target="#enquiryModal">Request A Call</a>
+                        <a v-else href="javascript:void(0)" @click="addCart" class="btn-solid btn-sm addtocart-btn">Add To Cart </a>
+                        <a v-if="showWishlistBtn == false && selectedVariation.price != null" href="javascript:void(0)" @click="addWishlist" class="btn-outline btn-sm">Add To Wishlist</a>
+                        <a v-else href="{% url 'wishlist' %}" class="btn-outline btn-sm wishlist-btn">View Wishlist</a>
+                    </div>
+                </div>
+
+                <!-- Tabs Start -->
+                <div class="description-box">
+                  <div class="row gy-4">
+                    <div class="col-12">
+                      <!-- Tabs Filter Start -->
+                      <ul class="nav nav-pills nav-tabs2 row-tab" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="description-tab" data-bs-toggle="pill" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">
+                            Description
+                          </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="specification-tab" data-bs-toggle="pill" data-bs-target="#specification" type="button" role="tab" aria-controls="specification" aria-selected="false">
+                            Specification
+                          </button>
+                        </li>
+                      </ul>
+                      <!-- Tabs Filter End -->
+                    </div>
+
+                    <div class="col-12">
+                      <!-- Tab Content Start -->
+                      <div class="tab-content" id="pills-tabContent">
+                        <!-- Description Tab Content Start -->
+                        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                            <div class="details-product">
+                               {% if pproduct.desc is not None %}
+                                  {% autoescape off %}
+                                  {{ pproduct.desc }}
+                                  {% endautoescape %}
+                              {% else %}
+                                  <p>No Description</p>
+                              {% endif %}
+                            </div>
+                        </div>
+                        <!-- Description Tab Content End -->
+
+                        <!-- Specification Tab Content Start -->
+                        <div class="tab-pane fade" id="specification" role="tabpanel" aria-labelledby="specification-tab">
+                          <div class="specification-wrap">
+                            <div v-if="product.specs == null || product.specs.length <= 0">
+                              <div class="details-product">
+                                <p>No Specifications</p>
+                              </div>
+                            </div>
+                            <div v-else class="table-responsive">
+                              <table class="specification-table table striped">
+                                <tr v-for="s in product.specs">
+                                  <th>[[ s.name ]]</th>
+                                  <td>[[ s.value ]]</td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <!-- Tab Content End -->
+                    </div>
+                  </div>
+                </div>
+                <!-- Tabs End -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- Product Section End -->
+
+    <!-- New Arrived Section Start -->
+    <section class="ratio_asos" style="margin-bottom:40px">
+      <div class="container-lg">
+        <div class="title-box4">
+          <p class="heading font-2xl">YOU MAY ALSO LIKE… <span class="bg-theme-blue"></span></p>
+        </div>
+        <div class="swiper product-slider">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="p in suggestedProducts">
+              <div class="product-card">
+                <div class="img-box">
+                  <!-- Thumbnail -->
+                  <a v-if="p.images.length > 0" :href="`/product/${p.slug}`"><img v-if="p.images.filter((i) => i.default == true).length > 0" :src="p.images.filter((i) => i.default == true)[0].cmp_image" :alt="addUnslug(p.name)"/></a>
+                  <a v-else :href="`/product/${p.slug}`"><img src="{% static 'assets/images/lux.png' %}" height="238" alt="product" /></a>
+                </div>
+
+                <!-- Content Box -->
+                <div class="content-box">
+                  <a :href="`/product/${p.slug}`">
+                    <p>[[ p.brand ]]</p>
+                    <h2>[[ addUnslug(p.name) ]]</h2>
+                    <div v-if="p.sale_price != null">
+                        <span><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(p.sale_price) ]]</span> <del><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(p.price) ]]</del>
+                    </div>
+                    <div v-else-if="p.price != null">
+                        <span><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(p.price) ]]</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- New Arrived Section End -->
+
+     <!-- Enquiry Modal Start -->
+     <div class="modal fade" id="enquiryModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" @submit="submitEnquiry">
+          <div class="modal-header">
+            <h5 class="modal-title">Call for Enquiry</h5>
+            <span class="close-modal" data-bs-dismiss="modal"><i data-feather="x"></i></span>
+          </div>
+          <div class="modal-body full-grid-mobile">
+            <div class="custom-form form-pill">
+              <div class="row g-3 g-md-4">
+                <div class="col-12">
+                  <div class="input-box">
+                    <label for="name">Phone No.</label>
+                    <input class="form-control" type="number" name="phone" id="phone" required/>
+                  </div>
+                </div>
+                <input type="hidden" name="product" value="{{pproduct.id}}">
+                <div class="col-12">
+                  <div v-if="enquiryFormMsg" :class="enquiryFormMsg.type === 'success' ? 'alert alert-success' : 'alert alert-danger'" role="alert">
+                    [[ enquiryFormMsg.text ]]
+                  </div> 
+                </div>      
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-box">
+              <button type="button" class="btn btn-outline rounded-pill" data-bs-dismiss="modal" aria-label="Close">Close</button>
+              <button type="submit" class="btn btn-solid line-none rounded-pill">Submit<i class="arrow"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Enquiry Modal End -->
+</main>
+<!-- Main End -->
+<div id="lploader"></div>
+<script src="{% static 'vue/vue.global.js' %}"></script>
+<script src="{% static 'vue/axios.min.js' %}"></script>
+<script>
+    Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                product: {},
+                showImages: false,
+                suggestedProducts: [],
+                attributes: [],
+                selectedAttribute: 0,
+                selectedVariation: {},
+                errors: {},
+                qty: 1,
+                showWishlistBtn: false,
+                enquiryFormMsg: null,
+            }
+        },
+        mounted() {
+            let rawData = '{{product|escapejs}}'
+            this.product = JSON.parse(rawData);
+            
+            if (this.product.images.length > 0) {
+                this.showImages = true;
+            }
+            this.suggestedProducts = JSON.parse('{{suggested_products|escapejs}}');
+            if (this.product.type == 'Variable') { 
+                this.getAttributes();
+            }
+        },
+        methods: {
+            getAttributes() {
+                const attrSet = new Set();
+                for (let a of this.product.variations[0].values) {
+                    attrSet.add(a.attribute);
+                }
+                let params = {params: {"ids": JSON.stringify(Array.from(attrSet))}};
+                axios.get("{% url 'api_attributes' %}", params).then((resp) => {
+                    if (resp.data.status === true) {
+                        this.attributes = resp.data.data;
+                        this.selectedAttribute = this.attributes[0].values[0].id;
+                        for (let variant of this.product.variations) {
+                            if (variant.values.some(v => v.attribute_value == this.selectedAttribute)) {
+                              this.selectedVariation = variant;
+                            }
+                        }
+                    } else {
+                        this.errors = resp.data.errors;
+                    }
+                });
+            },
+            changeAttribute(id) {
+                this.selectedAttribute = id;
+                this.selectedVariation = {};
+                for (let variant of this.product.variations) {
+                    if (variant.values.some(v => v.attribute_value == this.selectedAttribute)) {
+                        this.selectedVariation = variant;
+                    } 
+                }
+            },
+            addQty() {
+                this.qty += 1;
+            },
+            removeQty() {
+                if (this.qty > 1) {
+                  this.qty -= 1;
+                }
+            },
+            addCart() {
+                let authed = JSON.parse('{{authed}}');
+                if (authed == false) {
+                    window.location = '/user/login';
+                    return;
+                }
+                let price = 0;
+                if (this.product.type == 'Simple') {
+                    if (this.product.sale_price != null) {
+                        price = this.product.sale_price;
+                    } else {
+                        price = this.product.price;
+                    }
+                } else {
+                    if (this.selectedVariation.sale_price != null) {
+                        price = this.selectedVariation.sale_price;
+                    } else {
+                        price = this.selectedVariation.price;
+                    }
+                }
+                let total = price * this.qty;
+                let data = new FormData();
+                data.append('product', this.product.id.toString());
+                if (this.product.type == 'Simple') {
+                  data.append('variation', '0');
+                } else {
+                  data.append('variation', this.selectedVariation.id.toString());
+                }
+                data.append('total', total.toString());
+                data.append('qty', this.qty.toString());
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+                axios.post("{% url 'change_cart' %}", data).then((resp) => {
+                    console.log('added to cart');  
+                    if (resp.data.status === false) {
+                        console.log('error '+ JSON.stringify(resp.data.errors));  
+                        this.errors = resp.data.errors;
+                    } else {
+                         window.location = `/product/${this.product.slug}`;
+                    }
+                });
+            },
+            addWishlist() {
+                let authed = JSON.parse('{{authed}}');
+                if (authed == false) {
+                    window.location = '/user/login';
+                    return;
+                }
+                let data = new FormData();
+                data.append('product', this.product.id.toString());
+                if (this.product.type == 'Simple') {
+                  data.append('variation', '0');
+                } else {
+                  data.append('variation', this.selectedVariation.id.toString());
+                } 
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+                axios.post("{% url 'add_wishlist' %}", data).then((resp) => {
+                    if (resp.data.status === true) {
+                        this.showWishlistBtn = true;
+                        window.location = `/product/${this.product.slug}`;
+                    } else {
+                        console.log('error '+ JSON.stringify(resp.data.errors));  
+                        this.errors = resp.data.errors;
+                    }
+                });
+            },
+            addCommas(x) {
+                if (x == null || x == '') {
+                    return '';
+                } else {
+                    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+            },
+            addUnslug(x) {
+                return x.replace(/-/g, " ")
+            },
+            submitEnquiry(e) {
+              e.preventDefault()
+              const formData = new FormData()
+              formData.append('phone', e.target.phone.value)
+              formData.append('product', e.target.product.value)
+              formData.append('csrfmiddlewaretoken', "{{csrf_token}}")
+              axios.post('/api/products/enquiry', formData).then((res) => {
+                if (res.status === 201) {
+                  this.enquiryFormMsg = {type: 'success', text: "Enquiry submitted successfully, we'll contact you soon!"}
+                }
+              }).catch((err) => {
+                console.log(err)
+                if (err.response?.data?.phone) this.enquiryFormMsg = {type: 'error', text: err.response?.data?.phone.join(', ')}
+                else this.enquiryFormMsg = {type: 'error', text: 'Oops! Something went wrong'}          
+              })
+            },
+        }
+    }).mount('#product-details');
+</script>
+{% endblock web_content %}

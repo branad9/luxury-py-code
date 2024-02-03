@@ -1,0 +1,788 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.1.4/tailwind.min.css">
+<div class="page-content">
+    <div class="container-fluid" id="add-product" v-cloak>
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Add Product</h4>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'cms_home' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'cms_products' %}">Products</a></li>
+                            <li class="breadcrumb-item active">Add Product</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mr-auto p-2">
+                            <h4 class="card-title">Add Product</h4>
+                        </div>
+                        <div v-if="Object.keys(errors).length > 0" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            [[ errors?.serverError || 'Please fix below errors.' ]]
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="POST" @submit.prevent="addProduct" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" v-model="product.name" class="form-control"
+                                            placeholder="Enter name" :class="'name' in errors ? 'is-invalid' : ''"
+                                            required>
+                                        <div v-if="'name' in errors" class="invalid-feedback">[[ errors['name'] ]]</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Brand</label>
+                                        <select v-model="product.brand" class="form-control">
+                                            <option value="" selected>-----</option>
+                                            {% for b in brands %}
+                                            <option value="{{b.id}}">{{ b.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Main Category</label>
+                                        <select v-model="product.main_category" @change="getCategories"
+                                            class="form-control" required>
+                                            <option value="">-----</option>
+                                            <option :value="mc.id" v-for="mc in main_categories">[[ mc.name ]]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select v-model="product.category" @change="getSubcategories"
+                                            class="form-control" required>
+                                            <option value="">-----</option>
+                                            <option :value="c.id" v-for="c in categories">[[ c.name ]]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Subcategory</label>
+                                        <select v-model="product.subcategory" class="form-control" required>
+                                            <option value="">-----</option>
+                                            <option :value="sc.id" v-for="sc in subcategories">[[ sc.name ]]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="text-left">Product Images</label>
+                            {% comment %} <div class=" items-center justify-center text-center">
+                                <div class="p-12 bg-gray-100 border border-gray-300 rounded-lg" @dragover="dragover"
+                                    @dragleave="dragleave" @drop="drop">
+                                    <input type="file" multiple name="fields[assetsFieldHandle][]"
+                                        id="assetsFieldHandle" class="w-px h-px opacity-0 overflow-hidden absolute"
+                                        @change="onChange" ref="file" accept="image/*" />
+                                    <label for="assetsFieldHandle" class="block cursor-pointer">
+                                        <div>
+                                            Please drop product images here
+                                            or <span class="underline">click here</span> to browse files.
+                                        </div>
+                                    </label>
+                                    <ul class="mt-4" v-if="this.filelist.length" v-cloak>
+                                        <li class="text-sm p-1" v-for="file in filelist">
+                                            [[ file.name ]]
+                                            <a href="javascript:void(0)" class="btn btn-danger"
+                                                @click="remove(filelist.indexOf(file))"><i
+                                                    class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br><br> {% endcomment %}
+
+                            {% comment %} <div id="accordion">
+                                <div class="card mb-1 shadow-none">
+                                    <a href="#collapseOne" class="text-dark" data-toggle="collapse" aria-expanded="true"
+                                        aria-controls="collapseOne">
+                                        <div class="card-header" id="headingOne">
+                                            <h6 class="m-0">Product Images
+                                                <i class="bx bx-chevron-up" style="float: right;font-size: 25px;"></i>
+                                            </h6>
+                                        </div>
+                                    </a>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                        data-parent="#accordion">
+                                        <div class="card-body">
+                                            <a href="javascript:void(0)" class="btn btn-success float-right"
+                                                @click="addImage">
+                                                <i class="bx bx-plus font-size-16 align-middle mr-2"></i>Add Image
+                                            </a>
+                                            <br>
+                                            <br>
+                                            <div v-for="(img, i) in images">
+                                                <div class="row">
+                                                    <div class="form-group col-md-6 mb-2">
+                                                        <div class="custom-file">
+                                                            <input type="file" @change="handleImageUpload($event, i)"
+                                                                class="custom-file-input" :id="i" accept="image/*"
+                                                                required>
+                                                            <label class="custom-file-label text-truncate"
+                                                                :for="i">[[img.imageFileName]]</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <a href="javascript:void(0)" class="btn btn-danger"
+                                                            @click="deleteImage(i)"><i
+                                                                class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> {% endcomment %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Reference</label>
+                                        <input type="url" v-model="product.reference" class="form-control"
+                                            placeholder="Enter reference"
+                                            :class="'reference' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'reference' in errors" class="invalid-feedback">[[
+                                            errors['reference'] ]]</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Type</label>
+                                        <select v-model="product.type" class="form-control" required>
+                                            <option value="Simple">Simple</option>
+                                            <option value="Variable">Variable</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" v-if="product.type == 'Simple'">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input type="text" v-model="product.price" class="form-control"
+                                            placeholder="Enter price" :class="'price' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'price' in errors" class="invalid-feedback">[[ errors['price'] ]]
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Sale Price</label>
+                                        <input type="text" v-model="product.sale_price" class="form-control"
+                                            placeholder="Enter sale price"
+                                            :class="'sale_price' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'sale_price' in errors" class="invalid-feedback">[[
+                                            errors['sale_price'] ]]</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Qty</label>
+                                        <input type="number" v-model="product.qty" class="form-control"
+                                            placeholder="Enter qty" :class="'qty' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'qty' in errors" class="invalid-feedback">[[ errors['qty'] ]]</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="accordion" v-else>
+                                <div class="card mb-1 shadow-none">
+                                    <a href="#collapseOne" class="text-dark" data-toggle="collapse" aria-expanded="true"
+                                        aria-controls="collapseOne">
+                                        <div class="card-header" id="headingOne">
+                                            <h6 class="m-0">Product Variations
+                                                {% comment %} <i class="bx bx-chevron-up"
+                                                    style="float: right;font-size: 25px;"></i> {% endcomment %}
+                                            </h6>
+                                        </div>
+                                    </a>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                        data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Select Attributes</label>
+                                                        <select class="form-control" @change="changeSelectedAttributes"
+                                                            v-model="selectedAttributes" multiple>
+                                                            <option :value="a" v-for="a in attributes">[[ a.name ]]
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <a href="javascript:void(0)" class="btn btn-success float-right"
+                                                        @click="addVariation">
+                                                        <i class="bx bx-plus font-size-16 align-middle mr-2"></i>Add
+                                                        Variation
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <div v-for="(v, i) in variations">
+                                                <div class="row">
+                                                    <div class="col-md-4" v-for="(attribs, j) in selectedAttributes">
+                                                        <div class="form-group">
+                                                            <label>[[attribs.name]]</label>
+                                                            <select v-model="v.values[j].attribute_value"
+                                                                class="form-control" required>
+                                                                <option value="">-----</option>
+                                                                <option :value="a.id" v-for="a in attribs.values">
+                                                                    [[a.name]]</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Price</label>
+                                                            <input type="text" v-model="v.price" class="form-control"
+                                                                placeholder="Enter price"
+                                                                :class="'price' in errors ? 'is-invalid' : ''">
+                                                            <div v-if="'price' in errors" class="invalid-feedback">[[
+                                                                errors['price'] ]]</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Sale Price</label>
+                                                            <input type="text" v-model="v.sale_price"
+                                                                class="form-control" placeholder="Enter sale price"
+                                                                :class="'sale_price' in errors ? 'is-invalid' : ''">
+                                                            <div v-if="'sale_price' in errors" class="invalid-feedback">
+                                                                [[ errors['sale_price'] ]]</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Qty</label>
+                                                            <input type="number" v-model="v.opening_qty"
+                                                                class="form-control" placeholder="Enter qty"
+                                                                :class="'qty' in errors ? 'is-invalid' : ''">
+                                                            <div v-if="'qty' in errors" class="invalid-feedback">[[
+                                                                errors['qty'] ]]</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1 mt-4">
+                                                        <a href="javascript:void(0)" class="btn btn-danger"
+                                                            @click="deleteVariation(i)"><i
+                                                                class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" v-model="v.in_stock"
+                                                                    class="custom-control-input" :id="`stock-${i}`">
+                                                                <label class="custom-control-label"
+                                                                    :for="`stock-${i}`">In Stock</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tags</label>
+                                        <select class="form-control" v-model="product.tag" multiple="multiple">
+                                            {% for t in tags %}
+                                            <option value="{{t.id}}">{{ t.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <p-editor v-model="value1" editor-style="height: 300px"></p-editor>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 mt-4">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" v-model="product.pre_order"
+                                                class="custom-control-input" id="formrow-pre-order">
+                                            <label class="custom-control-label" for="formrow-pre-order">Pre
+                                                Order</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Pre Order Date</label>
+                                        <input type="date" v-model="product.pre_order_date" class="form-control"
+                                            :class="'pre_order_date' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'pre_order_date' in errors" class="invalid-feedback">[[
+                                            errors['pre_order_date'] ]]</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Pre Order Msg</label>
+                                        <input type="text" v-model="product.pre_order_msg" class="form-control"
+                                            placeholder="Enter Message"
+                                            :class="'pre_order_msg' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'pre_order_msg' in errors" class="invalid-feedback">[[
+                                            errors['pre_order_msg'] ]]</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Length</label>
+                                        <input type="number" v-model="product.length" class="form-control"
+                                            placeholder="Enter length" :class="'length' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'length' in errors" class="invalid-feedback">[[ errors['length'] ]]
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Width</label>
+                                        <input type="number" v-model="product.width" class="form-control"
+                                            placeholder="Enter width" :class="'width' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'width' in errors" class="invalid-feedback">[[ errors['width'] ]]
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Height</label>
+                                        <input type="number" v-model="product.height" class="form-control"
+                                            placeholder="Enter height" :class="'height' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'height' in errors" class="invalid-feedback">[[ errors['height'] ]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="javascript:void(0)" class="btn btn-success float-right"
+                                        @click="addSpecs"><i class="bx bx-plus font-size-16 align-middle mr-2"></i>Add
+                                        Specifications</a>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-for="(ps, i) in product.specs">
+                                <div class="col-md-5">
+                                    <label>Name</label>
+                                    <input type="text" v-model="ps.name" class="form-control"
+                                        placeholder="Specification name" id="horizontal-value-input" required>
+                                </div>
+                                <div class="col-md-5">
+                                    <label>Value</label>
+                                    <input type="text" v-model="ps.value" class="form-control"
+                                        placeholder="Specification value" id="horizontal-value-input" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="javascript:void(0)" class="btn btn-danger mt-4" @click="deleteSpecs(i)"><i
+                                            class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-2" v-if="product.type == 'Simple'">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" v-model="product.in_stock"
+                                                class="custom-control-input" id="formrow-stock">
+                                            <label class="custom-control-label" for="formrow-stock">In Stock</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" v-model="product.active" class="custom-control-input"
+                                                id="formrow-active">
+                                            <label class="custom-control-label" for="formrow-active">Is Active</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="h5 mt-4">Product Images</h5>
+                            <hr class="mb-3">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="javascript:void(0)" class="btn btn-success float-right"
+                                        @click="addImage"><i class="bx bx-plus font-size-16 align-middle mr-2"></i>Add
+                                        Image</a>
+                                </div>
+                            </div>
+
+                            <div class="row form-group" v-for="(img, i) in product.images">
+                                <div class="col-md-3">
+                                    <label>Image</label>
+                                    <div class="custom-file mb-3">
+                                        <input type="file" @change="(e) => onImageChange(e, i)"
+                                            class="custom-file-input" id="customFile" accept="image/*" :class="errors?.images && i in errors.images && 'image' in errors.images[i] && 'is-invalid'" required>
+                                        <label class="custom-file-label" for="customFile">[[ img.file?.name ]]</label>
+                                        <div v-if="errors?.images && i in errors.images && 'image' in errors.images[i]" class="invalid-feedback">
+                                            <div v-for="msg in errors.images[i].image">[[ msg ]]</div>                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Name</label>
+                                    <input type="text" v-model="img.name" class="form-control" :class="errors?.images && i in errors.images && 'name' in errors.images[i] && 'is-invalid'" required>
+                                    <div v-if="errors?.images && i in errors.images && 'name' in errors.images[i]" class="invalid-feedback">
+                                        <div v-for="msg in errors.images[i].name">[[ msg ]]</div>                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Alt Text</label>
+                                    <input type="text" v-model="img.alt" class="form-control">
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="javascript:void(0)" class="btn btn-danger mt-4" @click="deleteImage(i)"><i
+                                            class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                </div>
+                            </div>
+
+                            <h5 class="h5 mt-4">Meta Information</h5>
+                            <hr class="mb-3">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Meta Title</label>
+                                        <input type="text" v-model="product.meta_title" class="form-control"
+                                            placeholder="Enter Title"
+                                            :class="'meta_title' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'length' in errors" class="invalid-feedback">[[ errors['meta_title']
+                                            ]]</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Robots</label>
+                                        <input type="text" v-model="product.robots" class="form-control"
+                                            placeholder="Ex. - index, follow"
+                                            :class="'robots' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'length' in errors" class="invalid-feedback">[[ errors['robots'] ]]
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Keywords</label>
+                                        <input type="text" v-model="product.keywords" class="form-control"
+                                            placeholder="Ex. - keyword 1, keyword 2"
+                                            :class="'keywords' in errors ? 'is-invalid' : ''">
+                                        <div v-if="'length' in errors" class="invalid-feedback">[[ errors['keywords'] ]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Meta Desc.</label>
+                                        <textarea v-model="product.meta_description" class="form-control"
+                                            :class="'meta_description' in errors ? 'is-invalid' : ''"
+                                            rows="6"></textarea>
+                                        <div v-if="'length' in errors" class="invalid-feedback">[[
+                                            errors['meta_description'] ]]</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Schema</label>
+                                        <textarea v-model="product.schema" class="form-control"
+                                            :class="'schema' in errors ? 'is-invalid' : ''" rows="6"></textarea>
+                                        <div v-if="'length' in errors" class="invalid-feedback">[[ errors['schema'] ]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" :class="loading ? 'disabled' : ''" class="btn btn-primary w-md">
+                                <i v-if="loading" class="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>[[
+                                submit ]]
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+    </div> <!-- container-fluid -->
+</div>
+<script src="{% static 'vue/vue.global.js' %}"></script>
+<script src="{% static 'vue/axios.min.js' %}"></script>
+<script src="https://unpkg.com/primevue@^3/core/core.min.js"></script>
+<script src="https://unpkg.com/quill/dist/quill.min.js"></script>
+<script src="https://unpkg.com/primevue@^3/editor/editor.min.js"></script>
+
+<script>
+    const { ref } = Vue;
+    Vue.createApp({
+        delimiters: ['[[', ']]'],
+        setup() {
+            const value1 = ref('');
+            return { value1 }
+        },
+        components: {
+            "p-editor": primevue.editor
+        },
+        data() {
+            return {
+                product: {
+                    name: null,
+                    main_category: '',
+                    category: '',
+                    subcategory: '',
+                    brand: '',
+                    tag: [],
+                    type: 'Simple',
+                    price: null,
+                    sale_price: null,
+                    desc: null,
+                    reference: null,
+                    qty: null,
+                    in_stock: true,
+                    pre_order: false,
+                    pre_order_date: null,
+                    pre_order_msg: null,
+                    length: null,
+                    width: null,
+                    height: null,
+                    active: true,
+                    specs: [],
+                    meta_title: '',
+                    meta_description: '',
+                    robots: '',
+                    keywords: '',
+                    schema: '',
+                    images: [
+                        {
+                            file: null,
+                            name: '',
+                            alt: ''
+                        }
+                    ],
+                },
+                main_categories: [],
+                categories: [],
+                subcategories: [],
+                filelist: [],
+                attributes: [],
+                selectedAttributes: [],
+                variations: [
+                    {
+                        values: [],
+                        price: null,
+                        sale_price: null,
+                        opening_qty: null,
+                        in_stock: true,
+                    }
+                ],
+                loading: false,
+                submit: 'Submit',
+                errors: {},
+            }
+        },    
+        mounted() {
+            this.attributes = JSON.parse('{{ attributes|safe }}');
+            this.getMainCategories();
+        },
+        methods: {
+            onChange() {
+                this.filelist = [...this.$refs.file.files];
+            },
+            remove(i) {
+                this.filelist.splice(i, 1);
+            },
+            dragover(event) {
+                event.preventDefault();
+                if (!event.currentTarget.classList.contains('bg-green-300')) {
+                    event.currentTarget.classList.remove('bg-gray-100');
+                    event.currentTarget.classList.add('bg-green-300');
+                }
+            },
+            dragleave(event) {
+                event.currentTarget.classList.add('bg-gray-100');
+                event.currentTarget.classList.remove('bg-green-300');
+            },
+            drop(event) {
+                event.preventDefault();
+                this.$refs.file.files = event.dataTransfer.files;
+                this.onChange();
+                event.currentTarget.classList.add('bg-gray-100');
+                event.currentTarget.classList.remove('bg-green-300');
+            },
+            getMainCategories() {
+                axios.get("{% url 'api_main_categories' %}").then((resp) => {
+                    if (resp.data.status === true) {
+                        this.main_categories = resp.data.data;
+                    } else {
+                        this.errors = resp.data.errors;
+                    }
+                });
+            },
+            getCategories() {
+                this.product.category = '';
+                this.product.subcategory = '';
+                let params = { params: { "id": this.product.main_category } };
+                axios.get("{% url 'api_categories' %}", params).then((resp) => {
+                    if (resp.data.status === true) {
+                        this.categories = resp.data.data;
+                    } else {
+                        this.errors = resp.data.errors;
+                    }
+                });
+            },
+            getSubcategories() {
+                this.product.subcategory = '';
+                let params = { params: { "id": this.product.category } };
+                axios.get("{% url 'api_subcategories' %}", params).then((resp) => {
+                    if (resp.data.status === true) {
+                        this.subcategories = resp.data.data;
+                    } else {
+                        this.errors = resp.data.errors;
+                    }
+                });
+            },
+            handleImageUpload(event, i) {
+                this.images[i].image = event.target.files[0];
+                this.images[i].imageFileName = event.target.files[0].name;
+            },
+            addImage() {
+                this.product.images.push({
+                    file: null,
+                    name: '',
+                    alt: ''
+                })
+            },
+            deleteImage(i) {
+                if (this.product.images.length > 1) {
+                    this.product.images.splice(i, 1);
+                }
+            },
+            changeSelectedAttributes() {
+                for (let i = 0; i < this.variations.length; i++) {
+                    this.variations[i].values = [];
+                    for (let sa of this.selectedAttributes) {
+                        this.variations[i].values.push({
+                            attribute: sa.id,
+                            attribute_value: '',
+                        });
+                    }
+                }
+            },
+            addVariation() {
+                let vals = [];
+                for (let sa of this.selectedAttributes) {
+                    vals.push({
+                        attribute: sa.id,
+                        attribute_value: '',
+                    });
+                }
+                this.variations.push({
+                    values: vals,
+                    price: null,
+                    sale_price: null,
+                    opening_qty: null,
+                    in_stock: true,
+                });
+            },
+            deleteVariation(i) {
+                if (this.variations.length > 1) {
+                    this.variations.splice(i, 1);
+                }
+            },
+            addSpecs() {
+                this.product.specs.push({
+                    name: null,
+                    value: null
+                });
+            },
+            deleteSpecs(i) {
+                this.product.specs.splice(i, 1);
+            },
+            addProduct() {
+                this.product.desc = this.value1;
+                if (this.product.type == 'Variable') {
+                    if (this.selectedAttributes.length <= 0) {
+                        alert('Please slect any one 1 attribute.');
+                        return;
+                    } else if (this.selectedAttributes.length > 1) {
+                        alert('Please select just 1 attribute.');
+                        return;
+                    }
+                    let selVals = [];
+                    this.variations.filter(variants => variants.values.filter(av => selVals.push(av.attribute_value)));
+                    if ((new Set(selVals)).size !== selVals.length) {
+                        alert('Multiple similar attribute values.');
+                        return;
+                    }
+                }
+                this.loading = true;
+                this.submit = 'Loading...';
+                let data = new FormData();
+                for (img of this.product.images) {
+                    data.append('images', img.file);
+                    data.append('imagesMeta', JSON.stringify({ ...img, file: undefined }))
+                }
+                data.append('product', JSON.stringify(this.product));
+                data.append('variations', JSON.stringify(this.variations));
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+                const headers = { 'Content-Type': 'multipart/form-data' };
+                axios.post("{% url 'cms_save_product' %}", data, { headers }).then((resp) => {
+                    this.loading = false;
+                    this.submit = 'Submit';
+                    if (resp.data.status === true) {
+                        window.location = "{% url 'cms_products' %}";
+                    } else {
+                        this.errors = resp.data.errors;
+                        window.scrollTo(0, 0);
+                    }
+                }).catch(e => {
+                    this.loading = false;
+                    this.submit = 'Submit';
+                    this.errors = { serverError: 'Oops! something went wrong.' };
+                    window.scrollTo(0, 0);
+                });
+            },
+            hasDuplicates(array) {
+                return (new Set(array)).size !== array.length;
+            },
+            onImageChange(event, i) {
+                file = event.target.files[0]
+                this.product.images[i].file = file
+            },
+        }
+    }).use(primevue.config.default).mount('#add-product');
+</script>
+{% endblock content %}

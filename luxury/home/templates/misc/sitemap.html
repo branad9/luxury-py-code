@@ -1,0 +1,64 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+
+<title>Sitemap</title>
+<meta name='robots' content='index, follow' />
+
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main title-element">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="banner">
+      <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+      <div class="container-lg">
+        <div class="breadcrumb-box">
+          <div class="heading-box">
+            <h1>Sitemap</h1>
+          </div>
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home </a></li>
+            <li>
+              <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+            </li>
+
+            <li class="current"><a href="#">Sitemap</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- About Us Section Start -->
+  <section class="about-section">
+    <div class="container-lg">
+      <div class="row g-0 g-lg-4 g-xl-5">
+        <div class="col-lg-12 order-2 order-lg-1">
+          <div class="align-ment">
+            <div class="contenten-wrap">
+              <div class="content-box">
+                {% for mc in main_categories %}<br><br>
+                    <a href="{% url 'maincategory_products' mc.slug %}"><h5>{{ mc.name }}</h5></a><br>
+                    {% for c in mc.categories.all %}
+                        <a href="{% url 'category_products' c.slug %}"><h6>{{ c.name }}</h6></a><br>
+                        {% for p in c.product_set.all %}
+                            <p><a href="{% url 'product_details' p.slug %}">{{ p.name }}</a></p>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- About Us Section End -->
+
+</main>
+<!-- Main End -->
+{% endblock web_content %}

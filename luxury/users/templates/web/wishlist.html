@@ -1,0 +1,196 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+
+<title>Wishlist</title>
+<meta name='robots' content='noindex, nofollow' />
+
+{% endblock head_section %}
+{% block web_content %}
+<style>
+    [v-cloak] {
+  display: none;
+}
+[v-cloak] + #lploader::before {
+    content: url({% static 'assets/images/loader2.svg' %});
+    display: block;
+    text-align: center;
+    width: 390px;
+    height: 600px;
+    margin: 0px auto;
+    font-size: 30px;
+    padding: 180px 3px 6px 0px;
+}
+</style>
+<!-- Main Start -->
+<main class="main" id="wishlist" v-cloak>
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-wrap">
+      <div class="banner">
+        <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+        <div class="container-lg">
+          <div class="breadcrumb-box">
+            <div class="heading-box">
+              <h1>My Wishlist</h1>
+            </div>
+            <ol class="breadcrumb">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li>
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+              </li>
+              <li class="current">Wishlist</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Wishlist Section Start -->
+    <section v-if="products.length <= 0" class="page-not-found">
+        <div class="container">
+          <div class="row gx-md-2 gx-0 gy-md-0 gy-3">
+            <div class="col-md-8 m-auto">
+              <div class="page-image">
+                <img src="{% static 'assets/images/wishlist.png' %}" class="img-fluid blur-up lazyload" alt="" />
+              </div>
+            </div>
+    
+            <div class="col-md-8 mx-auto mt-md-5 mt-3">
+              <div class="page-container pass-forgot">
+                <div>
+                  <h2>Wishlist Empty</h2>
+                  <p class="font-md">This wishlist is empty.</p>
+                  <a href="{% url 'products' %}" class="btn-solid mb-line">Shop Now<i class="arrow"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section v-else class="section-b-space wishlist-page">
+        <div class="container-lg">
+          <div class="row g-3 g-3 g-xxl-4 ratio_asos row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
+
+            <div class="col" v-for="p in products">
+              <div class="product-card product-wishlist">
+                <div class="img-box">
+                    <a v-if="p.product.images.length > 0" :href="`/product/${p.product.slug}`"><img v-if="p.product.images.filter((i) => i.default == true).length > 0" :src="p.product.images.filter((i) => i.default == true)[0].cmp_image" :alt="addUnslug(p.product.name)" /></a>
+                    <a v-else :href="`/product/${p.product.slug}`"><img src="{% static 'assets/images/lux.png' %}" alt="product" /></a>
+                    {% comment %} <button class="delete-button"><i data-feather="x"></i></button> {% endcomment %}
+                </div>
+                <div class="content-wrap">
+                  <!-- Content Box -->
+                  <div class="content-box">
+                    <a :href="`/product/${p.product.slug}`">
+                        <p>[[ p.product.brand ]]</p>
+                        <h5>[[ p.product.name ]]</h5>
+                        <span v-if="p.product.type == 'Variable'" class="sold-by">[[p.variation.values[0].attribute]]: [[p.variation.values[0].attribute_value]]</span>
+                        <div v-if="p.product.sale_price != null">
+                            <span><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(p.product.sale_price) ]]</span><del><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(p.product.price) ]]</del>
+                        </div>
+                        <div v-else-if="p.product.price != null">
+                            <span><i class="fa fa-inr" aria-hidden="true"></i>[[ addCommas(p.product.price) ]]</span>
+                        </div>
+                    </a>
+                  </div>
+                  <div class="mov-to-bag">
+                    <button @click="addCart(p)" class="btn btn-solid btn-sm addtocart-btn mb-2">Add To Cart<i class="arrow"></i></button>
+                    <button @click="remove(p.id)" class="btn btn-outline btn-sm">Remove<i class="arrow"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </section>
+    <!-- Wishlist Section End -->                                                            
+</main>
+<div id="lploader"></div>
+<script src="{% static 'vue/vue.global.js' %}"></script>
+<script src="{% static 'vue/axios.min.js' %}"></script>
+<script>
+    Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                products: [],
+                errors: {},
+            }
+        },
+        mounted() {
+            this.showProducts();
+        },
+        methods: {
+            showProducts() {
+                axios.get("{% url 'get_wishlist' %}").then((resp) => { 
+                    if (resp.data.status === true) {
+                        console.log(JSON.stringify(resp.data.data));
+                        this.products = resp.data.data;
+                    } else {
+                        this.errors = resp.data.errors;
+                    }
+                }).catch(e => {
+                    this.errors = {Error: 'Something went wrong.'};
+                });
+            },
+            remove(wid) {
+                let data = new FormData();
+                data.append('wid', wid);
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+                axios.post("{% url 'delete_wishlist' %}", data).then((resp) => {
+                    if (resp.data.status === true) {
+                        this.showProducts();
+                        window.location = "/user/wishlist";
+                    } else {
+                        this.errors = resp.data.errors;
+                    }
+                });
+            },
+            addCart(prod) {
+                let price = 0;
+                if (prod.product.type == 'Simple') {
+                    if (prod.product.sale_price != null) {
+                        price = prod.product.sale_price;
+                    } else {
+                        price = prod.product.price;
+                    }
+                } else {
+                    if (prod.variation.sale_price != null) {
+                        price = prod.variation.sale_price;
+                    } else {
+                        price = prod.variation.price;
+                    }
+                }
+                let data = new FormData();
+                data.append('product', prod.product.id.toString());
+                if (prod.type == 'Simple') {
+                    data.append('variation', '0');
+                } else if (prod.variation != null) {
+                    data.append('variation', prod.variation.id.toString());
+                }
+                data.append('total', price.toString());
+                data.append('qty', '1');
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+                axios.post("{% url 'change_cart' %}", data).then((resp) => { 
+                    console.log(JSON.stringify(resp.data))
+                    if (resp.data.status === false) {
+                        console.log('error '+ JSON.stringify(resp.data.errors));  
+                        this.errors = resp.data.errors;
+                    } else {
+                        window.location = "/cart/";
+                    }
+                });
+            },
+            addCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
+            addUnslug(x) {
+                return x.replace(/-/g, " ")
+            }
+        },
+    }).mount('#wishlist');
+</script>
+{% endblock web_content %}

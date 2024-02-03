@@ -1,0 +1,759 @@
+{% extends 'web/base.html' %}
+
+{% load static %}
+
+{% load tags %}
+
+{% load humanize %}
+
+{% block head_section %}
+
+<meta name="title" content="{{ main_category.meta_title|default_if_none:'' }}" />
+<meta name="description" content="{{ main_category.meta_desc|default_if_none:'' }}" />
+<meta name="keywords" content="{{ main_category.meta_keywords|default_if_none:'' }}" />
+<link rel="canonical" href="{{ request.build_absolute_uri }}" />
+
+<title>{{ main_category.meta_title|default_if_none:'' }}</title>
+
+<meta property="article:published_time" content="2022-11-26T12:27:00+05:30">
+<meta property="article:modified_time" content="2022-11-26T12:27:00+05:30">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="products">
+<meta property="og:title" content="{{ main_category.meta_title|default_if_none:'' }}">
+<meta property="og:description" content="{{ main_category.meta_desc|default_if_none:'' }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ main_category.meta_title|default_if_none:'' }}">
+<meta name="twitter:description" content="{{ main_category.meta_desc|default_if_none:'' }}">
+<meta name="twitter:image" content="https://theluxurypioneer.com/static/assets/images/logos/luxury-pioneer.png">
+<meta name='robots' content="{{ main_category.robots|default_if_none:'' }}" />
+
+{% autoescape off %}
+{{ main_category.schema|default_if_none:'' }}
+{% endautoescape %}
+
+{% endblock head_section %}
+
+{% block web_content %}
+
+<!-- Main Start -->
+
+<main class="main">
+
+    <!-- Breadcrumb Start -->
+
+    <div class="breadcrumb-wrap">
+
+      <div class="banner">
+
+        <!--<img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />-->
+
+
+
+        <div class="container-lg">
+
+          <div class="breadcrumb-box">
+
+            <div class="heading-box">
+
+              <h1>{{ main_category.name }}</h1>
+
+            </div>
+
+            <ol class="breadcrumb">
+
+              <li><a href="{% url 'home' %}">Home</a></li>
+
+              <li>
+
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+
+              </li>
+
+              <li class="current">{{ main_category.name }}</li>
+
+            </ol>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Breadcrumb End -->
+
+
+
+
+
+    <section class="special-product pb-0 wow-section-overflow mb-5" style="display: none;">
+
+      <div class="container-lg">
+
+        <div class="row g-2 g-lg-3 g-xxl-4">
+
+          <div class="row g-2 g-lg-3">
+
+              {% for c in categories %}
+
+              <div class="col-2">
+
+                  <div class="product-box">
+
+                  <a href="{% url 'category_products' main_category.slug c.slug %}" class="img-wrap bg-size">
+
+                    <img draggable="false" src="https://assets.myntassets.com/dpr_2,q_60,w_210,c_limit,fl_progressive/assets/images/8340275/2019/1/4/8f26b279-c3ba-4bd4-8eb3-03b72057343b1546584853121-Louis-Philippe-Men-Maroon-Checked-Single-Breasted-Slim-Fit-F-1.jpg" width="100%">
+
+                  </a>
+
+                  <div class="catagories-small-label">
+
+                    <a href="{% url 'category_products' main_category.slug c.slug %}">
+
+                      <p>{{ c.name }}</p>
+
+                    </a>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              {% endfor %}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- Categories Style 2 Start -->
+
+      <section class="catagories-style-3">
+
+          <div class="container-lg">
+
+          <!-- Categories Section Start -->
+
+            <div class="swiper-box">
+
+              <div class="swiper top-catagories">
+
+                <div class="swiper-wrapper">
+
+                  {% for c in categories %}
+
+                  <div class="swiper-slide">
+
+                    <div class="catagories-box">
+
+                      <a href="{% url 'category_products' main_category.slug c.slug %}">
+
+                        {% if c.image.url is not None %}
+
+                            <img src="{{ c.image.url }}" alt="icon" />
+
+                        {% else %}
+
+                            <img src="{% static 'assets/images/category-banner-Audemars-Piguet.png' %}" alt="icon" />
+
+                        {% endif %}
+
+                        <p>{{ c.name }}</p>
+
+                      </a>
+
+                    </div>
+
+                  </div>
+
+                  {% endfor %}
+
+
+
+                </div>
+
+              </div>
+
+              <div class="swiper-button">
+
+                <button class="swiper-next">
+
+                  <i data-feather="arrow-left"></i>
+
+                </button>
+
+                <button class="swiper-prev"><i data-feather="arrow-right"></i></button>
+
+              </div>
+
+            </div>
+
+            <!-- Categories Section End -->
+
+          </div>
+
+      </section>
+
+    
+
+
+
+    <!-- Shop Section Start -->
+
+    <section class="shop-page">
+
+      <div class="container-lg">
+
+        <div class="row gy-4 g-lg-3 g-xxl-4">
+
+          <div class="col-4 col-xl-3 sidebar-controll sidebar-responsive">
+
+            <div class="sidebar-inner sticky">
+
+              <div class="back-box d-flex d-lg-none">
+
+                <span>Back</span>
+
+                <span><i data-feather="x"></i></span>
+
+              </div>
+
+
+
+              <div class="search-box reverse">
+
+                <form action="{% url 'search_products' %}" method="GET">
+
+                  <input class="form-control" type="search" name="search" {% if request.GET.search != None %} value="{{request.GET.search}}" {% endif %} placeholder="Search products..." />
+
+                </form>
+
+                <span class="search">
+
+                  <i data-feather="search"></i>
+
+                </span>
+
+              </div>
+
+
+
+              <div class="row gy-3 gx-0 g-lg-4">
+
+                <div class="col-12">
+
+                  <div class="sidebar-box">
+
+                    <div class="title-box4">
+
+                      <p class="heading">Filter <span class="bg-theme-blue"></span></p>
+
+                    </div>
+
+                    <form class="range-slider" action="{% url 'maincategory_products' main_category.slug %}" method="GET">
+
+                        <div class="price-input">
+
+                          <div class="field">
+
+                            <span>Min <strong><i class="fa fa-inr" aria-hidden="true"></i></strong></span>
+
+                            <input class="form-control input-min" type="number" name="minprice" min="0" {% if request.GET.minprice != None %} value="{{request.GET.minprice}}" {% endif %} placeholder="Price" />
+
+                          </div>
+
+                          <div class="separator">-</div>
+
+                          <div class="field">
+
+                            <span>Max <strong><i class="fa fa-inr" aria-hidden="true"></i></strong></span>
+
+                            <input class="form-control input-max" type="number" name="maxprice" min="0" {% if request.GET.maxprice != None %} value="{{request.GET.maxprice}}" {% endif %} placeholder="Price" />
+
+                          </div>
+
+                        </div>
+
+                        <button type="submit" class="btn-solid btn-sm float-right">Apply</button>
+
+                    </form>
+
+                  </div>
+
+                </div>
+
+
+
+                {% for mc in cp_main_categories %}
+
+                    {% if mc.slug == main_category.slug %}
+
+                    
+
+                  <div class="col-12">
+
+                    <div class="sidebar-box">
+
+                      <div class="title-box4">
+
+                        <p class="heading">{{ mc }} Categories <span class="bg-theme-blue"></span></p>
+
+                      </div>
+
+                      <ul class="catagories-side">
+
+                        {% for c in mc.categories.all %}
+
+                          <li>
+
+                            <a href="{% url 'category_products' main_category.slug c.slug %}">
+
+                              <span>
+
+                                <i data-feather="arrow-right"></i>
+
+                                {{ c.name }}
+
+                              </span>
+
+                              <span class="notification">{{ c.product_set.count }}</span>
+
+                            </a>
+
+                          </li>
+
+                        {% endfor %}
+
+                      </ul>
+
+                    </div>
+
+                  </div>
+
+                  {% endif %}
+
+                {% endfor %}
+
+
+
+                <div class="col-12">
+
+                  <div class="sidebar-box">
+
+                    <div class="title-box4">
+
+                      <p class="heading">Brands <span class="bg-theme-blue"></span></p>
+
+                    </div>
+
+                    <ul class="catagories-side">
+
+                      {% for b in cp_brands %}
+
+                        <li>
+
+                          <a href="{% url 'main_brand_products' b.slug %}">
+
+                            <span>
+
+                              <i data-feather="arrow-right"></i>
+
+                              {{ b.name }}
+
+                            </span>
+
+                            <span class="notification">{{ b.product_set.count }}</span>
+
+                          </a>
+
+                        </li>
+
+                      {% endfor %}
+
+                    </ul>
+
+                  </div>
+
+                </div>
+
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="col-lg-8 col-xl-9">
+
+            <div class="row gy-5 g-lg-3 g-xxl-4">
+
+              <div class="col-12 order-1 order-lg-2">
+
+                <div class="shop-product">
+
+                  <div class="top-header-wrap">
+
+                    <button class="filter-btn btn-solid btn-sm mb-line d-flex d-lg-none">Filter <i class="arrow"></i></button>
+
+                    <div class="grid-option-wrap">
+
+                      <div class="select-options">
+
+                        <div class="select-menu">
+
+                          <form action="{% url 'maincategory_products' main_category.slug %}" method="GET">
+
+                            <select name='sort' id="sort" onchange="this.form.submit()" class="dropdown select-dropdown">
+
+                              <option {% if request.GET.sort == '-created' %} selected {% endif %} value="-created">Date: New To Old</option>
+
+                              <option {% if request.GET.sort == 'created' %} selected {% endif %} value="created">Date: Old To New</option>
+
+                              <option {% if request.GET.sort == 'name' %} selected {% endif %} value="name">Alphabetical A-Z</option>
+
+                              <option {% if request.GET.sort == '-name' %} selected {% endif %} value="-name">Alphabetical Z-A</option>
+
+                              <option {% if request.GET.sort == '-price' %} selected {% endif %} value="-price">Price: High To Low</option>
+
+                              <option {% if request.GET.sort == 'price' %} selected {% endif %} value="price">Price: Low To High</option>
+
+                            </select>
+
+                          </form>
+
+                        </div>
+
+                      </div>
+
+                      
+
+                      <ul class="filter-option-grid d-none d-sm-flex">
+
+                        <li class="nav-item d-none d-sm-flex">
+
+                          <button class="nav-link" data-grid="2">
+
+                            <img src="{% static 'assets/images/2.png' %}" width="18px" alt="icon" />
+
+                          </button>
+
+                        </li>
+
+                        <li class="nav-item d-none d-sm-flex">
+
+                          <button class="nav-link" data-grid="3">
+
+                            <img src="{% static 'assets/images/3.png' %}" width="18px" alt="icon" />
+
+                          </button>
+
+                        </li>
+
+                        <li class="nav-item d-none d-xl-flex">
+
+                          <button class="nav-link active" data-grid="4">
+
+                            <img src="{% static 'assets/images/4x4.png' %}" width="18px" alt="icon" />
+
+                          </button>
+
+                        </li>
+
+                        <li class="nav-item d-none d-sm-flex">
+
+                          <button class="nav-link" data-grid="list">
+
+                            <img src="{% static 'assets/images/list.png' %}" width="18px" alt="icon" />
+
+                          </button>
+
+                        </li>
+
+                      </ul>   
+
+                      
+
+                      
+
+                    </div>
+
+                  </div> 
+
+
+
+                  <div id="myproducts">
+
+                    <div class="product-tab-content">
+
+                        <div class="view-option row g-3 g-xl-4 ratio_asos row-cols-2 row-cols-sm-3 row-cols-xl-4 grid-section">
+
+                            {% for p in products %}
+
+                            <div class="product-card d-flex flex-column">
+
+                                <div class="img-box h-100">
+
+                                <!-- Thumbnail -->
+
+                                    {% if p.images.count > 0 %}
+
+                                        <a href="{% url 'product_details' p.slug %}"><img src="{{ p.images.all.first.cmp_image.url }}" alt="{{ p.name|unslug }}" style="height: 100%; object-fit: cover;"/></a>
+
+                                    {% else %}
+
+                                        <a href="{% url 'product_details' p.slug %}"><img src="{% static 'assets/images/lux.png' %}" alt="{{ p.name|unslug }}" /></a>
+
+                                    {% endif %}
+
+                                </div>
+
+                                <!-- Content Box -->
+
+                                <div class="content-box">
+
+                                <a href="{% url 'product_details' p.slug %}">
+
+                                    {% if p.brand != None %}
+
+                                      <p>{{ p.brand }}</p>
+
+                                    {% endif %}  
+
+                                    <h2>{{ p.name|unslug }}</h2>
+
+                                    {% if p.sale_price != None %}
+
+                                        <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.sale_price|intcomma }}</span> <del><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price|intcomma }}</del>
+
+                                    {% elif p.price != None %}
+
+                                        <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price|intcomma }}</span>
+
+                                    {% endif %}
+
+                                    
+
+                                </a>
+
+                                <a href="{% url 'product_details' p.slug %}" class="btn btn-solid btn-sm mb-line addtocart-btn">View Details<i class="arrow"></i> </a>
+
+                                </div>
+
+                            </div>
+
+                            {% empty %}
+
+                            <img src="{% static 'assets/images/no-product-found.png' %}" alt="No Products">    
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    {% if products.has_other_pages %}
+
+                    <div class="pagination-wrap justify-content-center luxurymain">
+
+                        <ul class="pagination">
+
+                        {% if products.has_previous %}
+
+                            <li><a class="prev" href="{% url 'paged_maincategory_products' main_category.slug products.previous_page_number %}{% if request.GET.sort is not None %}?sort={{request.GET.sort}}{% endif %}{% if request.GET.minprice is not None %}?minprice={{request.GET.minprice}}{% endif %}{% if request.GET.maxprice is not None %}&maxprice={{request.GET.maxprice}}{% endif %}">&laquo;</a></li>
+
+                        {% endif %}
+
+                        {% for i in products.adjusted_elided_pages  %}
+
+                            {% if products.paginator.ELLIPSIS == i %}
+
+                                <li><a>{{ i }}</a></li>
+
+                            {% else %}
+
+                                {% if products.number == i %}
+
+                                    <li><a class="active" rel="canonical" href="{{ request.build_absolute_uri }}">{{ i }}</a></li>
+
+                                {% else %}
+
+                                    <li><a href="{% url 'paged_maincategory_products' main_category.slug i %}{% if request.GET.sort is not None %}?sort={{request.GET.sort}}{% endif %}{% if request.GET.minprice is not None %}?minprice={{request.GET.minprice}}{% endif %}{% if request.GET.maxprice is not None %}&maxprice={{request.GET.maxprice}}{% endif %}">{{ i }}</a></li>
+
+                                {% endif %}
+
+                            {% endif %} 
+
+                        {% endfor %}
+
+                        {% if products.has_next %}
+
+                            <li><a class="next" href="{% url 'paged_maincategory_products' main_category.slug products.next_page_number %}{% if request.GET.sort is not None %}?sort={{request.GET.sort}}{% endif %}{% if request.GET.minprice is not None %}?minprice={{request.GET.minprice}}{% endif %}{% if request.GET.maxprice is not None %}&maxprice={{request.GET.maxprice}}{% endif %}">&raquo;</a></li>
+
+                        {% endif %}
+
+                        </ul>
+
+                    </div>
+
+                    {% endif %}
+
+                  </div>
+
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    
+
+    {% if main_category.content is not None %}
+
+    <section class="productdesc pb-0 wow-section-overflow" style=" padding-top: 45px;">
+
+        <div class="container-lg" style=" padding-bottom: 45px;">
+
+          {% autoescape off %}
+
+            {{ main_category.content }}
+
+          {% endautoescape %}
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+
+</main>
+
+<script src="{% static 'vue/jquery.min.js' %}"></script>
+
+<script>
+
+  $(document).ready(function() {
+
+      $('#minprice').on("keyup change", function() {
+
+          setTimeout(()=> {
+
+            $.ajax({
+
+                type: 'GET',
+
+                url: '{% url "sort_maincategory_products" main_category.slug %}',
+
+                data: {
+
+                  'sort': $('#sort').val(),
+
+                  'min': $(this).val(),
+
+                  'max': $('#maxprice').val(),
+
+                },
+
+                success: function (resp) {
+
+                    $('#myproducts').html(resp);
+
+                },
+
+                dataType: 'html'
+
+            });
+
+          }, 800);
+
+      });
+
+      $('#maxprice').on("keyup change", function() {
+
+          setTimeout(()=> {
+
+            $.ajax({
+
+                type: 'GET',
+
+                url: '{% url "sort_maincategory_products" main_category.slug %}',
+
+                data: {
+
+                  'sort': $('#sort').val(),
+
+                  'min': $('#minprice').val(),
+
+                  'max': $(this).val(),
+
+                },
+
+                success: function (resp) {
+
+                    $('#myproducts').html(resp);
+
+                },
+
+                dataType: 'html'
+
+            });
+
+          }, 800);
+
+      });
+
+      $('#sort').change(function() {
+
+          $.ajax({
+
+              type: 'GET',
+
+              url: '{% url "sort_maincategory_products" main_category.slug %}',
+
+              data: {
+
+                'sort': $(this).val(),
+
+                'min': $('#minprice').val(),
+
+                'max': $('#maxprice').val(),
+
+              },
+
+              success: function (resp) {
+
+                  $('#myproducts').html(resp);
+
+              },
+
+              dataType: 'html'
+
+          });
+
+      });
+
+  });
+
+</script>
+
+{% endblock web_content %}

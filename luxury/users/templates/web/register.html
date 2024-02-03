@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+<!-- Html start -->
+<html lang="en">
+    {% include 'web/includes/head.html' %}  
+  <!-- Body Start -->
+  <body>
+    <!-- Main Start -->
+    <div class="main">
+      <section class="page-body p-0">
+        <div class="row g-0 ratio_asos">
+          <div class="order-1 order-lg-2 col-lg-7">
+            <div class="img-box">
+              <img class="bg-img" src="{% static 'assets/images/inner-page/gucci.png' %}" alt="banner" />
+            </div>
+          </div>
+
+          <div class="order-2 order-lg-1 col-lg-5">
+            <div class="content-box">
+              <div>
+                <h5>CREATE ACCOUNT<span class="bg-theme-blue"></span></h5>
+                <br><br>
+                {% include 'web/includes/alerts.html' %}
+                <form action="{% url 'register' %}" method="POST" class="custom-form form-pill">
+                    {% csrf_token %}
+                    <div class="input-box">
+                      <label for="full-name">Full Name</label>
+                      {{ form.full_name }}
+                    </div>
+                    <div class="input-box">
+                      <label for="email">Email</label>
+                      {{ form.email }}
+                    </div>
+                    <div class="input-box">
+                      <label for="password">Create Password</label>
+                      <div class="icon-input">
+                        {{ form.password }}
+                        {% comment %} <img class="showHidePassword" src="{% static 'assets/images/icon/eye.png' %}" alt="eye" /> {% endcomment %}
+                      </div>
+                    </div>
+                    <div class="input-box">
+                      <label for="password">Confirm Password</label>
+                      <div class="icon-input">
+                        {{ form.confirm_password }}
+                      </div>
+                    </div>
+                    <button type="submit" class="btn-solid rounded-pill line-none theme-color">Register <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+                    <a href="{% url 'home' %}" class="btn-solid rounded-pill line-none btn-outline mt-3 d-flex justify-content-center">Home <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                </form>
+
+                <span class="backto-link font-default content-color text-decoration-none">
+                    Already have an Account? <a class="text-decoration-underline theme-color" href="{% url 'login' %}">Sign In </a>
+                </span>
+
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </section>
+    </div>
+    <!-- Main End -->
+    {% include 'web/includes/scripts.html' %}
+  </body>
+
+</html>

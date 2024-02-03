@@ -1,0 +1,633 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block head_section %}
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="" />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="{% static 'assets/images/favicon/favicon.png' %}" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="{% static 'assets/images/favicon/favicon.png' %}" />
+  <meta name="theme-color" content="#0f8fac" />
+  <meta name="apple-mobile-web-app-capable" content="" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="" />
+  <meta name="msapplication-TileImage" content="{% static 'assets/images/favicon/favicon.png' %}" />
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>User Dashboard</title>
+
+  <!-- Google Jost Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+
+  <!-- Google Monsterrat Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&amp;display=swap" rel="stylesheet" />
+
+  <!-- Google Leckerli Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&amp;display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Css -->
+  <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css' %}" />
+
+  <!-- Wow Animation Css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/wow-animate.css' %}" />
+
+  <!-- Swiper Slider Css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css' %}" />
+  <meta name='robots' content='noindex, nofollow' />
+  <!-- Style Css -->
+  <link id="change-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <meta name='robots' content='noindex, nofollow' />
+  <meta name="google-site-verification" content="A6UPaquxaAVfnhFjZTxHo0KA_4rTtkP3S_YAISMdEOo" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3Z81XEH4NE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-3Z81XEH4NE');
+  </script>
+</head>
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="banner">
+      <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+      <div class="container-lg">
+        <div class="breadcrumb-box">
+          <div class="heading-box">
+            <h1>User Dashboard</h1>
+          </div>
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>
+              <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+            </li>
+            <li class="current"><a href="javascript:void(0)">User Dashboard</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- Dashboard Start -->
+  <section class="user-dashboard" id="mydashboard">
+    <div class="container-lg">
+      <div class="row g-3 g-xl-4 tab-wrap">
+        <div class="col-lg-4 col-xl-3 sticky">
+          <button class="setting-menu btn-solid btn-sm d-lg-none">Setting Menu <i class="arrow"></i></button>
+          <div class="side-bar">
+            <span class="back-side d-lg-none"> <i data-feather="x"></i></span>
+            <div class="profile-box">
+              <div class="user-name">
+                <h3>{{ user.full_name }}</h3>
+                <h4>{{ user.email }}</h4>
+              </div>
+            </div>
+
+            <ul class="nav nav-tabs nav-tabs2" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="dashboard-tab" @click="tab = 1" :class="tab == 1 ? 'active' : ''">
+                  Dashboard
+                  <span><i data-feather="chevron-right"></i></span>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="orders-tab" @click="tab = 2" :class="tab == 2 ? 'active' : ''">
+                  Orders
+                  <span><i data-feather="chevron-right"></i></span>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a href="{% url 'wishlist' %}" class="nav-link">
+                  Wishlist
+                  <span><i data-feather="chevron-right"></i></span>
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="savedAddress-tab" @click="tab = 3" :class="tab == 3 ? 'active' : ''">
+                  Saved Address
+                  <span><i data-feather="chevron-right"></i></span>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation" style="margin-bottom: 15px;">
+                <button class="nav-link" id="savedAddress-tab" @click="tab = 4" :class="tab == 4 ? 'active' : ''">
+                  Add Address
+                  <span><i data-feather="chevron-right"></i></span>
+                </button>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-8 col-xl-9">
+          <div class="right-content tab-content">
+            <!-- User Dashboard Start -->
+            <div class="tab-pane" :class="tab == 1 ? 'show active' : ''">
+              <div class="dashboard-tab">
+                <div class="title-box3">
+                  <h3>Hello {{ user.full_name }}</h3>
+                  <p>
+                    Welcome {{ user.full_name }}, here you can customize your profile and also track your order also,
+                    you can access your saved address and orders. if you want change setting you can
+                    do it from here.
+                  </p>
+                </div>
+
+                <div class="row g-0 option-wrap">
+                  <div class="col-sm-6 col-xl-4">
+                    <a href="javascript:void(0)" data-class="orders" class="tab-box" @click="tab = 2">
+                      <img src="https://themes.pixelstrap.com/oslo/assets/icons/svg/1.svg" alt="shopping bag" />
+                      <h5>Orders</h5>
+                      <p>See order history of previous orders</p>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-xl-4">
+                    <a href="{% url 'wishlist' %}" data-class="wishlist" class="tab-box">
+                      <img src="https://themes.pixelstrap.com/oslo/assets/icons/svg/2.svg" alt="wishlist" />
+                      <h5>Wishlist</h5>
+                      <p>Your Wishlist expire within 24h please complete Checkout</p>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-xl-4">
+                    <a href="javascript:void(0)" data-class="savedAddress" class="tab-box" @click="tab = 3">
+                      <img src="https://themes.pixelstrap.com/oslo/assets/icons/svg/3.svg" alt="address" />
+                      <h5>Saved Address</h5>
+                      <p>You saved Multiple address for delivery</p>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-xl-4">
+                    <a href="javascript:void(0)" data-class="savedAddress" class="tab-box" @click="tab = 4">
+                      <img src="https://themes.pixelstrap.com/oslo/assets/icons/svg/3.svg" alt="address" />
+                      <h5>Add Address</h5>
+                      <p>Add address for delivery</p>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- User Dashboard End -->
+
+            <!-- Order Tabs Start -->
+            <div class="tab-pane" id="orders" :class="tab == 2 ? 'show active' : ''">
+              <div v-if="(orders.data || []).length > 0" class="cart-wrap order-content">
+                <div class="title-box3">
+                  <h3>My Orders</h3>
+                  <p>Thanks for placing a delivery order with Luxury Pioneer! Your order should be home with you in
+                    soon!</p>
+                </div>
+                <div class="order-wraper">
+                  <div class="order-box" v-for="ord in orders.data">
+                    <div class="order-header">
+                      <span><i data-feather="box"></i></span>
+                      <div class="order-content">
+                        <h5 class="order-status success">[[ ord.status ]]</h5>
+                        <p>Order placed on [[ new Date(ord.created).toLocaleDateString() ]]</p>
+                        <p>Order total [[ addCommas(ord.order_total) ]]</p>
+                        <p v-if="ord.track_number">You can tracking number is [[ ord.track_number ]]</p>
+                        <p v-if="ord.order_note">Note: [[ ord.order_note ]]</p>
+                      </div>
+                      <button v-if="(ord.status != 'Cancelled' && ord.status != 'Rejected')"
+                        @click="cancelOrder(ord.id)" class="btn-outline btn-sm w-full"
+                        :disabled="cancelOrderLoadings[ord.id]">[[
+                        cancelOrderLoadings[ord.id] ?
+                        'Wait...' : 'Cancel' ]]</button>
+                    </div>
+                    <div class="order-info" v-for="item in ord.items">
+                      <div class="product-details">
+                        <div v-if="item.product.images.length > 0" class="img-box"><img
+                            :src="item.product.images.filter((e) => e.default == true)[0].cmp_image" alt="product" />
+                        </div>
+                        <div v-else class="img-box"><img src="{% static 'assets/images/lux.png' %}" alt="product" />
+                        </div>
+
+                        <div class="product-content">
+                          <h5><a :href="`/product/${item.product.slug}`">[[ item.product.name ]]</a></h5>
+                          <span v-if="item.variation != null">[[ item.variation.values[0].attribute ]] - [[
+                            item.variation.values[0].attribute_value ]]</span>
+
+                          <div v-if="item.variation != null">
+                            <span v-if="item.variation.sale_price">Price: [[ addCommas(item.variation.sale_price)
+                              ]]</span>
+                            <span v-else-if="item.variation.price">Price: [[ addCommas(item.variation.price) ]]</span>
+                          </div>
+                          <div v-else>
+                            <span v-if="item.product.sale_price">Price: [[ addCommas(item.product.sale_price) ]]</span>
+                            <span v-else-if="item.product.price">Price: [[ addCommas(item.product.price) ]]</span>
+                          </div>
+
+                          <span>Qty: [[ item.qty ]]</span>
+                          <span>Total Price: [[ addCommas(item.price) ]]</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pagination-wrap justify-content-center">
+                    <ul class="pagination">
+                      <li v-if="orders.prev != null"><a href="javascript:void(0)" @click="showOrders(orders.prev)"
+                          class="prev">&laquo; Prev</a></li>
+                      <li v-if="orders.next != null"><a href="javascript:void(0)" @click="showOrders(orders.next)"
+                          class="next">Next &raquo;</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <div class="title-box3">
+                  <h3>My Orders</h3>
+                  <p>You have no orders yet.</p>
+                </div>
+              </div>
+            </div>
+            <!-- Order Tabs End -->
+
+            <!-- Saved Address Tabs Start -->
+            <div class="tab-pane" id="savedAddress" :class="tab == 3 ? 'show active' : ''">
+              <div class="address-tab">
+                <div class="title-box3">
+                  <h3>Your Saved Address</h3>
+                  <p>here is your saved address, from here you can easily add or modify your address</p>
+                </div>
+
+                <div class="row g-3 g-md-4">
+                  <div class="col-md-6 col-lg-12 col-xl-6" v-for="add in addresses">
+                    <div class="address-box" :class="add.default ? 'checked' : ''">
+                      <div class="radio-box">
+                        <div>
+                          <input class="radio-input" type="radio" @change="defaultAddress(add.id)"
+                            :checked="add.default" :id="add.id" :name="add.id" />
+                          <label class="radio-label" :for="add.id">{{ user.full_name}}</label>
+                        </div>
+                        <span class="badges badges-pill badges-theme">[[ add.type ]]</span>
+                        <div class="option-wrap">
+                          <span><a href="javascript:void(0)" @click="addressDetails(add.id)"><i
+                                class="fa fa-pencil-square-o address-size" aria-hidden="true"></i></a></span>
+                          <span><a href="javascript:void(0)" @click="deleteAddress(add.id)"><i
+                                class="fa fa-trash-o address-size" aria-hidden="true"></i></a></span>
+                        </div>
+                      </div>
+                      <div class="address-detail">
+                        <p class="content-color font-default">[[ add.address ]]</p>
+                        <p class="content-color font-default">[[ add.locality ]], [[ add.city ]]</p>
+                        <span class="content-color font-default">Pincode: <span class="title-color font-default fw-500">
+                            [[ add.pincode ]]</span></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-12 col-xl-6">
+                    <div @click="tab = 4"
+                      class="address-box add-new d-flex flex-column gap-2 align-items-center justify-content-center">
+                      <span class="plus-icon"><i data-feather="plus"></i></span>
+                      <h4 class="theme-color font-xl fw-500">Add New Address</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Saved Address Tabs End -->
+
+            <!-- Add Address Start -->
+            <div class="tab-pane" id="profile" :class="tab == 4 ? 'show active' : ''">
+              <div class="profile">
+                <div class="title-box3">
+                  <h3>Add Address</h3>
+                </div>
+
+                <form @submit.prevent="addAddress" class="custom-form form-pill">
+                  <div class="row g-3 g-xl-4">
+                    <div class="col-sm-4">
+                      <div class="input-box">
+                        <label for="type">Address type </label>
+                        <select name="type" id="type" v-model="address.type" class="form-control">
+                          <option value="Home">Home</option>
+                          <option value="Office">Office</option>
+                          <option value="Others">Others</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="input-box">
+                        <label for="address1">Address</label>
+                        <textarea v-model="address.address" class="form-control" name="address" id="address" rows="4"
+                          maxlength="300" required></textarea>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="input-box">
+                        <label for="locality">Locality</label>
+                        <input v-model="address.locality" class="form-control" id="locality" name="locality" type="text"
+                          maxlength="250" required />
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="input-box">
+                        <label for="city">City</label>
+                        <input v-model="address.city" class="form-control" id="city" name="city" type="text"
+                          maxlength="100" required />
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="input-box">
+                        <label for="pincode">Pincode</label>
+                        <input v-model="address.pincode" class="form-control" id="pincode" name="pincode" type="text"
+                          maxlength="6" required />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="btn-box">
+                    <button class="btn-outline btn-sm" @click="tab = 3">Cancel</button>
+                    <button class="btn-solid btn-sm" type="submit">Submit<i class="arrow"></i></button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- Profile Tabs End -->
+
+            <!-- Edit Address Start -->
+            <div class="tab-pane" id="edit-address" :class="tab == 5 ? 'show active' : ''">
+              <div class="edit-address profile1">
+                <div class="title-box3">
+                  <h3>Edit Address</h3>
+                </div>
+
+                <form @submit.prevent="editAddress" class="custom-form form-pill">
+                  <div class="row g-3 g-xl-4">
+                    <div class="col-sm-4">
+                      <div class="input-box">
+                        <label for="type">Address type </label>
+                        <select name="type" id="type" v-model="editAddressData.type" class="form-control">
+                          <option value="Home">Home</option>
+                          <option value="Office">Office</option>
+                          <option value="Others">Others</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="input-box">
+                        <label for="address1">Address</label>
+                        <textarea v-model="editAddressData.address" class="form-control" name="address" id="address"
+                          rows="4" maxlength="300" required></textarea>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="input-box">
+                        <label for="locality">Locality</label>
+                        <input v-model="editAddressData.locality" class="form-control" id="locality" name="locality"
+                          type="text" maxlength="250" required />
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="input-box">
+                        <label for="city">City</label>
+                        <input v-model="editAddressData.city" class="form-control" id="city" name="city" type="text"
+                          maxlength="100" required />
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="input-box">
+                        <label for="pincode">Pincode</label>
+                        <input v-model="editAddressData.pincode" class="form-control" id="pincode" name="pincode"
+                          type="text" maxlength="6" required />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-12 col-xl-12" style="margin-top: 20px;text-align: end;">
+                    <div class="btn-box ">
+                      <button class="btn-outline btn-sm" @click="tab = 3">Cancel</button>
+                      <button class="btn-solid btn-sm" type="submit">Submit<i class="arrow"></i></button>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+            <!-- Edit Address  Tabs End -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Dashboard End -->
+</main>
+<!-- Main End -->
+
+
+<script src="{% static 'vue/vue.global.js' %}"></script>
+<script src="{% static 'vue/axios.min.js' %}"></script>
+<script>
+  Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        tab: 1,
+        orders: {},
+        addresses: [],
+        address: {
+          id: null,
+          type: 'Home',
+          address: null,
+          locality: null,
+          city: null,
+          pincode: null
+        },
+        editAddressData: {
+          id: null,
+          type: 'Home',
+          address: null,
+          locality: null,
+          city: null,
+          pincode: null
+        },
+        errors: {},
+        cancelOrderLoadings: {}
+      }
+    },
+    mounted() {
+      const showAddress = localStorage.getItem('showAddress');
+      if (showAddress) {
+        this.tab = 3;
+      }
+      localStorage.clear();
+      this.showOrders("{% url 'all_orders' %}");
+      this.showAddresses();
+    },
+    methods: {
+      showOrders(link) {
+        axios.get(link).then((resp) => {
+          console.log(`orders ${JSON.stringify(resp.data)}`)
+          if (resp.data.status === true) {
+            this.orders = resp.data;
+          } else {
+            this.errors = resp.data.errors;
+          }
+        }).catch(e => {
+          this.errors = { Error: 'Something went wrong.' };
+        });
+      },
+      showAddresses() {
+        axios.get("{% url 'api_get_addresses' %}").then((resp) => {
+          if (resp.data.status === true) {
+            this.addresses = resp.data.data;
+          } else {
+            this.errors = resp.data.errors;
+          }
+        }).catch(e => {
+          this.errors = { Error: 'Something went wrong.' };
+        });
+      },
+      addressDetails(id) {
+        this.tab = 5;
+        axios.get("{% url 'api_address_details' %}", { params: { "aid": id } }).then((resp) => {
+          if (resp.data.status === true) {
+            this.editAddressData = resp.data.data;
+          } else {
+            this.errors = resp.data.errors;
+          }
+        }).catch(e => {
+          this.errors = { Error: 'Something went wrong.' };
+        });
+      },
+      defaultAddress(id) {
+        let data = new FormData();
+        data.append('aid', id);
+        data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+        axios.post("{% url 'api_address_change_default' %}", data).then((resp => {
+          if (resp.data.status === true) {
+            this.showAddresses();
+          } else {
+            this.errors = resp.data.errors;
+          }
+        })).catch(e => {
+          this.errors = { Error: 'Something went wrong.' };
+        });
+      },
+      addAddress() {
+        let data = new FormData();
+        data.append('address', JSON.stringify(this.address));
+        data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+        axios.post("{% url 'api_add_address' %}", data).then((resp => {
+          if (resp.data.status === true) {
+            this.address = {
+              id: null,
+              type: 'Home',
+              address: null,
+              locality: null,
+              city: null,
+              pincode: null
+            };
+            this.tab = 3;
+            this.showAddresses();
+          } else {
+            this.errors = resp.data.errors;
+          }
+        })).catch(e => {
+          console.log(e);
+          this.errors = { Error: 'Something went wrong.' };
+        });
+      },
+      editAddress() {
+        let data = new FormData();
+        data.append('address', JSON.stringify(this.editAddressData));
+        data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+        axios.post("{% url 'api_edit_address' %}", data).then((resp => {
+          if (resp.data.status === true) {
+            this.editAddressData = {
+              id: null,
+              type: 'Home',
+              address: null,
+              locality: null,
+              city: null,
+              pincode: null
+            };
+            this.tab = 3;
+            this.showAddresses();
+          } else {
+            this.errors = resp.data.errors;
+          }
+        })).catch(e => {
+          console.log(e);
+          this.errors = { Error: 'Something went wrong.' };
+        });
+      },
+      deleteAddress(id) {
+        if (!confirm('Are you sure you want to delete?')) {
+          return;
+        }
+        let data = new FormData();
+        data.append('aid', id);
+        data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+        axios.post("{% url 'api_delete_address' %}", data).then((resp => {
+          if (resp.data.status === true) {
+            this.showAddresses();
+          } else {
+            this.errors = resp.data.errors;
+          }
+        })).catch(e => {
+          this.errors = { Error: 'Something went wrong.' };
+        });
+      },
+      cancelOrder(id) {
+        const cancellationReason = prompt("Reason for cancellation")
+        if (!cancellationReason) return
+        if (!confirm('Are you sure you want to cancel this order?')) return
+
+        this.cancelOrderLoadings[id] = true
+        let data = new FormData();
+        data.append('order_id', id);
+        data.append('cancellationReason', cancellationReason);
+        data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+        axios.post("{% url 'cancel_order' %}", data).then((resp => {
+          if (resp.data.status === true) {
+            this.showOrders("{% url 'all_orders' %}");
+          } else {
+            this.errors = resp.data.errors;
+          }
+          this.cancelOrderLoadings[id] = false
+        })).catch(e => {
+          this.errors = { Error: 'Something went wrong.' };
+          this.cancelOrderLoadings[id] = false
+        })
+      },
+      addCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+    },
+  }).mount('#mydashboard');
+</script>
+
+{% endblock web_content %}

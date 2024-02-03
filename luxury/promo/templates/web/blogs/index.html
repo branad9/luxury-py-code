@@ -1,0 +1,107 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+<title>Blogs | Largest Online E-Commerce Store for Luxury Fashion | The Luxury Pioneer </title>
+    
+<meta property="article:published_time" content="2022-11-26T12:27:00+05:30">
+<meta property="article:modified_time" content="2022-11-26T12:27:00+05:30">
+<meta property="og:locale" content="en_US">
+
+<meta property="og:type" content="article">  
+<meta property="og:title" content="Blogs | Largest Online E-Commerce Store for Luxury Fashion | The Luxury Pioneer ">
+<meta property="og:description" content="know more about latest trends in luxury products world. styling tips, pariring tips, and more only at luxury pioneer.">
+
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blogs | Largest Online E-Commerce Store for Luxury Fashion | The Luxury Pioneer ">
+<meta name="twitter:description" content="know more about latest trends in luxury products world. styling tips, pariring tips, and more only at luxury pioneer.">
+
+<meta name="twitter:image" content="https://theluxurypioneer.com/static/assets/images/logos/luxury-pioneer.png">
+
+<meta name='robots' content='index, follow' />
+
+{% endblock head_section %}
+{% block web_content %}
+
+<!-- Main Start -->
+<main class="main">
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-wrap">
+      <div class="banner">
+        <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+        <div class="container-lg">
+          <div class="breadcrumb-box">
+            <div class="heading-box">
+              <h1>Blogs</h1>
+            </div>
+            <ol class="breadcrumb">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li>
+                <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+              </li>
+
+              <li class="current"><a href="javascript:void(0)">Blogs</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <section class="ratio2_3">
+      <div class="container-lg">
+        <div class="blog-wrap">
+          <div class="row g-3 g-xxl-4">
+            {% for b in blogs %}
+                <div class="col-sm-6 col-lg-4">
+                    <div class="blog-box blog-grid">
+                        <a href="{% url 'blog_details' b.slug %}" class="img-box">
+                            {% if b.image.url is not None %}
+                                <img class="bg-img" src="{{ b.image.url }}" alt="{{ b.image_alt }}" />
+                            {% else %}
+                                <img class="bg-img" src="assets/images/blogs/Blog Image_16_11_22-01.jpg" alt="{{ b.image_alt }}" />
+                            {% endif %}
+                        </a>
+                        <div class="content-box">
+                        <span><i data-feather="clock"> </i>{{ b.date }}</span>
+                        <a href="{% url 'blog_details' b.slug %}"> <h5 class="truncate-2">{{ b.name }}</h5> </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No Blogs</p>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- Pagination Start -->
+        {% if products.has_other_pages %}
+        <div class="pagination-wrap justify-content-center">
+            <ul class="pagination">
+            {% if products.has_previous %}
+                <li><a class="prev" href="{% url 'paged_products' products.previous_page_number %}{% if request.GET.sort is not None %}?sort={{request.GET.sort}}{% endif %}">&laquo;</a></li>
+            {% endif %}
+            {% for i in products.adjusted_elided_pages  %}
+                {% if products.paginator.ELLIPSIS == i %}
+                    <li><a>{{ i }}</a></li>
+                {% else %}
+                    {% if products.number == i %}
+                        <li><a class="active">{{ i }}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'paged_products' i %}{% if request.GET.sort is not None %}?sort={{request.GET.sort}}{% endif %}">{{ i }}</a></li>
+                    {% endif %}
+                {% endif %} 
+            {% endfor %}
+            {% if products.has_next %}
+                <li><a class="next" href="{% url 'paged_products' products.next_page_number %}{% if request.GET.sort is not None %}?sort={{request.GET.sort}}{% endif %}">&raquo;</a></li>
+            {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+        <!-- Pagination End -->
+      </div>
+    </section>
+</main>
+<!-- Main End -->
+{% endblock web_content %}

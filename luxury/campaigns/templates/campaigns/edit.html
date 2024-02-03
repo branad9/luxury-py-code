@@ -1,0 +1,211 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid" id="add-campaign" v-cloak>
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Edit Campaign</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'cms_home' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'cms_campaigns' %}">Campaigns</a></li>
+                            <li class="breadcrumb-item active">Edit Campaign</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mr-auto p-2"> 
+                            <h4 class="card-title">Edit Campaign</h4>
+                        </div>
+                        <div v-if="Object.keys(errors).length > 0">
+                            <div v-for="(v, k) in errors" :key="k" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                [[ k ]]: [[ v ]]
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        <form method="POST" @submit.prevent="editCampaign" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="formrow-name-input">Title</label>
+                                        <input type="text" v-model="campaign.title" class="form-control" placeholder="Enter title" :class="'title' in errors ? 'is-invalid' : ''" id="formrow-name-input" required>
+                                        <div v-if="'title' in errors" class="invalid-feedback">[[ errors['title'] ]]</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="formrow-name-input">Subtitle</label>
+                                        <input type="text" v-model="campaign.subtitle" class="form-control" placeholder="Enter subtitle" :class="'subtitle' in errors ? 'is-invalid' : ''" id="formrow-name-input">
+                                        <div v-if="'subtitle' in errors" class="invalid-feedback">[[ errors['subtitle'] ]]</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="formrow-name-input">Image</label>
+                                    <div class="custom-file">
+                                       <input type="file" @change="handleImageUpload($event)" class="custom-file-input" :id="campaign-image" accept="image/*">
+                                       <label class="custom-file-label text-truncate" :for="campaign-image">[[imageFileName]]</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" v-model="campaign.active" class="custom-control-input" id="formrow-active">
+                                            <label class="custom-control-label" for="formrow-active">Is Active</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="formrow-name-input">Select Product</label>
+                                    <div class="search-box mb-3">
+                                        <div class="position-relative">
+                                            <input type="search" v-model="searchProducts" @keyup="searchForProducts" @search="searchForProducts" class="form-control rounded bg-light border-light" placeholder="Search products...">
+                                            <i class="mdi mdi-magnify search-icon"></i>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group">
+                                        <li v-for="p in allProducts.data" class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-9">
+                                                    <div class="custom-control custom-checkbox mx-4">
+                                                        <input type="checkbox" @change="addProducts($event, p.id)" class="custom-control-input" :id='"pg-"+p.id'>
+                                                        <label class="custom-control-label" :for='"pg-"+p.id'>[[ p.name ]]</label>
+                                                    </div>
+                                                    <div class="py-1 mx-4 text-muted">Code: [[p.code]]</div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <img v-if="p.images.filter((i) => i.default == true).length > 0" :src="p.images.filter((i) => i.default == true)[0].cmp_image" alt="" style="color:#000;width:100px">
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="my-3">
+                                <ul class="pagination mb-0">
+                                   <li v-if="allProducts.prev" class="page-item"><a href="javascript:void(0)" class="page-link" @click="showProducts(allProducts.prev)">Previous</a></li>
+                                   <li v-if="allProducts.next" class="page-item"><a href="javascript:void(0)" class="page-link" @click="showProducts(allProducts.next)">Next</a></li>
+                                </ul>
+                            </div> 
+                            <br>
+                            <button type="submit" :class="loading ? 'disabled' : ''" class="btn btn-primary w-md">
+                                <i v-if="loading" class="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>[[ submit ]]
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+    </div> <!-- container-fluid -->
+</div>
+<script src="{% static 'vue/vue.global.js' %}"></script>
+<script src="{% static 'vue/axios.min.js' %}"></script>
+<script>
+    Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                campaign: {
+                    title: null,
+                    subtitle: null,
+                    products: [],
+                    active: true,
+                },
+                image: null,
+                imageFileName: 'Choose image',
+                allProducts: {},
+                searchProducts: '',
+                loading: false,
+                submit: 'Submit',
+                errors: {},
+            }
+        },
+        mounted() {
+            this.showProducts("{% url 'cms_campaign_products' %}");
+            this.campaign = JSON.parse('{{campaign|escapejs}}');
+            this.image = this.campaign.image || '';
+            if (this.image != '') {
+                this.imageFileName = this.campaign.image || '';
+            }
+            console.log(JSON.stringify(this.campaign.products));
+        },
+        methods: {
+            handleImageUpload(event) {
+                this.image = event.target.files[0];
+                this.imageFileName = event.target.files[0].name;
+            },
+            showProducts(url) {
+                axios.get(url).then(resp => {
+                    if (resp.data.status === true) {
+                        this.allProducts = resp.data;
+                    }
+                });
+            },
+            searchForProducts() {
+                setTimeout(() => {
+                   let params = {params: {"search": this.searchProducts}};
+                   axios.get("{% url 'cms_campaign_product_search' %}", params).then((resp) => {
+                        if (resp.data.status === true) {
+                            this.allProducts = resp.data;
+                        }
+                   });
+                }, 750);
+            },
+            addProducts(e, n) {
+                if (e.target.checked) {
+                   this.campaign.products.push(n);
+                } else {
+                    const index = this.campaign.products.indexOf(n);
+                    if (index > -1) {
+                        this.campaign.products.splice(index, 1);
+                    }
+                }
+            },
+            editCampaign() {
+                if (this.campaign.products.length <= 0 ) {
+                    alert('Please select atleast 1 product.');
+                    return;
+                }
+                this.loading = true;
+                this.submit = 'Loading...';
+                let data = new FormData();
+                data.append('campaign', JSON.stringify(this.campaign));
+                data.append('image', this.image);
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+                const headers = { 'Content-Type': 'multipart/form-data' };
+                axios.post("{% url 'cms_update_campaign' id %}", data, {headers}).then((resp) => {
+                    this.loading = false;
+                    this.submit = 'Submit';
+                    if (resp.data.status === true) {
+                        window.location = "{% url 'cms_campaigns' %}";
+                    } else {
+                        this.errors = resp.data.errors;
+                    }
+                }).catch(e => {
+                    this.loading = false;
+                    this.submit = 'Submit';
+                    this.errors = {Error: 'Something went wrong.'};
+                });
+            }
+        }
+    }).mount('#add-campaign');
+</script>
+{% endblock content %}

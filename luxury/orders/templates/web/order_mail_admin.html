@@ -1,0 +1,11 @@
+{% autoescape off %}
+Hi, Admin
+
+A new order has been placed. please check dashboard
+Please process the order. The Order Number is {{ order.order_number }}.
+
+You can track the new order in CMS from here {{ request.scheme }}://{{ request.get_host }}/orders/cms/orders
+
+Thank you,
+The Luxury Pioneer
+{% endautoescape %}

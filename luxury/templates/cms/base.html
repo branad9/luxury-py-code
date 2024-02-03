@@ -1,0 +1,61 @@
+<!DOCTYPE html> 
+<html lang="en">
+
+    {% include 'cms/includes/head.html' %}
+
+    <body data-sidebar="dark">
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            {% include 'cms/includes/header.html' %}
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+                <div data-simplebar class="h-100">
+                    <!--- Sidemenu -->
+                    {% include 'cms/includes/sidebar.html' %}
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+               {% block content %}
+               
+               {% endblock content %}
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © The Luxury Pioneer.
+                            </div>
+                            {% comment %} <div class="col-sm-6">
+                                <div class="text-sm-right d-none d-sm-block">
+                                   Luxury
+                                </div>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        <!-- Right Sidebar -->
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+        <!-- JAVASCRIPT -->
+        {% include 'cms/includes/scripts.html' %}
+    </body>
+
+</html>

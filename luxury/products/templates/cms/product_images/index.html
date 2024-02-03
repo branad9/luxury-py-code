@@ -1,0 +1,112 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Product Images</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'cms_home' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'cms_products' %}">Products</a></li>
+                            <li class="breadcrumb-item active">Product Images</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="mr-auto p-2"> 
+                                    <h4 class="card-title">Images for {{ product }}</h4>
+                                </div>
+                            </div>
+                            <div class="col-3 text-right">
+                                <a href="{% url 'cms_add_product_image' pid %}" class="btn btn-primary"><i class="bx bx-plus font-size-16 align-middle mr-2"></i>Add Image</a>
+                            </div>
+                        </div>
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Image</th>
+                                <th>Cmp. Image</th>
+                                <th>Default</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in images %}
+                                <tr>
+                                    <td>{{ forloop.counter0|add:images.start_index }}</td>
+                                    <td><img src="{{ i.image.url }}" alt="Product Image" width="120" height="120"></td>
+                                    <td><img src="{{ i.cmp_image.url }}" alt="Compressed Image" width="120" height="120"></td>
+                                    <td>
+                                        {% if i.default %}
+                                            <h5><span class="badge badge-soft-success px-3 py-2">Default</span></h5>
+                                        {% else %}
+                                            <a href="" id="{{ i.id }}" class="btn btn-primary defbtn"  data-form="{% url 'cms_product_image_default' pid i.id %}">Make Default</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'cms_edit_product_image' pid i.id %}" class="btn btn-primary mr-3"><i class="bx bx-pencil font-size-16 align-middle"></i></a>
+                                        <a href="{% url 'cms_delete_product_image' pid i.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="bx bx-trash-alt font-size-16 align-middle"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>   
+                        <div class="my-3">
+                            {% if images.has_other_pages  %}
+                            <ul class="pagination mb-0 flex-wrap">
+                                {% if images.has_previous  %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ images.previous_page_number }}">Previous</a></li>
+                                {% endif %}
+                                {% for i in images.paginator.page_range %}
+                                    {% if images.number == i %}
+                                        <li class="page-item"><a class="page-link">{{ i }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %} 
+                                {% endfor %}
+                                {% if images.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ images.next_page_number  }}">Next</a></li>
+                                {% endif %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+        
+    </div> <!-- container-fluid -->
+</div>
+<script src="{% static 'vue/jquery.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".defbtn", function () {
+            $.ajax({
+                type: 'GET',
+                url:  $(this).data("form"),
+                success: function (data) {
+                   if (data.status == true) {
+                        window.location = "{% url 'cms_product_images' pid %}"
+                   }     
+                },  
+                dataType: 'json'
+            });
+            return false;
+        });
+    });
+</script>
+{% endblock content %}

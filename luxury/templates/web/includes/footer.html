@@ -1,0 +1,625 @@
+{% load static %}
+
+<style>
+    .float1{position:fixed ;width:60px;height:60px;bottom:80px;left:10px;background-color:#2196f3;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow: 2px 2px 3px #999;z-index:100;}
+    
+    [v-cloak] {
+        display: none;
+    }
+    
+    .tap-to-top-box {
+        position: fixed;
+        bottom: 149px;
+        right: 20px;
+        z-index: 10;
+        -webkit-transition: all .5s;
+        transition: all .5s;
+    }
+    .breadcrumb-wrap .banner .heading-box h1 {
+    font-size: calc(12px + (30 - 24) * ((100vw - 320px)/(1920 - 320)));
+    font-family: montserrat,sans-serif;
+    color: #262834;
+    margin-top: 0px;
+}
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 8px;
+    left: 5px;
+    background-color: #25d366;
+    color: #fff;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+}
+@media only screen and (max-width: 991px){
+.sidebar-responsive {
+    position: fixed;
+    margin-top: 0;
+    margin-bottom: 0;
+    top: 0;
+    left: -120%;
+    bottom: 0;
+    padding: 15px;
+    background-color: #fff;
+    height: 100vh;
+    overflow-y: scroll;
+    z-index: 6;
+    width: 100%;
+    -webkit-transition: all .4s linear;
+    transition: all .4s linear;
+}
+}
+
+.presentation {
+  position: fixed;
+  right: 88px;
+  bottom: 34px;
+  text-shadow: 1px 1px 1px #000;
+}
+
+/* menu */
+nav.float-action-button {
+position: fixed;
+    bottom: -129px;
+    right: 0;
+    margin: 2em;
+    z-index: 999;
+}
+
+a.buttons {
+  box-shadow: 0 5px 11px -2px rgba(0, 0, 0, 0.18), 0 4px 12px -7px rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  color: #fff;
+  font-size: 34px;
+  padding: 1px 0 0 0;
+  text-align: center;
+  display: block;
+  margin: 20px auto 0;
+  position: relative;
+  -webkit-transition: all .1s ease-out;
+  transition: all .1s ease-out;
+    margin-bottom: 230px;
+}
+
+a.buttons:active,
+a.buttons:focus,
+a.buttons:hover {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+  text-decoration: none;
+}
+
+a.buttons:not(:last-child) {
+    width: 55px;
+    height: 55px;
+    margin: 20px auto 0;
+    opacity: 0;
+    font-size: 1.6em;
+  padding-top: 0px;
+  -webkit-transform: translateY(50px);
+  -ms-transform: translateY(50px);
+  transform: translateY(50px);
+}
+
+a.buttons.main-button > i:first-child {
+  position: relative;
+  margin-top: 10px;
+}
+
+nav.float-action-button:hover a.buttons:not(:last-child) {
+  opacity: 1;
+  -webkit-transform: none;
+  -ms-transform: none;
+  transform: none;
+  margin: 20px auto 0;
+}
+
+a.buttons:nth-last-child(1) {
+  -webkit-transition-delay: 25ms;
+  transition-delay: 25ms;
+  background-color: #D32F2F;
+  /* Button color */
+}
+
+a.buttons:nth-last-child(1) i.fa {
+  transform: rotate3d(0, 0, 1, 0);
+  transition: content 0.4s, transform 0.4s, opacity 0.4s;
+}
+
+a.buttons:nth-last-child(1):hover i.fa {
+  transform: rotate3d(0, 0, 1, -180deg);
+}
+
+a.buttons:nth-last-child(1) i.fa:nth-last-child(1) {
+  position: absolute;
+  margin: 10px 0 0 -32px;
+}
+
+a.buttons:nth-last-child(1) i.fa:nth-last-child(2) {
+  opacity: 0;
+}
+
+a.buttons:nth-last-child(1):hover i.fa:nth-last-child(1) {
+  opacity: 0;
+}
+
+a.buttons:nth-last-child(1):hover i.fa:nth-last-child(2) {
+  opacity: 1;
+}
+
+a.buttons:not(:last-child):nth-last-child(2) {
+  -webkit-transition-delay: 50ms;
+  transition-delay: 20ms;
+  background-color: #3b5998;
+  /* Facebook color */
+}
+
+a.buttons:not(:last-child):nth-last-child(3) {
+  -webkit-transition-delay: 75ms;
+  transition-delay: 40ms;
+  background-color: #0deb42;
+  /* whatsapp color */
+}
+
+
+
+.tooltip.left {
+  margin-left: -10px;
+}
+
+/*#region presentation purpose */
+.credits {
+	font-family: sans-serif;
+	font-size: 13px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 9999;
+}
+
+.credits .code-credits {
+	background-color: rgba(0, 0, 0, .1);
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	color: rgba(255, 255, 255, .9);
+	display: block;
+	max-width: 256px;
+	padding: 8px;
+}
+
+.credits .code-credits::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.credits .code-credits img {
+	border-radius: 4px;
+	float: left;
+	margin-right: 12px;
+	width: 64px;
+}
+
+.credits .code-credits > div {
+	float: left;
+}
+
+.credits .code-credits .cc-name {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.credits .code-credits .cc-follow {
+	display: block;
+	margin-top: 2px;
+}
+
+.credits .code-credits .cc-follow a:last-child {
+	margin-left: 4px;
+}
+
+.credits .code-credits .cc-follow a:link,
+.credits .code-credits .cc-follow a:visited {
+	background-color: #eff3f6;
+	background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
+	border: 1px solid #d6d6d6;
+	border-radius: 4px;
+	color: #24292e;
+	font-weight: bold;
+	letter-spacing: -0.3px;
+	padding: 4px 10px;
+	text-decoration: none;
+}
+
+.credits .code-credits .cc-follow a:hover,
+.credits .code-credits .cc-follow a:active {
+	color: #fff;
+	background-color: #3072b3;
+	background-image: -webkit-linear-gradient(#599bdc, #3072b3);
+	background-image: -moz-linear-gradient(#599bdc, #3072b3);
+	background-image: -ms-linear-gradient(#599bdc, #3072b3);
+	background-image: linear-gradient(#599bdc, #3072b3);
+	border-color: #518cc6 #518cc6 #2a65a0;
+	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.credits .code-credits .cc-follow a:first-child:hover,
+.credits .code-credits .cc-follow a:first-child:active {
+	color: #fff;
+	background-color: #000;
+	background-image: -webkit-linear-gradient(#555, #000);
+	background-image: -moz-linear-gradient(#555, #000);
+	background-image: -ms-linear-gradient(#555, #000);
+	background-image: linear-gradient(#555, #000);
+	border-color: #555 #555 #000;
+	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.bg-credits {
+	background-color: #000;
+	border-radius: 4px;
+	color: white;
+	display: inline-block;
+	font-family: sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 1.2;
+	padding: 4px 6px;
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	text-decoration: none;
+}
+
+/*#endregion */
+
+.luxury{
+    display:none;
+}
+@media only screen and (max-width: 575px){
+.luxury {
+    display:block;
+}
+}
+
+.notification-label{
+        position: absolute;
+        top: -6px;
+        right: 12px;
+        width: 16px;
+        height: 16px;
+        border-radius: 100%;
+        font-size: 12px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        color: #fff;
+        background-color: #dc9749;
+}
+</style>
+<footer class="footer-document ratio_asos">
+
+    <div>
+
+      <div class="container-lg">
+
+        <div class="main-footer" >
+
+          <div class="row gy-3 gy-md-4 gy-xl-0">
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+
+              <div class="content-box">
+
+                <img class="logo" src="{% static 'assets/images/logos/luxury-pioneer-footer.png' %}" alt="luxury pioneer" />
+
+                <ul>
+
+                  <li><i data-feather="map-pin"></i> <span>{{ cp_settings.address  }}</span></li>
+
+                  <li>
+
+                    <i data-feather="phone"></i><a class="nav" href="tel:{{ cp_settings.phone }}"><span> {{ cp_settings.phone }} </span></a>
+
+                  </li>
+
+                  <li>
+
+                    <i data-feather="mail"></i><a class="nav" href="mailto:{{ cp_settings.email }}"><span> {{ cp_settings.email }} </span></a>
+
+                  </li>
+
+                </ul>
+
+              </div>
+
+            </div>
+
+
+
+            <div class="nav-footer col-lg-2 col-md-4 order-md-3 order-lg-2">
+
+              <div class="nav content-box d-md-block open">
+
+                <b class="heading-footer">Shop By</b>
+
+                <ul>
+
+                  <li><a class="nav" href="{% url 'category_products' 'men' 'watches' %}">Men's Watches </a></li>
+                  
+                  <li><a class="nav" href="{% url 'category_products' 'men' 'bags' %}">Men's Bags </a></li>
+                  
+                  <!--<li><a class="nav" href="#">Men's Shoes </a></li>-->
+
+                  <li><a class="nav" href="{% url 'category_products' 'women' 'bags' %}">Women's Bags </a></li>
+                  
+                  <li><a class="nav" href="{% url 'category_products' 'women' 'accessories' %}">Women's Accessories </a></li>
+                  <li><a class="nav" href="/sitemap">Sitemap </a></li>
+                  
+
+                </ul>
+
+              </div>
+
+            </div>
+
+            <div class="nav-footer col-xl-2 col-lg-3 col-md-4 order-md-5 order-lg-4">
+
+              <div class="nav d-md-block open content-box">
+
+                <b class="heading-footer">Information</b>
+
+                <ul>
+
+                  <li><a class="nav" href="{% url 'home' %}">Home </a></li>
+
+                  <li><a class="nav" href="{% url 'products' %}">Shop </a></li>
+                  
+                  <li><a class="nav" href="{% url 'maincategory_products' 'women' %}">Women </a></li>
+
+                  <li><a class="nav" href="{% url 'maincategory_products' 'men' %}">Men </a></li>
+
+                  <li><a class="nav" href="{% url 'blogs' %}">Blogs</a></li>
+
+                  
+
+                </ul>
+
+              </div>
+
+            </div>
+
+            <div class="nav-footer col-xl-2 col-lg-3 col-md-4 order-md-5 order-lg-4">
+
+              <div class="nav d-md-block open content-box">
+
+                <b class="heading-footer">Get Help</b>
+
+                <ul>
+
+
+
+                  <li><a class="nav" href="{% url 'faq' %}">Faqs </a></li>
+
+                  <li><a class="nav" href="{% url 'policy' %}">Privacy Policy </a></li>
+
+                  <li><a class="nav" href="{% url 'terms' %}">Terms of Use</a></li>
+
+                  <li><a class="nav" href="{% url 'disclaimer' %}">Disclaimer</a></li>
+
+                  <li><a class="nav" href="{% url 'return_exchange' %}">Returns and Exchange</a></li>
+
+                </ul>
+
+              </div>
+
+            </div>
+
+
+
+            <div class="col-xl-3 col-md-6 col-lg-4 order-md-2 order-lg-5">
+
+              <div class="content-box">
+
+                <b class="heading-footer">Follow Us</b>
+
+                <div class="follow-wrap">
+
+                  <ul>
+
+                    <li>
+                        <a href="https://www.facebook.com/profile.php?id=100087673463255" target="_blank"> <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i> </a>
+                    </li>
+
+                    <!--<li>-->
+
+                    <!--  <a href="https://www.instagram.com/theluxurypioneer/" target="_blank"> <i class="fa fa-instagram fa-2x" aria-hidden="true"></i> </a>-->
+
+                    <!--</li>-->
+
+                    <!--<li>-->
+
+                    <!--  <a href="https://twitter.com/i/flow/login"> <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i> </a>-->
+
+                    <!--</li>-->
+
+                    <!--<li>-->
+
+                    <!--  <a href="https://in.pinterest.com/fashluxee/"> <i class="fa fa-pinterest-square fa-2x" aria-hidden="true"></i> </a>-->
+
+                    <!--</li>-->
+
+                  </ul>
+
+                </div>
+
+
+
+                <div id="newsletter" v-cloak>
+                    <div class="subscribe-box">
+                      <h5>Newsletter Sign Up</h5>
+                      <p>Receive our latest updates about our products & promotions.</p>
+                    </div>
+                    <div v-if="Object.keys(success).length > 0">
+                        <div v-for="(v, k) in success" :key="k" class="alert alert-success alert-dismissible fade show" role="alert">
+                            [[ k ]]: [[ v ]]
+                            
+                        </div>
+                    </div>
+                    <div v-if="Object.keys(errors).length > 0">
+                        <div v-for="(v, k) in errors" :key="k" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            [[ k ]]: [[ v ]]
+                            
+                        </div>
+                    </div>
+                    <form @submit.prevent="addNewLetter" method="POST" class="footer-form">
+                      <input type="email" v-model="email" class="form-control" name="email" placeholder="Your email address" required />
+                      <button type="submit" :class="loading ? 'disabled' : ''" class="btn-solid">[[btnText]] <i class="arrow"></i></button>
+                    </form>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+
+
+
+
+  </footer>
+
+
+
+  <footer class="footer-document ratio_asos ">
+
+    <div>
+
+      <div class="container-lg">
+
+        <div class="sub-footer">
+
+          <div class="row gy-3">
+
+            <div class="col-md-6">
+
+              <p class="mb-0" style="text-align: left;">In case of any concern <span href="#">Contact us</span></p>
+
+            </div>
+
+            <div class="col-md-6">
+
+              <p class="mb-0" style="text-align: right;">© 2022, The luxury Pioneer, All Rights Reserved</p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      
+
+    </div>
+
+  </footer>
+
+
+
+
+  <!--<a href="https://api.whatsapp.com/send?phone=917208128600&text=Hello%21%20I%27m%20interested%20in%20one%20of%20your%20products.%20%20{{ request.build_absolute_uri }}&source=&data=&app_absent=" class="float" target="_blank">-->
+
+  <!--  <i class="fa fa-whatsapp my-float"></i>-->
+
+  <!--</a>-->
+
+
+
+  <!--<a href="tel:{{ cp_settings.phone }}" class="float1" target="_blank">-->
+
+  <!--  <i class="fa fa-phone my-float1"></i>-->
+
+  <!--</a>-->
+
+  
+<nav class="float-action-button">
+    <a href="https://api.whatsapp.com/send?phone= {{ cp_settings.whatsapp_phone }}&text=Hello%21%20I%27m%20interested%20in%20one%20of%20your%20products.%20%20{{ request.build_absolute_uri }}&source=&data=&app_absent=" class="buttons" title="Whatsapp" data-toggle="tooltip" data-placement="left">
+     <i class="fa fa-whatsapp my-float"></i>
+    </a>
+    <a href="tel:{{ cp_settings.phone }}" class="buttons" title="Call" data-toggle="tooltip" data-placement="left">
+      <i class="fa fa-phone my-float1"></i>
+    </a>
+    <a href="#" class="buttons main-button" title="Share" data-toggle="tooltip" data-placement="left">
+      <i class="fa fa-times"></i>
+      <i class="fa fa-share-alt"></i>
+    </a>
+</nav>
+
+
+
+
+<script src="{% static 'vue/vue.global.js' %}"></script>
+<script src="{% static 'vue/axios.min.js' %}"></script>
+<script>
+  Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data() {
+        return {
+            loading: false,
+            btnText: 'SUBMIT',
+            email: '',
+            success: {},
+            errors: {},
+        }
+    },
+    methods: {
+        addNewLetter() {
+          let data = new FormData();
+          data.append('email', this.email);
+          data.append("csrfmiddlewaretoken", '{{csrf_token}}');
+          this.loading = true;
+          this.btnText = 'Loading...';
+          axios.post("{% url 'api_add_newsletter' %}", data).then((resp => {
+            this.loading = false;
+            this.btnText = 'SUBMIT';
+            if (resp.data.status === true) {
+              this.success = {Success: 'You are now subscribed to newsletter'};
+            } else {
+                this.errors = resp.data.errors;
+            }
+          })).catch(e => {
+              console.log(e);
+              this.errors = {Error: e};
+          });
+        }
+    },
+  }).mount('#newsletter');
+</script>  
+
+
+  
+

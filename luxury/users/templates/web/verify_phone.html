@@ -1,0 +1,137 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="" />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="{% static 'assets/images/favicon/favicon.png' %}" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="{% static 'assets/images/favicon/favicon.png' %}" />
+  <meta name="theme-color" content="#0f8fac" />
+  <meta name="apple-mobile-web-app-capable" content="" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="" />
+  <meta name="msapplication-TileImage" content="{% static 'assets/images/favicon/favicon.png' %}" />
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Verify Phone</title>
+
+  <!-- Google Jost Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+
+  <!-- Google Monsterrat Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&amp;display=swap" rel="stylesheet" />
+
+  <!-- Google Leckerli Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&amp;display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Css -->
+  <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css' %}" />
+
+  <!-- Wow Animation Css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/wow-animate.css' %}" />
+
+  <!-- Swiper Slider Css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css' %}" />
+
+  <!-- Style Css -->
+  <link id="change-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main title-element">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="banner">
+      <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+      <div class="container-lg">
+        <div class="breadcrumb-box">
+          <div class="heading-box">
+            <h1>Verify Phone</h1>
+          </div>
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home </a></li>
+            <li>
+              <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+            </li>
+            <li class="current"><a href="javascript:void(0)">Verify Phone</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- About Us Section Start -->
+  <section class="about-section">
+    <div class="container-lg">
+      <div class="row g-0 g-lg-4 g-xl-5">
+        <div class="col-lg-4 order-2 order-lg-1"></div>
+        <div class="col-lg-5 order-2 order-lg-1">
+          <div class="">
+            <div class="contenten-wrap">
+              <div class="content-box">
+                {% include 'web/includes/alerts.html' %}
+                {% if verify_type == 'phone' %}
+                <form method="POST" class="custom-form form-pill">
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="col-md-7">
+                      <div class="input-box">
+                          <label for="phone">Phone Number</label>
+                          <input class="form-control" type="text" name="phone" id="phone" maxlength="10" placeholder="Enter Phone number." required>
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="submit" class="btn-solid rounded-pill line-none" name="phone_form" style="margin-top: 22px !important;">Send OTP</button>
+                    </div>
+                  </div>
+                </form>  
+                <br><br>
+                {% else %}
+                <form method="POST" class="custom-form form-pill">  
+                    {% csrf_token %}
+                  <div class="row">
+                    <div class="col-md-7">
+                    <div class="input-box">
+                        <label for="otp">OTP</label>
+                        <div class="icon-input">
+                            <input class="form-control" type="text" name="otp" id="otp" maxlength="6" placeholder="Enter OTP from Whatsapp." required>
+                        </div>
+                    </div>
+                    </div>
+                      <div class="col-md-5">
+                            <button type="submit" class="btn-solid rounded-pill line-none mt-5" name="otp_form" style="margin-top: 22px !important;">Submit OTP</button>
+                      </div>
+                    </div>
+                </form>   
+                {% endif %}  
+                 
+                  {% comment %} <a href="{% url 'home' %}" class="btn-solid rounded-pill line-none btn-outline mt-3 d-flex justify-content-center">Home<i class="arrow"></i></a> {% endcomment %}
+               </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 order-2 order-lg-1"></div>
+      </div>
+    </div>
+  </section>
+  <!-- About Us Section End -->
+
+</main>
+<!-- Main End -->
+{% endblock web_content %}

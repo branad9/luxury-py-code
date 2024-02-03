@@ -1,0 +1,59 @@
+{% load static %}
+{% load humanize %}
+<div class="product-tab-content">
+    <div class="view-option row g-3 g-xl-4 ratio_asos row-cols-2 row-cols-sm-3 row-cols-xl-4 grid-section">
+        {% for p in products %}
+        <div class="product-card">
+            <div class="img-box">
+            <!-- Thumbnail -->
+                {% if p.images.count > 0 %}
+                    <a href="{% url 'product_details' p.slug %}"><img src="{{ p.images.all.first.cmp_image.url }}" alt="product" /></a>
+                {% else %}
+                    <a href="{% url 'product_details' p.slug %}"><img src="{% static 'assets/images/lux.png' %}" alt="product" /></a>
+                {% endif %}
+            </div>
+            <!-- Content Box -->
+            <div class="content-box">
+            <a href="{% url 'product_details' p.slug %}">
+                {% if p.brand != None %}
+                    <p>{{ p.brand }}</p>
+                {% endif %} 
+                <h5>{{ p.name }}</h5>
+                {% if p.sale_price != None %}
+                    <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.sale_price|intcomma }}</span> <del><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price|intcomma }}</del>
+                {% elif p.price != None %}
+                    <span><i class="fa fa-inr" aria-hidden="true"></i>{{ p.price|intcomma }}</span>
+                {% endif %}
+                
+            </a>
+            <a href="{% url 'product_details' p.slug %}" class="btn btn-solid btn-sm mb-line addtocart-btn">View Details<i class="arrow"></i></a>
+            </div>
+        </div>
+        {% empty %}
+        <img src="{% static 'assets/images/no-product-found.png' %}" alt="No Products">    
+        {% endfor %}
+    </div>
+</div>
+{% if products.has_other_pages %}
+<div class="pagination-wrap justify-content-center">
+    <ul class="pagination">
+    {% if products.has_previous %}
+        <li><a class="prev" href="{% url 'paged_sort_category_products' category.slug subcategory.slug products.previous_page_number %}">&laquo;</a></li>
+    {% endif %}
+    {% for i in products.adjusted_elided_pages %}
+        {% if products.paginator.ELLIPSIS == i %}
+            <li><a>{{ i }}</a></li>
+        {% else %}
+            {% if products.number == i %}
+                <li><a class="active">{{ i }}</a></li>
+            {% else %}
+                <li><a href="{% url 'paged_sort_category_products' category.slug subcategory.slug i %}">{{ i }}</a></li>
+            {% endif %}
+        {% endif %} 
+    {% endfor %}
+    {% if products.has_next %}
+        <li><a class="next" href="{% url 'paged_sort_category_products' category.slug subcategory.slug products.next_page_number %}">&raquo;</a></li>
+    {% endif %}
+    </ul>
+</div>
+{% endif %}

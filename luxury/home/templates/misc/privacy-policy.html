@@ -1,0 +1,99 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+<title>Privacy Policy</title>
+<meta name='robots' content='index, follow' />
+<style>
+.headingcss{
+color: #db9648;
+font-size: 17px!important;
+margin-bottom: 0!important;
+}
+.headp{
+
+margin-top: 0px;
+color: #3e3d3d!important;
+font-size: 15px!important;
+}
+</style>
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main title-element">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="banner">
+      <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+      <div class="container-lg">
+        <div class="breadcrumb-box">
+          <div class="heading-box">
+            <h1>Privacy Policy</h1>
+          </div>
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home </a></li>
+            <li>
+              <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+            </li>
+
+            <li class="current"><a href="#">Privacy Policy</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- About Us Section Start -->
+  <section class="about-section">
+    <div class="container-lg">
+      <div class="row g-0 g-lg-4 g-xl-5">
+        <div class="col-lg-12 order-2 order-lg-1">
+          <div class="align-ment">
+            <div class="contenten-wrap">
+              <div class="content-box">
+                <h5 class="headingcss">WHAT PERSONAL DATA WE COLLECT AND WHY WE COLLECT IT</h5>
+                <h4 class="headingcss">COMMENTS</h4>
+
+                <p class="headp">WHEN VISITORS LEAVE COMMENTS ON THE SITE WE COLLECT THE DATA SHOWN IN THE COMMENTS FORM, AND ALSO THE VISITOR’S IP ADDRESS AND BROWSER USER AGENT STRING TO HELP SPAM DETECTION.</p>
+                <p class="headp">AN ANONYMIZED STRING CREATED FROM YOUR EMAIL ADDRESS (ALSO CALLED A HASH) MAY BE PROVIDED TO THE GRAVATAR SERVICE TO SEE IF YOU ARE USING IT. THE GRAVATAR SERVICE PRIVACY POLICY IS AVAILABLE HERE: AFTER APPROVAL OF YOUR COMMENT, YOUR PROFILE PICTURE IS VISIBLE TO THE PUBLIC IN THE CONTEXT OF YOUR COMMENT.</p>
+
+                 <!--<h4 class="headingcss">MEDIA</h4>-->
+
+                <p class="headp">IF YOU UPLOAD IMAGES TO THE WEBSITE, YOU SHOULD AVOID UPLOADING IMAGES WITH EMBEDDED LOCATION DATA (EXIF GPS) INCLUDED. VISITORS TO THE WEBSITE CAN DOWNLOAD AND EXTRACT ANY LOCATION DATA FROM IMAGES ON THE WEBSITE.</p>
+
+                <!--<h4 class="headingcss">CONTACT FORMS</h4>-->
+                <h4 class="headingcss">COOKIES</h4>
+                <p class="headp">IF YOU LEAVE A COMMENT ON OUR SITE YOU MAY OPT-IN TO SAVING YOUR NAME, EMAIL ADDRESS AND WEBSITE IN COOKIES. THESE ARE FOR YOUR CONVENIENCE SO THAT YOU DO NOT HAVE TO FILL IN YOUR DETAILS AGAIN WHEN YOU LEAVE ANOTHER COMMENT. THESE COOKIES WILL LAST FOR ONE YEAR.</p>
+                <p class="headp">IF YOU VISIT OUR LOGIN PAGE, WE WILL SET A TEMPORARY COOKIE TO DETERMINE IF YOUR BROWSER ACCEPTS COOKIES. THIS COOKIE CONTAINS NO PERSONAL DATA AND IS DISCARDED WHEN YOU CLOSE YOUR BROWSER.</p>
+                <p class="headp">WHEN YOU LOG IN, WE WILL ALSO SET UP SEVERAL COOKIES TO SAVE YOUR LOGIN INFORMATION AND YOUR SCREEN DISPLAY CHOICES. LOGIN COOKIES LAST FOR TWO DAYS, AND SCREEN OPTIONS COOKIES LAST FOR A YEAR. IF YOU SELECT “REMEMBER ME”, YOUR LOGIN WILL PERSIST FOR TWO WEEKS. IF YOU LOG OUT OF YOUR ACCOUNT, THE LOGIN COOKIES WILL BE REMOVED.</p>
+                <p class="headp">IF YOU EDIT OR PUBLISH AN ARTICLE, AN ADDITIONAL COOKIE WILL BE SAVED IN YOUR BROWSER. THIS COOKIE INCLUDES NO PERSONAL DATA AND SIMPLY INDICATES THE POST ID OF THE ARTICLE YOU JUST EDITED. IT EXPIRES AFTER 1 DAY.</p>
+
+                <h4 class="headingcss">EMBEDDED CONTENT FROM OTHER WEBSITES</h4>
+                <p class="headp">ARTICLES ON THIS SITE MAY INCLUDE EMBEDDED CONTENT (E.G. VIDEOS, IMAGES, ARTICLES, ETC.). EMBEDDED CONTENT FROM OTHER WEBSITES BEHAVES IN THE EXACT SAME WAY AS IF THE VISITOR HAS VISITED THE OTHER WEBSITE.</p>
+                <p class="headp">THESE WEBSITES MAY COLLECT DATA ABOUT YOU, USE COOKIES, EMBED ADDITIONAL THIRD-PARTY TRACKING, AND MONITOR YOUR INTERACTION WITH THAT EMBEDDED CONTENT, INCLUDING TRACKING YOUR INTERACTION WITH THE EMBEDDED CONTENT IF YOU HAVE AN ACCOUNT AND ARE LOGGED IN TO THAT WEBSITE.</p>
+
+                <!--<h4 class="headingcss">ANALYTICS</h4>-->
+                <!--<h4 class="headingcss">WHO WE SHARE YOUR DATA WITH</h4>-->
+                <h4 class="headingcss">HOW LONG WE RETAIN YOUR DATA</h4>
+                <p class="headp">IF YOU LEAVE A COMMENT, THE COMMENT AND ITS METADATA ARE RETAINED INDEFINITELY. THIS IS SO WE CAN RECOGNIZE AND APPROVE ANY FOLLOW-UP COMMENTS AUTOMATICALLY INSTEAD OF HOLDING THEM IN A MODERATION QUEUE.</p>
+                <p class="headp">FOR USERS THAT REGISTER ON OUR WEBSITE (IF ANY), WE ALSO STORE THE PERSONAL INFORMATION THEY PROVIDE IN THEIR USER PROFILE. ALL USERS CAN SEE, EDIT, OR DELETE THEIR PERSONAL INFORMATION AT ANY TIME (EXCEPT THEY CANNOT CHANGE THEIR USERNAME). WEBSITE ADMINISTRATORS CAN ALSO SEE AND EDIT THAT INFORMATION.</p>
+
+                <h4 class="headingcss">WHAT RIGHTS YOU HAVE OVER YOUR DATA</h4>
+                <p class="headp">IF YOU HAVE AN ACCOUNT ON THIS SITE OR HAVE LEFT COMMENTS, YOU CAN REQUEST TO RECEIVE AN EXPORTED FILE OF THE PERSONAL DATA WE HOLD ABOUT YOU, INCLUDING ANY DATA YOU HAVE PROVIDED TO US. YOU CAN ALSO REQUEST THAT WE ERASE ANY PERSONAL DATA WE HOLD ABOUT YOU. THIS DOES NOT INCLUDE ANY DATA WE ARE OBLIGED TO KEEP FOR ADMINISTRATIVE, LEGAL, OR SECURITY PURPOSES.</p>
+
+                <h4 class="headingcss">WHERE WE SEND YOUR DATA</h4>
+                <p class="headp">VISITOR COMMENTS MAY BE CHECKED THROUGH AN AUTOMATED SPAM DETECTION SERVICE.</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- About Us Section End -->
+
+</main>
+<!-- Main End -->
+{% endblock web_content %}

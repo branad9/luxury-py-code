@@ -1,0 +1,62 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block head_section %}
+
+<title>Disclaimer</title>
+
+{% endblock head_section %}
+{% block web_content %}
+<!-- Main Start -->
+<main class="main title-element">
+  <!-- Breadcrumb Start -->
+  <div class="breadcrumb-wrap">
+    <div class="banner">
+      <img class="bg-img bg-top" src="{% static 'assets/images/inner-page/banner-p.jpg' %}" alt="banner" />
+
+      <div class="container-lg">
+        <div class="breadcrumb-box">
+          <div class="heading-box">
+            <h1>Disclaimer</h1>
+          </div>
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home </a></li>
+            <li>
+              <a href="javascript:void(0)"><i data-feather="chevron-right"></i></a>
+            </li>
+
+            <li class="current"><a href="#">Disclaimer</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- About Us Section Start -->
+  <section class="about-section">
+    <div class="container-lg">
+      <div class="row g-0 g-lg-4 g-xl-5">
+        <div class="col-lg-12 order-2 order-lg-1">
+          <div class="align-ment">
+            <div class="contenten-wrap">
+              <div class="content-box">
+                <h5>DISCLAIMER</h5>
+                <p>YOU ACKNOWLEDGE AND UNDERTAKE THAT YOU ARE ACCESSING THE SERVICES ON THE PLATFORM AND TRANSACTING AT YOUR OWN RISK AND ARE USING YOUR BEST AND PRUDENT JUDGMENT BEFORE ENTERING INTO ANY TRANSACTIONS THROUGH Luxury Pioneer. WHILE WE HAVE TAKEN PRECAUTIONS TO AVOID INACCURACIES IN CONTENT, THIS WEBSITE, ALL CONTENT, INFORMATION (INCLUDING THE PRICE OF PRODUCTS), SOFTWARE, PRODUCTS, SERVICES, AND RELATED GRAPHICS ARE PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND. AT NO TIME SHALL ANY RIGHT, TITLE OR INTEREST IN THE PRODUCTS SOLD THROUGH OR DISPLAYED ON PLATFORM VEST WITH Luxury Pioneer NOR SHALL Luxury Pioneer HAVE ANY OBLIGATIONS OR LIABILITIES IN RESPECT OF ANY TRANSACTIONS ON PLATFORM.</p>
+                <BR>
+                <p>DELIVERY RELATED – USER AGREES AND ACKNOWLEDGES THAT ANY CLAIMS REGARDING ORDER DELIVERY (INCLUDING NON-RECEIPT/ NON- DELIVERY OF ORDER OR SIGNATURE VERIFICATION) SHALL BE NOTIFIED TO Luxury Pioneer WITHIN 5 DAYS FROM THE ALLEGED DATE OF DELIVERY OF PRODUCT REFLECTING ON THE Luxury Pioneer PORTAL. NON NOTIFICATION BY YOU OF NON-RECEIPT OR NON-DELIVERY WITHIN THE TIME PERIOD SPECIFIED SHALL BE CONSTRUED AS A DEEMED DELIVERY IN RESPECT OF THAT TRANSACTION. Luxury Pioneer DISCLAIMS ANY LIABILITY OR RESPONSIBILITY FOR CLAIMS REGARDING NON-DELIVERY, NON-RECEIPT OF ORDER (INCLUDING SIGNATURE VERIFICATION IN PROOF OF DELIVERY) AFTER 5 DAYS FROM THE ALLEGED DATE OF DELIVERY OF PRODUCT REFLECTING ON THE Luxury Pioneer PORTAL.</p>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section></section>
+  <!-- About Us Section End -->
+
+
+
+</main>
+<!-- Main End -->
+{% endblock web_content %}
